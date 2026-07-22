@@ -134,5 +134,6 @@ Repo local, branch duy nhất `main`, chưa có remote. Lịch sử git là audi
 ## 9. Ghi chú môi trường
 
 - Workspace nằm trên OneDrive: lệnh bash lỗi với file cloud-only → dùng tool Read (tự tải về). Di chuyển/ghi hàng loạt gây một đợt sync — bình thường, không phải lỗi.
+- Git trong sandbox Cowork cần quyền xoá file (git unlink `index.lock` + object tạm mỗi thao tác). Gặp "unable to unlink ... Operation not permitted" → gọi tool xin quyền delete cho folder, dọn `index.lock` + `tmp_obj_*` trong `.git/objects/`, thao tác lại. Không được kết luận "git không dùng được".
 - `agent_db` cần MongoDB `agent_db` qua MCP; không có kết nối thì chỉ làm được phần methodology, phải nói rõ với user.
 - Claude Desktop Project (nếu còn dùng làm runtime): knowledge upload là bản sao tĩnh — sửa file ở đây xong phải re-upload thủ công, xem README mục 2.
