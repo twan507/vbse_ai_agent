@@ -44,7 +44,7 @@ _ops/              check_sync.sh + sync_baseline/ + CHANGELOG.md
 
 **Luật vận hành cốt lõi (chi tiết `CLAUDE.md` mục 2):** user không bao giờ tự tay sửa file trong workspace — mọi ghi/đổi qua AI; input user gửi qua chat, AI chuẩn hoá tên theo convention rồi mới lưu; AI phát hiện bất thường thì báo user, không tự xử; kho append-only — đính chính bằng bản mới + đánh dấu superseded trong INDEX, không ghi đè.
 
-**Version control:** git local branch `main`, AI commit theo lượt việc (deliverable / intake / engine tách commit riêng), lịch sử append-only không rewrite, `.gitattributes` ép LF. Quy tắc đầy đủ: `CLAUDE.md` mục 7. Chuỗi truy vết 4 lớp: front-matter (file tự mô tả) → `outputs/INDEX.md` (sổ cái) → `_ops/CHANGELOG.md` (log ngữ nghĩa engine) → git log (audit trail máy).
+**Version control:** git local branch `main`, AI commit theo lượt việc (deliverable / intake / engine tách commit riêng), lịch sử append-only không rewrite, `.gitattributes` ép LF. Remote `origin` = GitHub `twan507/vbse_ai_agent`; AI commit — user push thủ công (sandbox không có credential; chi tiết `CLAUDE.md` mục 7.7). Chuỗi truy vết 4 lớp: front-matter (file tự mô tả) → `outputs/INDEX.md` (sổ cái) → `_ops/CHANGELOG.md` (log ngữ nghĩa engine) → git log (audit trail máy).
 
 ---
 

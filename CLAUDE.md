@@ -105,7 +105,7 @@ status: final                  # draft | final | sent | superseded
 
 ## 7. Quy tắc git
 
-Repo local, branch duy nhất `main`, chưa có remote. Lịch sử git là audit trail máy — bổ trợ, không thay thế `_ops/CHANGELOG.md` (log ngữ nghĩa cho sửa engine).
+Repo local, branch duy nhất `main`. Remote `origin`: `git@github.com:twan507/vbse_ai_agent.git` (repo public — user đã chấp nhận rủi ro, 2026-07-22). Lịch sử git là audit trail máy — bổ trợ, không thay thế `_ops/CHANGELOG.md` (log ngữ nghĩa cho sửa engine).
 
 **7.1. Đầu session:** `git status` phải sạch. Working tree bẩn hoặc có file untracked lạ = bất thường (mục 2.2) → báo user trước khi làm tiếp.
 
@@ -122,7 +122,9 @@ Repo local, branch duy nhất `main`, chưa có remote. Lịch sử git là audi
 
 **7.5. Line-ending:** `.gitattributes` ép LF cho text — không override bằng autocrlf, không tắt.
 
-**7.6. OneDrive:** repo nằm trong folder OneDrive — chấp nhận với 1 máy + 1 session ghi tại một thời điểm; không chạy song song nhiều session cùng ghi. Nếu chuyển đa máy: đề xuất user lập remote (private) làm nguồn chính trước.
+**7.6. OneDrive:** repo nằm trong folder OneDrive — chấp nhận với 1 máy + 1 session ghi tại một thời điểm; không chạy song song nhiều session cùng ghi.
+
+**7.7. Push — phân công:** AI commit local (mục 7.2); push do USER chạy thủ công từ máy (`git push` trong folder, xác thực SSH của máy user). Sandbox không có credential SSH/PAT nên AI KHÔNG tự push được — không thử, không coi là lỗi. Cuối session nếu có commit mới chưa push → nhắc user một câu. Chỉ khi user cấp fine-grained PAT (lưu `.git/config`, đổi remote sang HTTPS): AI mới tự push sau mỗi lượt commit. Mọi trường hợp: cấm force push.
 
 ## 8. Behavioral guidelines (áp cho mọi session làm việc trên workspace)
 
