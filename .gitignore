@@ -1,0 +1,10 @@
+# Chỉ ignore temp thuần tuý của Office/OS — không phải artifact workspace.
+~$*
+*.tmp
+.~lock.*
+Thumbs.db
+desktop.ini
+
+# CHÚ Ý: KHÔNG ignore bản sao conflict OneDrive (*-DESKTOP-*, *conflict*).
+# Chúng phải hiện trong git status như bất thường để AI báo user xử lý
+# (CLAUDE.md mục 2.2). Ignore chúng = giấu lỗi sync.

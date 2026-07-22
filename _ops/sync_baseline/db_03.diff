@@ -1,0 +1,35 @@
+12,21c12,21
+< - Rule 1 (no fabrication, nguồn cho mọi claim): system prompt mục 5.1
+< - Rule 2 (tin tức bắt buộc song song DB + web): `agent_db_00` mục 2
+< - Rule 3 (biệt danh, thuật ngữ lạ phải hỏi trước): system prompt mục 5.4 + `agent_db_00` mục 4.1
+< - Rule 4 (clarification trước câu phức tạp): system prompt mục 5.4 + `agent_db_00` mục 4.2
+< - Rule 5 (không bịa số, xác suất, phân bổ phải có giả định): `agent_db_00` mục 4.3
+< - Rule 6 (K hygiene, không lộ ký hiệu raw và taxonomy): system prompt mục 5.5 + `agent_db_00` mục 5
+< - Rule 7 (rollback sạch khi sai giả định gốc): system prompt mục 5.3
+< - **MỚI v2 — Rule 8 (phase là tín hiệu tham chiếu, nêu khi liên quan)**: `agent_db_00` mục 4.6 — case 9 dưới
+< - **MỚI v2 — Rule 9 (hiệu suất 2 tầng)**: `agent_db_00` mục 4.3 + `agent_db_06` mục 4 — case 10 dưới
+< - **MỚI v3 — Rule 10 (đọc đúng granularity + độ trễ của chuỗi lịch sử định giá)**: `agent_db_00` mục 6 + 7, methodology `agent_db_04` mục D6 — case 11 dưới
+---
+> - Rule 1 (no fabrication, nguồn cho mọi claim): system prompt mục 8.1
+> - Rule 2 (tin tức bắt buộc DB + web khi có search — v2 có 2 chế độ): system prompt mục 7
+> - Rule 3 (biệt danh, thuật ngữ lạ phải hỏi trước): system prompt mục 8.4
+> - Rule 4 (clarification — ⚠ v2 NỚI LỎNG: mặc định giả định ghi rõ, chỉ hỏi khi mơ hồ thật): system prompt mục 8.4
+> - Rule 5 (không bịa số, xác suất, phân bổ phải có giả định): system prompt mục 6 + 10
+> - Rule 6 (K hygiene, không lộ ký hiệu raw và taxonomy): system prompt mục 8.5 + 9
+> - Rule 7 (rollback sạch khi sai giả định gốc): system prompt mục 8.3
+> - **MỚI v2 — Rule 8 (phase là tín hiệu tham chiếu, nêu khi liên quan)**: system prompt mục 5 — case 9 dưới
+> - **MỚI v2 — Rule 9 (hiệu suất 2 tầng)**: system prompt mục 6 — case 10 dưới
+> - **MỚI v3 — Rule 10 (đọc đúng granularity + độ trễ của chuỗi lịch sử định giá)**: system prompt mục 4 + 11, methodology `agent_db_04` mục D6 — case 11 dưới
+264,266c264,267
+< - ⚠ **Lưu ý trong pack này (audience analyst nội bộ):** clarify theo `agent_db_00` mục 4.2 — 2 câu hỏi chuẩn
+<   trước câu phân tích phức tạp; skip khi tra cứu đơn, trạng thái nhanh 1 cách hiểu, hoặc context đã rõ từ turn
+<   trước. Bài học còn lại của case: đừng trả một bức tường text — trả lời đúng trọng tâm, mời user đào sâu.
+---
+> - ⚠ **v2 cập nhật (audience = khách NĐT):** mặc định KHÔNG hỏi lại — trả lời thẳng với giả định hợp lý; nói ra
+>   giả định khi kết luận phụ thuộc vào nó, diễn đạt tự nhiên, không có câu mẫu hay kiểu mở đầu cố định.
+>   CHỈ dừng lại hỏi khi biệt danh/thuật ngữ mơ hồ (case 1) hoặc câu thiếu đối tượng. Bài học của case này
+>   còn lại là: đừng trả một bức tường text — trả lời ngắn đúng trọng tâm trước, mời khách đào sâu.
+397c398
+< | Nhảy thẳng vào phân tích chi tiết với câu hỏi mơ hồ | Rule 4 | Clarify multiple choice trước |
+---
+> | Trả bức tường text / hỏi vặn nhiều lựa chọn cho câu hỏi ngắn | Rule 4 | Trả lời gọn với giả định hợp lý; chỉ hỏi khi thật sự mơ hồ |

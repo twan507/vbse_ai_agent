@@ -1,0 +1,23 @@
+# Chuẩn hoá line-ending: text luôn LF trong repo lẫn working tree.
+# Không dùng core.autocrlf — file này là nguồn quyết định duy nhất.
+* text=auto eol=lf
+*.md text eol=lf
+*.sh text eol=lf
+*.diff text eol=lf
+*.svg text eol=lf
+
+# Binary — không diff text, không đụng line-ending
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.docx binary
+*.pptx binary
+*.xlsx binary
+*.zip binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
