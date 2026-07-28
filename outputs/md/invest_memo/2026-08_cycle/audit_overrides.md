@@ -34,6 +34,32 @@ Ghi mỗi lần user override quyết định hoặc phương pháp mặc địn
 
 ---
 
+## 2026-07-28 — CP3 — Loại: loại mã khỏi shortlist theo nhận định định tính của user
+
+**Quyết định Agent:** shortlist bất động sản 6 mã — DIG (rank 1), KDH, HDG, IJC, HDC, NVL. Chấm bằng bộ lọc định lượng đọc **quý gần nhất**: Vòng D thanh khoản, Vòng B cơ bản, Vòng A xếp hạng bằng đại lượng khách quan.
+
+**User override:** DIG kém; IJC và HDC "đánh đấm kém, khó hút dòng tiền". Yêu cầu rà soát lại từ tin tức và diễn đàn kèm phân tích cơ bản sâu hơn.
+
+**Lý do user:** nhận định thực chiến về đặc tính giao dịch và khả năng thu hút dòng tiền của từng mã — thông tin không có trong bộ chỉ tiêu định lượng mà agent dùng.
+
+**Agent kiểm chứng và xác nhận user đúng cả ba mã, mỗi mã vì một lý do khác nhau.** Bổ sung ba thước đo mà bản gốc thiếu — chuỗi 6 quý thay vì 1 quý, vòng quay thanh khoản trên vốn hoá, hiệu suất thực tế sau hai đáy chu kỳ — cộng tra tin tức và dư luận:
+
+- **DIG:** thanh khoản thực ra rất tốt (vòng quay 123,6 điểm cơ bản, cao thứ hai trong 22 mã). Vấn đề nằm chỗ khác: ROE trailing 7,7% bị **kéo lên gần trọn bởi riêng quý 4/2025** (dòng tiền +1.356 tỷ), trong khi quý gần nhất ICR **âm 0,8** và dòng tiền **âm 437 tỷ**; báo chí xác nhận quý 1/2026 lỗ ròng 9,9 tỷ. Gia đình Chủ tịch bị giải chấp hơn 14,3 triệu cp trong bốn phiên 21–24/07, **doanh nghiệp không còn cổ đông lớn nào**, rủi ro giải chấp tiếp diễn. Cổ đông đợt phát hành giá 12.000đ đang lỗ, tạo lực bán khi giá hồi.
+- **IJC:** đúng là mã khó hút dòng tiền, ba nguồn độc lập trùng khớp. Vòng quay **31,2 điểm cơ bản, bằng một phần tư DIG**, thấp thứ ba trong 22 mã. Hồi sau hai đáy chỉ +65% và +57%, dưới trung vị cả hai lần. Báo Tin nhanh Chứng khoán 01/06/2026 đặt tít "Lợi nhuận cải thiện, cổ phiếu vẫn trầm lắng"; không có báo cáo khuyến nghị nào trong 3 tháng; vắng mặt khỏi mọi danh sách dòng tiền tháng 7; không có tên trong nhóm mã nhà đầu tư cá nhân bàn luận.
+- **HDC:** bộ lọc quý gần nhất che mất **ICR âm ba quý liên tiếp** (−0,3 · −0,5 · −0,4) đúng ba quý ROE trailing nhảy lên 25% — lợi nhuận không tạo tiền, dòng tiền kinh doanh âm 579, 462 và 276 tỷ. Cộng giải chấp gia đình Chủ tịch tháng 3/2026 và pha loãng dồn dập phía trước (~51 triệu cp cộng trái phiếu chuyển đổi 500 tỷ).
+
+**Agent phát hiện thêm một lỗi bản gốc mà user chưa nêu:** **NVL chậm trả 111,6 tỷ nợ gốc trái phiếu ngày 23/07/2026**, chỉ thanh toán được 611,95 triệu đồng. Bản gốc xếp NVL **Bucket 1**. Đây là sự kiện tín dụng đang hoạt động, xảy ra năm ngày trước ngày chạy báo cáo. Đã loại.
+
+**Kết quả:** shortlist bất động sản giảm từ 6 xuống **4 mã** — HDG, KDH, DXS, NLG. Không nới tiêu chí để lấp cho đủ 6.
+
+**Bài học phương pháp, đáng ghi to:** bộ lọc Vòng B theo spec chỉ đọc **quý gần nhất**. Với ngành có lợi nhuận lumpy như bất động sản, một quý đột biến đủ để kéo chỉ tiêu trailing qua ngưỡng và che lấp ba quý xấu liền trước. **Cả DIG lẫn HDC đều lọt Vòng B nhờ đúng cơ chế này.** Nếu cycle sau vẫn dùng spec hiện hành cho ngành bất động sản, phải đọc tối thiểu chuỗi 4–6 quý cho ICR và dòng tiền kinh doanh, không chỉ quý cuối.
+
+**Phát hiện cấu trúc:** trong ngành bất động sản dân dụng thời điểm này, **chất lượng cơ bản và khả năng hút dòng tiền gần như loại trừ nhau**. Bốn mã hồi mạnh nhất sau đáy 2025 là CEO (+162%), DXS (+132%), TAL (+123%), DXG (+98%) — chỉ DXS và TAL pass Vòng B, và cả hai đều vướng thanh khoản. Hai mã cơ bản tốt nhất là HDG và KDH thì hồi phục chỉ mức trung bình đến kém.
+
+**Cách đánh giá override này sau 3-6 tháng:** so lợi suất bốn mã bị loại (DIG, IJC, HDC, NVL) với bốn mã thay thế (HDG, KDH, DXS, NLG) tại mốc 30/09/2026 và 31/12/2026. Kiểm riêng: (a) DIG có tiếp tục giảm vì giải chấp không; (b) IJC có tiếp tục "trầm lắng" không, đo bằng vòng quay thanh khoản; (c) NVL có xử lý được nghĩa vụ trái phiếu không.
+
+---
+
 ## 2026-07-28 — CP2 — Loại: thêm ngành vào shortlist
 
 **Quyết định Agent:** universe (B ∩ C) = 2 ngành — Tài chính ngân hàng (catalyst 4đ), Bất động sản Dân dụng (3đ). Công ty Chứng khoán **trượt Funnel C với 2 điểm**, dưới ngưỡng 3, vì catalyst duy nhất chiếu vào ngành là dòng vốn nâng hạng và nhóm này chỉ nhận khoảng 6,96 triệu USD trong 128,18 triệu đợt 1, tức 5,4%. Agent trình 2 ngành thay vì ép đủ quota 3, theo `P_invest_memo_02` mục 10.2.
