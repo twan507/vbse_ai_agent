@@ -4,6 +4,43 @@ Ghi mỗi lần user override quyết định hoặc phương pháp mặc địn
 
 ---
 
+## 2026-07-28 — CP4 — Loại: dừng cycle ở Tier 3, không chạy Tier 5 và Tier 6
+
+**Quyết định Agent theo spec:** `P_invest_memo_00` Nguyên tắc 1 và 2 quy định **không vào position nếu chưa viết xong memo 7 phần** với variant perception, bear case steelmanned và exit trigger. Tier 3 chỉ là gate trước memo, không phải điểm kết thúc.
+
+**User override:** dừng ở Tier 3, "có danh sách mã là được rồi".
+
+**Lý do user:** nhịp này chỉ cần danh sách mã.
+
+**Agent xử lý:** viết `tier3_20260728_confirmed.md` thành deliverable **dùng trực tiếp** thay vì làm đầu vào cho tier sau. Bổ sung ba phần mà spec không yêu cầu ở Tier 3 nhưng cần có khi dừng tại đây:
+- Mục 7 — kỷ luật vào lệnh theo bucket, trần size theo thanh khoản, ba mã có ngày hết hạn luận điểm, và kỷ luật thoát cho sáu mã vào bằng đường dòng tiền
+- Mục 8 — điều kiện huỷ toàn cycle với ngưỡng số cụ thể
+- Mục 9 — liệt kê thẳng sáu giới hạn của danh sách khi chưa qua Tier 5
+
+**Rủi ro của override này, ghi rõ:** danh sách chưa qua ba gate quan trọng nhất của quy trình. Chưa có memo nên **không có variant perception** — tức không trả lời được câu "tại sao giá phải chạy trong 1-3 tháng tới mà thị trường chưa thấy". Chưa có bear case steelmanned nên rủi ro confirmation bias cao. Chưa có exit trigger viết trước, mà đây là thứ `P_invest_memo_00` gọi là "sự khác biệt giữa pro và amateur" ở horizon ngắn. Mục 7 của bản confirmed là kỷ luật tối thiểu, **không thay được memo**.
+
+**Cách đánh giá sau 3-6 tháng:** so hiệu suất danh sách với VNINDEX tại 30/09/2026 và 31/12/2026. Kiểm riêng: quyết định dừng ở Tier 3 có làm bỏ lỡ việc phát hiện red flag mà Tier 5A lẽ ra bắt được không — cụ thể ở ba mã có cờ đỏ "trailing che quý gần nhất" là VIX, SHS, CEO.
+
+---
+
+## 2026-07-28 — CP4 — Loại: giữ 20 mã thay vì cắt xuống 9
+
+**Quyết định Agent:** theo quota regime Risk-on selective, chọn top 3 mỗi ngành = 9 mã. Bảng chấm cho: CK — VND 13đ, MBS 13đ, VCI 11đ; BĐS — KDH 13đ, CEO 10đ, DXG 10đ; NH — SHB 12đ, LPB 12đ, MBB 11đ.
+
+**User override:** "có thể cứ thêm chứ không cần phải bớt mã, nếu mã nào ngon bạn cứ giữ lại".
+
+**Agent xử lý:** giữ toàn bộ 20 mã, phân **ba nhóm ưu tiên** thay vì cắt — nhóm 1 lõi 9 mã (top 3 theo bảng chấm), nhóm 2 bổ sung 8 mã, nhóm 3 giao dịch thuần 3 mã. Mỗi mã có size gợi ý và ghi chú riêng.
+
+**Agent nêu rõ khuyến nghị ngược một phần:** **không nên vào cả 20 mã**. Danh mục dưới 1 triệu USD giữ 20 mã là quá phân tán — mỗi mã 3,5% thì một mã tăng 30% chỉ đóng góp 1% cho danh mục, không đủ bù công theo dõi. Nhóm 1 với 9 mã đã là giới hạn thực tế; nhóm 2 nên coi là danh sách dự bị để thay khi một mã nhóm 1 hỏng luận điểm. Đã ghi vào mục 2 bản confirmed.
+
+**Hai mã agent thấy bảng chấm đối xử thiếu công bằng, đã nêu trong bản confirmed mục 4:**
+- **HDG** — chỉ 9đ vì tiêu chí quản trị 1 điểm do phiên nằm sàn 06/07 không có tin chính thức giải thích. Nhưng đây là **mã duy nhất trong 10 mã BĐS soi sâu có dòng tiền kinh doanh dương 6 quý liên tiếp** (+467, +339, +258, +190, +457, +105 tỷ) và ROE 10,11% cao thứ hai ngành.
+- **CTG** — mất 1 điểm thanh khoản vì free float chỉ 15%, nhưng giá trị giao dịch tuyệt đối 263,9 tỷ/phiên thừa cho mọi size trong danh mục dưới 1 triệu USD. Lợi nhuận quý 2 dự phóng cao nhất toàn ngành và LLCR 167,2% mạnh nhất nhóm.
+
+**Cách đánh giá sau 3-6 tháng:** so hiệu suất nhóm 1 (9 mã) với nhóm 2 (8 mã) và nhóm 3 (3 mã) tại 30/09/2026 và 31/12/2026. Nếu nhóm 2 vượt nhóm 1 thì bảng chấm 6 tiêu chí đang thiếu biến quan trọng — ứng viên rõ nhất là chất lượng dòng tiền kinh doanh, thứ hiện không có trong bất kỳ tiêu chí nào.
+
+---
+
 ## 2026-07-28 — CP1 — Loại: thay đổi phương pháp (nguồn input)
 
 **Quyết định Agent theo spec:** `P_invest_memo_01` mục 2 quy định bốn input bắt buộc, trong đó Input 1 (market trend đa khung + vận động 20 phiên) dùng tầng chỉ báo nội bộ của hệ thống — chỉ báo xu hướng 4 khung tuần/tháng/quý/năm, vùng kỹ thuật, và phân loại 1 trong 5 pattern vận động. Bảng quyết định regime ở mục 3 tham chiếu trực tiếp các ngưỡng của chỉ báo này (ví dụ "3/4 khung > 0.75", "2/4 khung < 0.2").
