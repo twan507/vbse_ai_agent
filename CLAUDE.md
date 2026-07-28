@@ -9,6 +9,8 @@ Hai tầng, không trộn lẫn:
 - **ENGINE** — `engine/`: knowledge, process, output spec. Ổn định, chỉ sửa khi user yêu cầu maintenance, mọi thay đổi ghi log.
 - **KHO** — `inputs/`, `outputs/`: artifact. Chỉ ghi thêm (append-only), không sửa ngược nội dung đã lưu. Báo cáo cần đính chính → tạo bản mới, đánh dấu bản cũ superseded trong INDEX, không ghi đè.
 
+  **Đặt tên bản đính chính:** giữ nguyên basename gốc, thêm hậu tố `_rev<N>` — `weekly_overview_20260726_rev2.md`. Bản gốc không đổi tên, không sửa `status` trong front-matter của nó; trạng thái superseded sống ở **INDEX**, kèm đường dẫn bản thay thế. (Ngoại lệ duy nhất được đổi tên file là bản trong `sent/` khi user duyệt thay — mục 6.)
+
 ```
 engine/    engine phân tích chứng khoán — 1 engine duy nhất
            system_prompt + KERNEL_SKELETON + OUTPUT_MASTER + K/ P/ O/
@@ -16,7 +18,8 @@ engine/    engine phân tích chứng khoán — 1 engine duy nhất
 inputs/    đầu vào đã dùng cho deliverable (bctc/ theo ticker, external/)
 outputs/   deliverable 4 cây (md/ pptx/ docx/ sent/) + INDEX.md (sổ cái)
 _ops/      CHANGELOG.md, GOTCHAS.md, specs/
-.claude/   settings.json — hook cưỡng chế luật git
+.claude/   settings.json (đăng ký hook) + hooks/block-git-rewrite.ps1 (logic chặn thật)
+           settings.local.json là cấu hình máy riêng, gitignore
 ```
 
 Version control: git local, branch `main` — quy tắc mục 7.
@@ -49,7 +52,7 @@ Không lưu thẳng file với tên gốc user gửi. Chuẩn hoá xong mới l�
 | Yêu cầu | Đọc theo thứ tự |
 |---|---|
 | Tra cứu nhanh: giá, dòng tiền, tin, phase | `engine/system_prompt.md` → K pack liên quan. **KHÔNG activate P/O pack** |
-| Báo cáo phân tích: memo, tuần, chiến lược, cổ phiếu | `engine/system_prompt.md` → `KERNEL_SKELETON.md` + `OUTPUT_MASTER.md` → pack `_00` master trước file con (master-first, bắt buộc) |
+| Báo cáo phân tích: memo, tuần, chiến lược, cổ phiếu | `engine/system_prompt.md` → `KERNEL_SKELETON.md` → pack `_00` master trước file con (master-first, bắt buộc). `OUTPUT_MASTER.md` đọc **muộn hơn**, khi sắp compose deliverable — không nạp từ đầu |
 | Lưu trữ / intake file user gửi | Mục 2.3 file này là đủ |
 | Maintenance workspace | `README.md` + `_ops/CHANGELOG.md` + `_ops/specs/` |
 
@@ -108,11 +111,27 @@ status: final          # draft | final | sent | superseded
 ---
 ```
 
-**INDEX.md:** một dòng mỗi deliverable, ghi ngay khi lưu, không dồn. Cột Đường dẫn trỏ bản **MD**. Cột Định dạng cho biết đã render và đã gửi những gì. Cột key call → kết quả điền ở kỳ review sau (phục vụ Stage 0 và Best/Worst call attribution).
+**Ba gốc đường dẫn khác nhau — dễ ghi nhầm, đọc kỹ:**
+
+| Chỗ ghi | Gốc tính từ | Ví dụ |
+|---|---|---|
+| Front-matter `inputs:` | **repo root** | `inputs/bctc/VNM/2025Q4_soatxet.pdf` |
+| Front-matter `derived:` | **`outputs/`** | `sent/weekly_overview/2026/weekly_overview_20260726.pptx` |
+| Cột Đường dẫn trong INDEX | **`outputs/md/`** | `weekly_overview/2026/weekly_overview_20260726.md` |
+
+**INDEX.md:** một dòng mỗi deliverable, ghi ngay khi lưu, không dồn. Cột Đường dẫn trỏ bản **MD**.
+
+**"Báo cáo tuần" là mơ hồ — luôn phải hỏi.** Có hai loại khác hẳn nhau: `weekly_overview` (broadcast tổng quan tuần, độc lập) và `vbse_strategy/weekly` (update tuần của chiến lược tháng, có HARD GATE cần monthly active). User chỉ nói "báo cáo tuần" thì hỏi rõ trước khi activate pack. Cột Định dạng cho biết đã render và đã gửi những gì. Cột key call → kết quả điền ở kỳ review sau (phục vụ Stage 0 và Best/Worst call attribution).
 
 ## 5. Kho inputs
 
 - BCTC: `inputs/bctc/<TICKER>/<YYYY>Q<N>_<loại>.pdf` — loại: `soatxet` | `kiemtoan` | `hopnhat` | `rieng`. Báo cáo năm: `<YYYY>_kiemtoan.pdf`.
+
+  **Bốn giá trị này trộn hai trục:** `soatxet`/`kiemtoan` là mức đảm bảo, `hopnhat`/`rieng` là phạm vi. Một file có thể vừa soát xét vừa hợp nhất. **Ưu tiên trục mức đảm bảo** (`soatxet`/`kiemtoan`); chỉ dùng `hopnhat`/`rieng` khi cần phân biệt hai bản cùng kỳ cùng mức đảm bảo — khi đó nối: `2025Q2_soatxet_hopnhat.pdf`.
+
+  **Trùng tên khi intake:** kho là append-only, cấm ghi đè. Gặp file đã tồn tại → **báo user**, hỏi là bản thay thế (thì thêm `_rev2`) hay user gửi nhầm. Không tự quyết.
+
+  **Xác minh trước khi đặt tên:** tên file suy ra từ nội dung, nên mở trang bìa PDF kiểm ticker/kỳ/loại trước khi đóng đinh. Lưu ý BCTC quý 4 của doanh nghiệp VN thường **không** có soát xét (soát xét áp cho bán niên) — gặp trường hợp này thì hỏi lại user.
 - Tài liệu ngoài: `inputs/external/<YYYYMMDD>_<nguồn>_<mô tả ngắn>.<ext>`.
 - **Lưu vs cite:** lưu thứ không lấy lại được (PDF user gửi, tài liệu đã tải). Bài web → cite URL + ngày truy cập trong front-matter, không lưu file. Số liệu DB → cite collection + ngày query.
 
@@ -135,6 +154,8 @@ status: final          # draft | final | sent | superseded
 Repo local, branch duy nhất `main`. Remote `origin`: `git@github.com:twan507/vbse_ai_agent.git` (repo public — user đã chấp nhận rủi ro, 2026-07-22). Lịch sử git là audit trail máy — bổ trợ, không thay thế `_ops/CHANGELOG.md` (log ngữ nghĩa cho sửa engine).
 
 **7.1. Đầu session:** `git status` phải sạch. Working tree bẩn hoặc có file untracked lạ = bất thường (mục 2.2) → báo user trước khi làm tiếp.
+
+**Ngoại lệ:** thay đổi nằm trong `outputs/sent/` **không phải bất thường** — đó là user sửa tay bản gửi khách giữa hai phiên, đúng thiết kế (mục 2.1). Xử lý: báo user một câu ("thấy anh/chị đã sửa file X"), rồi commit nó với type `report` hoặc `fix` tuỳ ngữ cảnh. Không hỏi lại như thể phát hiện lỗi, cũng không tự hoàn tác.
 
 **7.2. Commit theo lượt việc — 1 lượt việc hoàn chỉnh = 1 commit:**
 

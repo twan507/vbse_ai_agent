@@ -287,7 +287,7 @@ Trước rev 8 đây là một agent riêng với bản knowledge riêng. Nay n�
 
 `engine/system_prompt.md` (persona + meta-rules + tone nền mục 11) → `K_agent_db_00` (luật nền) → file con `K_agent_db_01..06` theo nhu cầu câu hỏi.
 
-**Không** đọc `KERNEL_SKELETON.md` khi không cần deliverable — đó là chỉ mục P/O pack, đọc nó là mở cửa cho việc activate nhầm.
+**Không** đọc `KERNEL_SKELETON.md` khi không cần deliverable — đó là chỉ mục P/O pack, đọc nó là mở cửa cho việc activate nhầm. **Ngoại lệ duy nhất:** query nằm ở vùng rìa thì được đọc riêng khối **Trigger** để phân định, không đọc phần mô tả pack (`CLAUDE.md` mục 3).
 
 `K_sector_framework` **dùng được ở chế độ này** khi user hỏi đích danh về một ngành ("phân tích sâu ngành X", "outlook ngành X"). Nó là K pack, mà gate chỉ chặn P/O — pull nó không phá gate, miễn trả lời inline chứ không sinh deliverable file. Nó không tự activate; phải có bên chủ động pull (P pack, hoặc câu hỏi ngành tường minh).
 
@@ -404,7 +404,14 @@ Pack `P_weekly_overview` và `P_vbse_strategy` (có mode branded gửi KH) tuân
 
 Điều kiện thật là **filesystem + thư viện Python**. Skill `document-skills` của Anthropic chỉ là tiện nghi — nó cũng chỉ gọi hai thư viện đó.
 
-**Đính chính về nhãn `[LEGACY]` (2026-07-28):** README các rev trước ghi "16/16 section Guide render docx/pptx bị marked `[LEGACY]`", và `CLAUDE.md` mục 6 chỉ định dùng chúng làm style baseline. **Nhãn đó chưa từng tồn tại trong repo** — `git log -S"[LEGACY]"` trên toàn lịch sử trả về rỗng, baseline rev 7 cũng 0 lần. Nó là mô tả sót lại từ rev 6 tiền-git. Đã gỡ khỏi cả hai chỗ.
+**Đính chính về nhãn `[LEGACY]` (2026-07-28, đã sửa lại lần 2):** README các rev trước ghi "16/16 section Guide render docx/pptx bị marked `[LEGACY]`", và `CLAUDE.md` mục 6 chỉ định dùng chúng làm style baseline.
+
+Sự thật, kiểm bằng `git log --all -S"[LEGACY]"` (**không giới hạn path** — bản đính chính đầu tiên giới hạn `-- engine/` nên ra 0 kết quả và kết luận sai):
+
+- **Không section nào trong `engine/` mang nhãn `[LEGACY]`** — grep `engine/` = 0. Đây là điều thực sự quan trọng, và nó đúng.
+- Nhưng **chuỗi đó có trong repo**: `CLAUDE.md:101`, `README.md:391`, `README.md:450` ở baseline rev 7 (`5fb0ecb`) — dưới dạng *tham chiếu tới* nhãn, không phải nhãn. Nhãn thật nếu từng tồn tại thì ở rev 6 tiền-git, ngoài tầm lịch sử này.
+
+Đã gỡ tham chiếu khỏi `CLAUDE.md` mục 6 và `system_prompt.md` mục 4. **Bài học:** lệnh verify viết vào tài liệu phải là lệnh đã chạy đúng nguyên văn — giới hạn path rồi phát biểu ở phạm vi toàn cục là cách tự tạo ra một đính chính sai.
 
 **Hiện trạng spec render binary** (verify 2026-07-28, đếm trên cả 10 file O pack):
 
@@ -494,7 +501,11 @@ Rev 6 clean các reference active, thay bằng wording "xuất MD trong message,
 
 **Rev 8 đảo lại lần nữa:** runtime là filesystem, agent ghi thẳng file vào `outputs/`. Wording "user copy/save thủ công" ở các pack nay đã lỗi thời theo hướng ngược lại. Đường dẫn đúng: `outputs/md/<loại>/...` theo `CLAUDE.md` mục 4.
 
-**Chưa dọn:** wording đó còn rải rác trong P/O packs. Không sửa trong rev 8 vì nằm ngoài phạm vi "cấu trúc + dọn trùng lặp", và không gây lỗi runtime (agent theo `CLAUDE.md` để biết ghi ở đâu). Dọn ở pass sau khi chạy báo cáo thật và biết chính xác chỗ nào vướng.
+**Đã dọn xong** ở commit `ca5c61f` (17 file). Verify 2026-07-28: grep `engine/` với 6 từ khoá (`project knowledge`, `Claude Desktop`, `copy/save thủ công`, `/mnt/user-data`, `present_files`, `/mnt/skills`) = **0 kết quả**.
+
+Trong đó có 2 chỗ không chỉ là wording mà là **chỉ thị hành vi sai**: `P_vbse_strategy_00` và `P_weekly_overview_00` từng ra lệnh *"agent KHÔNG lưu file qua session, user tự archive"* — ngược hẳn kiến trúc kho `outputs/`. Chi tiết ở `_ops/CHANGELOG.md`.
+
+Còn giữ có chủ đích: 4 chỗ "xuất block trong message" ở `P_vbse_strategy` — đó là checkpoint block trình user duyệt giữa stage, bản chất hội thoại, không phải deliverable.
 
 ---
 
@@ -550,7 +561,7 @@ Triệu chứng: hỏi một câu ngắn, agent bắt đầu chạy pre-flight /
 | Task | Đọc |
 |---|---|
 | Tra cứu nhanh | `engine/system_prompt.md` → `K_agent_db_00` → file con theo nhu cầu. **Không** đọc `KERNEL_SKELETON.md` |
-| Chạy báo cáo | + `KERNEL_SKELETON.md` + `OUTPUT_MASTER.md` → `_00` master của pack trước file con |
+| Chạy báo cáo | + `KERNEL_SKELETON.md` → `_00` master của pack trước file con. `OUTPUT_MASTER.md` đọc muộn hơn, lúc sắp compose |
 | Sửa engine | `engine/system_prompt.md` + `KERNEL_SKELETON.md` + master file pack liên quan + `_ops/CHANGELOG.md` |
 | Tái cấu trúc workspace | File này + `_ops/specs/` |
 | Gặp lỗi đã gặp trước đó | `_ops/GOTCHAS.md` |
@@ -561,4 +572,4 @@ Triệu chứng: hỏi một câu ngắn, agent bắt đầu chạy pre-flight /
 
 **Cập nhật convention/methodology:** sửa nội dung file → ghi `_ops/CHANGELOG.md` → commit git type `engine` (CHANGELOG entry nằm trong cùng commit). Không còn bước re-upload nào — runtime đọc thẳng filesystem.
 
-**Cuối session:** working tree phải sạch. Có commit chưa push thì nhắc user một câu — AI không tự push được (`CLAUDE.md` mục 7.7).
+**Cuối session:** working tree phải sạch, và **không còn commit nào chưa push** — AI push được, xem `CLAUDE.md` mục 7.7.
