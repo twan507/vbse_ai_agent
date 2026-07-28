@@ -4,6 +4,33 @@ Ghi mỗi lần sửa engine (K/P/O, system_prompt, KERNEL_SKELETON, OUTPUT_MAST
 
 Format: `## YYYY-MM-DD — tiêu đề` + file đụng tới + nội dung + lý do.
 
+## 2026-07-28 — Tái cấu trúc workspace rev 8 (A2-A4, B1-B2)
+
+**Phạm vi:** cấu trúc thư mục, luật vận hành, tooling. Spec: `_ops/specs/2026-07-28-tai-cau-truc-workspace-design.md`.
+
+**A2 — xoá thứ không còn lý do tồn tại.** `_ops/check_sync.sh` + `_ops/sync_baseline/` (6 diff): chỉ phục vụ đồng bộ 2 bản knowledge, không còn 2 bản. `agent_marketing/` + `brand/`: vỏ rỗng, mỗi thư mục đúng 1 file README, sinh cùng giả định Desktop Project đã bị bác. Verify trước khi xoá `brand/`: mode "default branded" của `O_weekly_overview_00` dùng placeholder `[TÊN CÔNG TY]` điền từ pre-flight, không đọc `brand/` — xoá an toàn.
+
+**A3 — `agent_analyst/` → `engine/`.** Dùng `git mv` nên lịch sử từng file giữ được (`git log --follow` truy tới commit baseline). Lý do đổi: `CLAUDE.md` mục 1 vốn đã dùng từ "ENGINE" cho đúng tầng này; sau khi gộp còn một engine nên thư mục mang đúng tên kiến trúc.
+
+**A4 — viết lại CLAUDE.md + README.** Thay đổi luật đáng chú ý:
+- **Luật gate mới** (CLAUDE.md mục 3): mặc định mọi query là inline lookup; activate P/O pack chỉ khi có ý định deliverable tường minh; tiền tố `tra nhanh:` ép inline. Đây là thứ thay thế cách ly vật lý cũ giữa 2 agent.
+- **`outputs/` thành 4 cây** `md/ pptx/ docx/ sent/`, đường dẫn và basename gương nhau. `sent/` là bản user sửa tay trước khi gửi khách.
+- **Ngoại lệ đầu tiên của luật 2.1** (AI là người ghi duy nhất): user được sửa nội dung file trong `outputs/sent/`. Kèm mục 2.2 nói rõ đó không phải bất thường.
+- **Re-render không bao giờ chạm `sent/`** (mục 6). Trước đây luật là "MD là source of truth, không edit binary trực tiếp" — sai với thực tế vì user luôn chỉnh tay pptx/docx trước khi gửi.
+- `pptx/` `docx/` vào `.gitignore`: bản máy sinh lại được; bản không tái tạo được nằm ở `sent/`. Giải luôn bài toán phình repo do ZIP không delta được.
+- **Sửa mâu thuẫn README mục 8.1 ↔ CLAUDE.md mục 6:** README nói render binary out of scope (rev 6), CLAUDE.md nói in scope kèm quy trình. Chốt lại: **in scope**, điều kiện là "filesystem + thư viện Python" chứ không phải "+ skill". Nhãn `[LEGACY]` trên 16 section O pack nay đọc là "reference spec", không phải "đã bỏ".
+- Mục 9 chuyển thành bảng có `since:` / `review:` cho từng ghi chú môi trường — phần thối nhanh nhất.
+
+**B1 — PreToolUse hook.** `.claude/hooks/block-git-rewrite.ps1` chặn `git commit --amend`, `git rebase`, `git push --force` (CLAUDE.md mục 7.4). Test 11/11 pass trên Windows PowerShell 5.1, kiểm cả hai chiều: case phải chặn và case không được chặn nhầm (`git log --grep="rebase"`). `.claude/settings.json` tracked để hook đi theo repo; `.claude/settings.local.json` gitignore.
+
+**B2 — `_ops/GOTCHAS.md`.** Khung + entry đầu tiên: hook fail-open khi script `.ps1` chứa ký tự ngoài ASCII.
+
+**Lệch so với spec, ghi lại để khỏi tin nhầm số cũ:**
+- A3 spec ước 9 tham chiếu `agent_analyst` trong 5 file pack; thực tế **2** (`K_agent_db_00` dòng 140, `P_stock_report_00` dòng 200). Con số 9 đến từ grep gộp cả `KERNEL_SKELETON`/`OUTPUT_MASTER`.
+- Bỏ hạng mục C15 của spec (thêm cờ `rendered`/`hand-edited`/`sent` vào front-matter `derived`). Vị trí thư mục đã mang đúng thông tin đó — thêm cờ là dư.
+
+**Chưa làm, cố ý:** wording "user copy/save thủ công" còn rải rác trong P/O packs (tàn dư runtime Claude Desktop). Nằm ngoài phạm vi "cấu trúc + dọn trùng lặp" và không gây lỗi runtime vì agent theo `CLAUDE.md` mục 4 để biết ghi ở đâu. Dọn ở pass sau, khi chạy báo cáo thật và biết chỗ nào thực sự vướng. Xem README mục 10.
+
 ## 2026-07-28 — Mục lục section cho 2 file K lớn (rev 8, B3)
 
 **Lý do:** `K_agent_db_05` 127 KB và `K_agent_db_04` 73 KB — mỗi file là một "chunk" chiếm tới ~1/6 context window. Đọc trọn file cho một câu hỏi chỉ cần một mục là mất luôn khả năng chọn lọc mà kiến trúc flat progressive disclosure sinh ra để có. Không tách file (đụng cấu trúc pack, không đáng); chỉ thêm bảng "đọc khi nào" ở đầu để session đọc lát cắt.
