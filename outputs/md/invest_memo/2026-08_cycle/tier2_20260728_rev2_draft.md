@@ -138,18 +138,29 @@ Bốn mã hồi mạnh nhất sau đáy 2025 là CEO, DXS, TAL, DXG — trong đ
 
 Mức tăng khối lượng 160–290% mà báo nêu là tăng **trên nền rất nhỏ**. Đây là lý do nên đo bằng giá trị tuyệt đối chứ không bằng phần trăm thay đổi.
 
-## 3. Shortlist Bất động sản Dân dụng đã sửa — 4 mã
+## 3. Shortlist Bất động sản Dân dụng đã sửa — 7 mã
 
-Giảm từ 6 xuống **4 mã**. Quy trình cho phép: khi universe không đủ chất lượng thì giảm số mã, không nới tiêu chí để lấp chỗ.
+**Thay đổi nguyên tắc xếp hạng theo chỉ đạo user:** với vị thế đánh sóng ngắn, **khả năng hút dòng tiền được ưu tiên cao hơn chất lượng cơ bản**. Đây là đảo ngược so với kiến trúc gốc của quy trình, vốn đặt cơ bản làm bộ lọc loại thẳng và dòng tiền chỉ làm bộ lọc xếp hạng. Hệ quả và cách xử lý ghi ở mục 3.8.
 
-| # | Mã | ADV (tỷ) | Vòng quay | P/E | P/B | ROE | ICR | Vòng B | Hồi 2022/2025 | NN 1T | Bucket |
+Danh sách xếp theo **vòng quay thanh khoản** làm trục chính, cơ bản làm trục phụ:
+
+| # | Mã | ADV (tỷ) | **Vòng quay** | Hồi 2022/2025 | P/E | P/B | ROE | ICR | Vòng B | Đường vào | Bucket |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | **HDG** | 38,1 | 58,2 | 9,85 | 0,79 | 10,11% | 2,5 | 3/4 | +45% / +79% | −36 | 2 |
-| 2 | **KDH** | 90,0 | 47,3 | 15,79 | 0,88 | 6,60% | **15,5** | 3/4 | +54% / +53% | −24 | 2 |
-| 3 | **DXS** | 9,8 | 29,9 | 6,75 | **0,36** | 7,63% | 10,2 | **4/4** | +51% / **+132%** | 0 | 2 |
-| 4 | **NLG** | 42,7 | 42,7 | 15,11 | 0,67 | 5,89% | 2,2 | 2/4 | +88% / +57% | — | 2 |
+| 1 | **CEO** | 71,3 | **107,8** | **+221% / +162%** | 32,92 | 1,01 | 3,24% | 10,0 | **2/4 fail** | Dòng tiền | 2 |
+| 2 | **DXG** | **119,2** | 91,7 | +66% / +98% | 58,96 | 0,62 | 1,65% | 4,5 | **2/4 fail** | Dòng tiền | 2 |
+| 3 | **HDG** | 38,1 | 58,2 | +45% / +79% | 9,85 | 0,79 | 10,11% | 2,5 | 3/4 | B ∩ D | 2 |
+| 4 | **KDH** | 90,0 | 47,3 | +54% / +53% | 15,79 | 0,88 | 6,60% | **15,5** | 3/4 | B ∩ D | 2 |
+| 5 | **NLG** | 42,7 | 42,7 | +88% / +57% | 15,11 | 0,67 | 5,89% | 2,2 | 2/4 fail | Catalyst | 2 |
+| 6 | **DXS** | 9,8 | 29,9 | +51% / **+132%** | 6,75 | **0,36** | 7,63% | 10,2 | **4/4** | B ∩ D | 2 |
+| 7 | **TAL** | 5,3 | **5,3** | — / **+123%** | 13,01 | 1,51 | 15,62% | 8,1 | **4/4** | B ∩ D | 2 |
 
-**Toàn bộ 4 mã vào Bucket 2.** Không mã nào đủ điều kiện Bucket 1 sau khi loại NVL. Điều này khớp với flag Tier 1 cho ngành này: giảm sâu nhất, còn động lượng giảm, hạn chế Bucket 1.
+**Toàn bộ 7 mã vào Bucket 2.** Không mã nào đủ điều kiện Bucket 1 sau khi loại NVL — khớp với flag Tier 1: ngành giảm sâu nhất, còn động lượng giảm, hạn chế Bucket 1.
+
+**Ba mã bổ sung theo chỉ đạo user (CEO, DXG, TAL) — nhận xét riêng:**
+
+- **CEO** là lựa chọn nhất quán nhất với nguyên tắc mới. Hiệu suất hồi phục **tốt nhất tuyệt đối cả hai chu kỳ**, vòng quay cao thứ ba trong 22 mã, và **đang nằm trong danh sách hút tiền tuần 20–24/07**. Đổi lại phải chấp nhận cơ bản yếu thật: ROE trailing đứng im quanh 3,2% suốt 6 quý và **dòng tiền kinh doanh quý gần nhất âm 380 tỷ**, mức âm sâu nhất chuỗi. Đây là vị thế giao dịch thuần, không phải vị thế giá trị.
+- **DXG** có **thanh khoản tuyệt đối lớn nhất nhóm (119,2 tỷ/phiên)** và câu chuyện tái cấu trúc thật: đổi tên thành Bluemarq Group hiệu lực 06/05, tái cấu trúc 4 mảng. Điểm trừ: ROE trailing **đang giảm** 2,6% → 1,7%, MBS dự báo lợi nhuận quý 2 giảm 14%, và **Dragon Capital đã bán từ 13% xuống dưới 5%**, rời ghế cổ đông lớn. Câu chuyện có, con số chưa theo.
+- **TAL** là trường hợp mâu thuẫn nhất và cần nói thẳng: **pass Vòng B 4/4** với ROE 15,62% và ICR 8,1, hồi **+123%** sau đáy 2025 — nhưng **vòng quay chỉ 5,3 điểm cơ bản, thấp nhất trong toàn bộ 22 mã đã đo**, và giá trị giao dịch 5,3 tỷ/phiên đúng sát ngưỡng loại. Nghĩa là đợt hồi +123% đó diễn ra trên nền thanh khoản rất mỏng. Theo trần 5% khối lượng bình quân, **size tối đa cả vị thế chỉ khoảng 800 triệu đồng**. Mã tốt nhưng gần như không vào được size có ý nghĩa — đây là mâu thuẫn trực tiếp với chính nguyên tắc ưu tiên dòng tiền, nên tôi giữ ở rank cuối và đề nghị user cân nhắc lại.
 
 ### 3.1. HDG — rank 1, chất lượng dòng tiền tốt nhất nhóm
 
@@ -196,6 +207,18 @@ Hồi phục sau đáy 11/2022 đạt **+88%**, tốt hơn hẳn KDH và IJC.
 
 **Điểm trừ:** MBS dự báo lợi nhuận quý 2 **giảm 19%**; giá đã giảm khoảng 50% trong một năm; chuỗi ICR rất bất ổn (35,3 → 1,8 → 3,5 → 3,2 → −230,2 → 2,2).
 
+### 3.8. Hệ quả của việc đảo ưu tiên — phải ghi rõ
+
+Quy trình gốc dùng công thức universe `(B ∩ D) ∪ (C ∩ D)`, trong đó **B là bộ lọc loại thẳng**: mã không đạt cơ bản thì không vào universe, bất kể dòng tiền mạnh đến đâu. Dòng tiền chỉ được dùng ở tầng xếp hạng.
+
+Chỉ đạo mới đảo thứ tự này. Ba hệ quả cụ thể:
+
+1. **Hai trong bảy mã (CEO, DXG) vào universe dù trượt Vòng B**, vượt quá constraint "tối đa 1-3 mã/ngành qua đường phụ" — ở đây là 2 mã, vẫn trong giới hạn, nhưng lý do vào không phải catalyst cá thể như spec quy định mà là **thanh khoản và lịch sử hồi phục**. Đây là một **đường vào thứ ba chưa có tên trong spec**.
+2. **Biên an toàn khi sai bị giảm.** CEO có P/E 32,92 và DXG có P/E 58,96, đều vượt ngưỡng 23,18. Nếu nhịp hồi không đến, hai mã này không có đệm định giá — giống hệt vấn đề của ngành Chứng khoán đã nêu ở Tier 1.
+3. **Kỷ luật thoát phải chặt hơn cho hai mã này.** Vị thế mua vì dòng tiền thì phải thoát khi dòng tiền rút, không chờ cơ bản xác nhận. Đề xuất ngưỡng cụ thể cho Tier 6: nếu vòng quay thanh khoản 5 phiên giảm dưới 60% mức bình quân 20 phiên, thoát bất kể giá.
+
+Đây là thay đổi phương pháp có chủ đích của user, đã ghi `audit_overrides.md`, và **sẽ được đưa vào pack tài liệu** theo yêu cầu — chi tiết ở phần tổng kết phương pháp cuối cycle.
+
 ## 4. Hai mã không đưa vào nhưng user nên biết
 
 **CEO** — hiệu suất hồi phục tốt nhất tuyệt đối trong cả hai chu kỳ (**+221%** và **+162%**), vòng quay 107,8, giá trị giao dịch 71,3 tỷ, và **đang nằm trong danh sách hút tiền tuần 20–24/07**. Đúng định nghĩa "mã có sóng".
@@ -214,17 +237,19 @@ Trong bốn mã shortlist, không mã nào có trọng tâm nhà ở xã hội. 
 
 Điều này làm yếu đi luận điểm "mùa báo cáo quý 2 là lực đỡ" trong bảng catalyst Tier 0, ít nhất với ngành này.
 
-## 6. Shortlist tổng hợp sau khi sửa — 16 mã
+## 6. Shortlist tổng hợp sau khi sửa — 19 mã
 
 | Ngành | Mã | Số lượng |
 |---|---|---|
-| Công ty Chứng khoán | VIX · VND · SSI · SHS · MBS · CTS | 6 (giữ nguyên) |
-| Bất động sản Dân dụng | **HDG · KDH · DXS · NLG** | **4 (sửa)** |
-| Tài chính ngân hàng | SHB · TPB · MBB · CTG · ACB · BID | 6 (giữ nguyên) |
+| Công ty Chứng khoán | VIX · VND · SSI · SHS · MBS · CTS | 6 (chờ rà tin, xem mục 7) |
+| Bất động sản Dân dụng | **CEO · DXG · HDG · KDH · NLG · DXS · TAL** | **7 (đã sửa)** |
+| Tài chính ngân hàng | SHB · TPB · MBB · CTG · ACB · BID | 6 (chờ rà tin, xem mục 7) |
 
-Bucket: **Bucket 1: 2 mã** (VND, SHS) · **Bucket 2: 11 mã** · **Bucket 3: 3 mã** (SHB, CTG, ACB).
+Bucket: **Bucket 1: 2 mã** (VND, SHS) · **Bucket 2: 14 mã** · **Bucket 3: 3 mã** (SHB, CTG, ACB).
 
-Loại so với bản gốc: DIG, IJC, HDC, NVL. Thêm: DXS, NLG.
+Loại so với bản gốc: DIG, IJC, HDC, NVL. Thêm: CEO, DXG, TAL, DXS, NLG.
+
+**Lưu ý:** 19 mã là nhiều so với quota cuối cùng 3 ngành × 3 mã = 9 mã ở Tier 3. Con số này sẽ giảm sau khi rà tin cho hai ngành còn lại (mục 7) và sau khi Tier 3 chấm điểm.
 
 ## 7. Việc chưa làm — cần nói rõ
 

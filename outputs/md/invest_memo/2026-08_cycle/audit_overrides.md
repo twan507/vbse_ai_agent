@@ -34,6 +34,32 @@ Ghi mỗi lần user override quyết định hoặc phương pháp mặc địn
 
 ---
 
+## 2026-07-28 — CP3 — Loại: thay đổi nguyên tắc xếp hạng (dòng tiền trên cơ bản)
+
+**Đây là override có sức lan rộng nhất của cycle — nó đổi kiến trúc bộ lọc, không chỉ đổi một quyết định.**
+
+**Quyết định Agent:** loại CEO và DXG khỏi shortlist bất động sản vì trượt Vòng B — CEO 2/4 (ROE trailing 3,24% đứng im 6 quý, P/E 32,92 vượt ngưỡng 23,18, dòng tiền kinh doanh quý gần nhất âm 380 tỷ), DXG 2/4 (ROE 1,65% và đang giảm, P/E 58,96). Giữ TAL ngoài danh sách vì vòng quay thanh khoản 5,3 điểm cơ bản, thấp nhất trong 22 mã đã đo.
+
+**User override:** "ceo dxg tal cũng được chứ sao, sóng ngắn nên ưu tiên hút dòng tiền".
+
+**Lý do user:** với vị thế đánh sóng ngắn, khả năng hút dòng tiền quan trọng hơn chất lượng cơ bản.
+
+**Agent xử lý:** đưa cả ba vào shortlist, nâng nhóm bất động sản từ 4 lên 7 mã, và **xếp lại toàn bộ danh sách theo vòng quay thanh khoản làm trục chính, cơ bản làm trục phụ**. CEO lên rank 1, DXG rank 2.
+
+**Vì sao đây không phải override thường:** kiến trúc gốc của `P_invest_memo_03` dùng công thức universe `(B ∩ D) ∪ (C ∩ D)`, trong đó **B là bộ lọc loại thẳng** — mã không đạt cơ bản thì không vào universe bất kể dòng tiền mạnh đến đâu, và dòng tiền chỉ được dùng ở tầng xếp hạng. Override này **đảo ngược thứ tự hai tầng**, tạo ra một **đường vào thứ ba chưa có tên trong spec**: vào universe nhờ thanh khoản và lịch sử hồi phục, không nhờ cơ bản cũng không nhờ catalyst cá thể.
+
+**Ba hệ quả agent đã ghi vào bản confirmed:**
+
+1. Hai trong bảy mã vào universe dù trượt Vòng B — vẫn trong giới hạn 1-3 mã/ngành của đường phụ, nhưng lý do vào khác với lý do spec quy định.
+2. **Biên an toàn khi sai giảm rõ.** CEO P/E 32,92 và DXG P/E 58,96 đều vượt ngưỡng. Nếu nhịp hồi không đến, hai mã này không có đệm định giá — cùng dạng vấn đề đã nêu cho ngành Chứng khoán ở Tier 1.
+3. **Kỷ luật thoát phải khác.** Vị thế mua vì dòng tiền phải thoát khi dòng tiền rút, không chờ cơ bản xác nhận. Agent đề xuất ngưỡng cụ thể cho Tier 6: vòng quay thanh khoản 5 phiên giảm dưới 60% mức bình quân 20 phiên thì thoát bất kể giá.
+
+**Một mâu thuẫn nội tại agent phải nêu:** TAL được thêm vào theo cùng lý do "ưu tiên hút dòng tiền", nhưng TAL có **vòng quay 5,3 — thấp nhất trong toàn bộ 22 mã đã đo**, và giá trị giao dịch 5,3 tỷ/phiên đúng sát ngưỡng loại. Đợt hồi +123% của TAL sau đáy 2025 diễn ra trên nền thanh khoản rất mỏng; theo trần 5% khối lượng bình quân thì size tối đa cả vị thế chỉ khoảng 800 triệu đồng. Tức TAL **đi ngược chính nguyên tắc được dùng để đưa nó vào**. Agent giữ ở rank cuối và đã đề nghị user cân nhắc lại.
+
+**Cách đánh giá override này sau 3-6 tháng:** so lợi suất nhóm vào bằng dòng tiền (CEO, DXG) với nhóm vào bằng cơ bản (HDG, KDH, DXS) tại mốc 30/09/2026 và 31/12/2026. Kiểm riêng hai câu: (a) nhóm dòng tiền có hồi mạnh hơn thật không; (b) trong kịch bản thị trường giảm tiếp, nhóm dòng tiền có mất nhiều hơn không — tức đệm định giá có giá trị thực hay không.
+
+---
+
 ## 2026-07-28 — CP3 — Loại: loại mã khỏi shortlist theo nhận định định tính của user
 
 **Quyết định Agent:** shortlist bất động sản 6 mã — DIG (rank 1), KDH, HDG, IJC, HDC, NVL. Chấm bằng bộ lọc định lượng đọc **quý gần nhất**: Vòng D thanh khoản, Vòng B cơ bản, Vòng A xếp hạng bằng đại lượng khách quan.
