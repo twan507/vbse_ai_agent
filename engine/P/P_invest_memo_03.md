@@ -38,19 +38,25 @@ Reference: `P_invest_memo_00` phần Flow chi tiết (overview), `P_invest_memo_
 
 Mã phải lọt điều kiện universe mới được xem xét tiếp. Công thức:
 
-**Universe = (B ∩ D) ∪ (C ∩ D)**
+**Universe = [(B ∩ D) ∪ (C ∩ D) ∪ (E ∩ D)] − F**
 
 Trong đó:
 - **B — Fundamental mã:** mã có trạng thái kinh doanh cơ bản đủ chất lượng
 - **D — Liquidity:** giá trị giao dịch đủ cao để vào/ra không gây slippage nặng
 - **C — Catalyst mã (optional):** mã có catalyst cá thể mạnh, có thể không đạt B nhưng có catalyst
+- **E — Sức hút dòng tiền (optional, chỉ mở khi horizon ngắn):** mã không đạt B nhưng có bằng chứng hút dòng tiền mạnh và bền. Xem Section 5b
+- **F — Loại trừ cứng:** sự kiện pháp lý, quản trị, hoặc nguồn cung cổ phiếu làm mã không dùng được bất kể B/C/E/D. Xem Section 5c
 
 Logic:
 - Đường chính: B ∩ D — mã fundamental tốt + đủ thanh khoản
-- Đường phụ (optional): C ∩ D — catalyst play không đạt B nhưng có catalyst mạnh, vẫn cần đủ thanh khoản
-- D là bắt buộc cho cả 2 đường — không có exception cho liquidity
+- Đường phụ 1 (optional): C ∩ D — catalyst play không đạt B nhưng có catalyst mạnh
+- Đường phụ 2 (optional): E ∩ D — flow play không đạt B nhưng dòng tiền chứng minh được bằng số
+- D là bắt buộc cho cả 3 đường — không có exception cho liquidity
+- **F áp SAU cùng và loại thẳng**, kể cả mã đã lọt B ∩ D
 
-**Constraint catalyst play:** tối đa 1-3 mã/ngành được vào universe qua đường C khi không đạt B. Nguyên tắc: tránh shortlist ngập catalyst thiếu nền tảng.
+**Constraint đường phụ:** tối đa 1-3 mã/ngành qua đường C, và tối đa 1-3 mã/ngành qua đường E. **Tổng hai đường phụ không vượt 3 mã/ngành** — tránh shortlist ngập mã thiếu nền tảng.
+
+**Đường E chỉ mở khi user chốt horizon ngắn (1-3 tháng) và tuyên bố ưu tiên dòng tiền trên cơ bản.** Mặc định đường E ĐÓNG. Mở đường E là quyết định của user, phải ghi `audit_overrides.md`, vì nó đảo thứ tự hai tầng của kiến trúc gốc.
 
 ### Tầng 2 — Ranking filter (xếp hạng, không loại)
 
@@ -92,6 +98,38 @@ collection: industry_finstats
 filter: { "industry_name": "<tên ngành>" }
 projection: { "_id": 0 }
 ```
+
+### Quy tắc bắt buộc — đọc CHUỖI, không đọc một quý
+
+**Đây là quy tắc quan trọng nhất của Vòng B. Vi phạm nó là nguyên nhân của mọi lỗi chọn mã đã ghi nhận.**
+
+Bước 2 ở trên lấy 4 kỳ quarterly. **Phải dùng cả 4 kỳ, không được chỉ đọc kỳ cuối.** Với ngành có lợi nhuận lumpy (bất động sản, xây dựng, chứng khoán, hàng hoá chu kỳ), lấy **6 kỳ** thay vì 4.
+
+Ba chỉ tiêu bắt buộc đọc theo chuỗi, không được đọc điểm:
+
+| Chỉ tiêu | Vì sao phải đọc chuỗi |
+|---|---|
+| **ICR** | Doanh nghiệp có thể có 1 quý ICR cao nhờ khoản bất thường, che 3 quý âm liền trước |
+| **Dòng tiền kinh doanh (CFO)** | ROE cao đi kèm CFO âm kéo dài = lợi nhuận không tạo tiền |
+| **Tăng trưởng lợi nhuận** | Một quý đột biến kéo nền so sánh, làm quý sau trông xấu và ngược lại |
+
+### Kiểm tra bắt buộc — đối chiếu trailing với quý gần nhất
+
+Trong `stock_finstats`, **ROE và các chỉ tiêu sinh lời là số trailing 4 quý**, còn `valuation_ratios` cũng tính trên lợi nhuận trailing. Nghĩa là **một quý cũ rất mạnh có thể giữ chỉ tiêu trailing qua ngưỡng dù quý gần nhất đã sụp**.
+
+Agent bắt buộc chạy kiểm tra này cho mọi mã trước khi kết luận pass B:
+
+1. Lấy tăng trưởng lợi nhuận YoY của **riêng quý gần nhất**.
+2. Nếu quý gần nhất **âm sâu hơn −30%** trong khi ROE trailing vẫn ≥ median ngành → **cờ đỏ "trailing che quý gần nhất"**.
+3. Mã bị cờ đỏ **không tự động loại**, nhưng phải: ghi rõ cả hai con số trong checkpoint, hạ một bậc ưu tiên xếp hạng, và nêu trong Phần 6 để user quyết.
+
+**Ba ca thật đã vấp (cycle 2026-08), ghi lại để không lặp:**
+
+| Mã | Chỉ tiêu trailing | Quý gần nhất | Hệ quả nếu không kiểm |
+|---|---|---|---|
+| DIG | ROE 7,7% — pass B | ICR **−0,8**, CFO **−437 tỷ**, lỗ ròng | Xếp rank 1 ngành BĐS |
+| HDC | ROE 24,8% — pass B | **ICR âm 3 quý liên tiếp**, CFO −579/−462/−276 tỷ | Vào shortlist |
+| VIX | ROE 25,58%, P/E 5,82 | LNST **−94/−95% YoY**, tự doanh lỗ ròng 200 tỷ | Xếp rank 1 ngành CK |
 
 ### Tiêu chí đạt Vòng B — theo 4 type doanh nghiệp
 
@@ -258,6 +296,72 @@ Giữ tỷ lệ catalyst play / fundamental stable ở mức hợp lý. Shortlis
 
 ---
 
+## 5b. Vòng E — Sức hút dòng tiền (chỉ mở khi horizon ngắn)
+
+### Vì sao có vòng này
+
+Kiến trúc gốc đặt cơ bản làm bộ lọc loại thẳng và dòng tiền chỉ làm bộ lọc xếp hạng. Với horizon 3-6 tháng trở lên, thứ tự đó đúng. **Với horizon 1-3 tháng và luận điểm bắt nhịp hồi, nó sai** — lợi nhuận đến từ mức nén giá phục hồi, mà phục hồi cần dòng tiền, không cần EPS.
+
+Vòng E cho phép mã **fail B nhưng chứng minh được sức hút dòng tiền bằng số** vào universe. Đây là đường vào thứ ba, tách bạch với đường catalyst (Vòng C).
+
+**Mặc định ĐÓNG.** Chỉ mở khi user chốt horizon 1-3 tháng và tuyên bố ưu tiên dòng tiền trên cơ bản. Ghi `audit_overrides.md`.
+
+### Ba chỉ tiêu, cần đạt ít nhất 2/3
+
+**E1. Vòng quay thanh khoản** = giá trị giao dịch bình quân 20 phiên ÷ vốn hoá, tính bằng điểm cơ bản (nhân 10.000).
+
+Đây là thước tốt hơn giá trị giao dịch tuyệt đối, vì nó chuẩn hoá theo quy mô. Một mã 15 tỷ/phiên trên vốn hoá 2.000 tỷ hút tiền tốt hơn một mã 15 tỷ/phiên trên vốn hoá 60.000 tỷ.
+
+- ≥ 80 điểm cơ bản: rất mạnh
+- 40-80: đạt
+- 20-40: yếu
+- < 20: không đạt
+
+**E2. Hiệu suất sau đáy chu kỳ.** Đo lợi suất 6 tháng của mã tính từ các đáy chỉ số gần nhất (tối thiểu 2 đáy). Mã có lợi suất **trên trung vị ngành ở ít nhất 2 trong 2 đáy** thì đạt.
+
+Cách xác định đáy: lấy phiên có giá đóng cửa thấp nhất của chỉ số trong mỗi đợt điều chỉnh lớn. Cycle 2026-08 dùng 15/11/2022 và 09/04/2025.
+
+**E3. Bằng chứng dòng tiền đang hoạt động.** Cần ít nhất một trong:
+- Có tên trong danh sách "hút tiền" của bản tin phiên hoặc tuần trong 30 ngày gần nhất, **có ngày và nguồn cụ thể**
+- Khối lượng khớp lệnh một phiên trong 10 phiên gần nhất dẫn đầu ngành hoặc dẫn đầu sàn
+- Khối ngoại mua ròng trong 20 phiên gần nhất
+
+### Cảnh báo bắt buộc khi dùng Vòng E
+
+1. **Kiểm mâu thuẫn nội tại.** Mã vào bằng lý do "hút dòng tiền" mà **E1 dưới 20 điểm cơ bản** là mâu thuẫn — phải flag và đề nghị user xem lại. Ca thật: TAL vào shortlist cycle 2026-08 theo đường E nhưng vòng quay chỉ 5,3, thấp nhất trong 22 mã đã đo.
+2. **Mức tăng khối lượng theo phần trăm không phải bằng chứng.** Mã nhỏ tăng khối lượng 200-300% vẫn có thể chỉ 2-3 tỷ/phiên. Luôn kiểm giá trị tuyệt đối. Ca thật: bản tin nêu AGG, IDJ, NDN trong nhóm hút tiền, nhưng giá trị giao dịch lần lượt 2,9 · 1,7 · 1,5 tỷ/phiên — đều trượt ngưỡng D.
+3. **Mã vào bằng đường E phải có kỷ luật thoát riêng**, chuyển thẳng cho Tier 6: thoát khi dòng tiền rút, không chờ cơ bản xác nhận. Ngưỡng đề xuất — vòng quay 5 phiên giảm dưới 60% mức bình quân 20 phiên thì thoát bất kể giá.
+
+## 5c. Vòng F — Loại trừ cứng
+
+Áp **sau cùng**, loại thẳng kể cả mã đã lọt B ∩ D. Đây là các điều kiện làm mã không dùng được bất kể chất lượng cơ bản hay dòng tiền.
+
+### F1. Sự kiện pháp lý và quản trị
+
+Loại nếu có bất kỳ điều nào trong 12 tháng gần nhất:
+
+- Lãnh đạo hoặc nguyên lãnh đạo **bị khởi tố, bắt tạm giam**, chưa có kết luận
+- Cổ phiếu bị sở giao dịch đưa vào **diện cảnh báo, kiểm soát, hoặc hạn chế giao dịch**
+- Có cá nhân bị xử phạt vì **thao túng chính cổ phiếu đó**
+- Doanh nghiệp **chậm trả gốc hoặc lãi trái phiếu**
+- Cổ đông lớn hoặc lãnh đạo **bị bán giải chấp** dẫn tới mất tư cách cổ đông lớn
+
+### F2. Nguồn cung cổ phiếu tương lai rơi trong horizon
+
+Loại hoặc hạ size nếu có đợt phát hành, chuyển đổi, hoặc đấu giá **thực hiện trong đúng khung thời gian nắm giữ dự kiến**:
+
+- Phát hành riêng lẻ hoặc chào bán cho cổ đông hiện hữu, tỷ lệ ≥ 10% vốn, thực hiện trong horizon → **loại**
+- Cổ phiếu thưởng hoặc cổ tức cổ phiếu **không hạn chế chuyển nhượng**, tỷ lệ ≥ 20%, về tài khoản trong horizon → hạ một bậc ưu tiên
+- **Trái phiếu chuyển đổi có giá chuyển đổi sát hoặc dưới thị giá** → loại, vì pha loãng gần như chắc chắn kích hoạt
+
+### Cách quét F — bắt buộc, không để đến Tier 5A
+
+**Không có thông tin nào của Vòng F nằm trong `agent_db`.** Phải quét bằng web search cho **từng mã trong universe** trước khi chốt shortlist.
+
+Đây là thay đổi so với spec cũ, vốn để việc soi red flag đến Tier 5A. Lý do đổi: ở cycle 2026-08, **8 trong 18 mã shortlist ban đầu bị loại vì lý do Vòng F**, và nếu để đến Tier 5A thì đã tốn toàn bộ công Tier 3 và Tier 5B cho những mã không dùng được.
+
+Ca thật đã ghi nhận, cả 5 ngành đều có: VCG và DGC (khởi tố lãnh đạo), DGC (HoSE hạn chế giao dịch), DPG (thao túng giá), NVL (chậm trả nợ gốc), DIG và HDC (giải chấp lãnh đạo), TPB (bị loại khỏi VN30), BID và VND và VPB và BCM và DPM (pha loãng lớn trong horizon), CII (trái phiếu chuyển đổi giá sát thị giá).
+
 ## 6. Vòng A — Ranking (Flow + Kỹ thuật trung-dài hạn)
 
 ### Query DB
@@ -420,16 +524,23 @@ Chạy song song:
 - Áp D: trading value, volume, market_rank_pct
 - Lưu list mã pass B + D
 
-**Bước 4 — Quét Vòng C (Catalyst mã, optional)**
+**Bước 4 — Quét Vòng C (Catalyst mã, optional) và Vòng E (Dòng tiền, nếu mở)**
 
 - Chỉ xét mã pass D nhưng fail B
-- Quét news + web search theo 5 loại catalyst
-- Giới hạn 1-3 mã/ngành qua C
+- Vòng C: quét news + web search theo 5 loại catalyst. Giới hạn 1-3 mã/ngành
+- Vòng E: chỉ chạy nếu user đã mở đường E (horizon 1-3 tháng, ưu tiên dòng tiền). Tính E1, E2, E3 theo Section 5b. Giới hạn 1-3 mã/ngành
+- **Tổng hai đường phụ không vượt 3 mã/ngành**
+
+**Bước 4b — Quét Vòng F (Loại trừ cứng) — BẮT BUỘC**
+
+Quét web search cho **từng mã** đã lọt B, C, hoặc E. Kiểm F1 (pháp lý, quản trị) và F2 (nguồn cung cổ phiếu trong horizon) theo Section 5c.
+
+Không skip bước này với lý do "để Tier 5A soi". Ở cycle 2026-08, bỏ qua bước này dẫn tới 8 trong 18 mã shortlist phải loại ở vòng rà sau.
 
 **Bước 5 — Xác định universe + ranking**
 
-- Universe = (B ∩ D) ∪ (C ∩ D)
-- Áp Vòng A ranking: A1-A4 với ưu tiên A1 (zone quý)
+- Universe = [(B ∩ D) ∪ (C ∩ D) ∪ (E ∩ D)] − F
+- Áp Vòng A ranking: A1-A4 với ưu tiên A1 (zone quý). Nếu đường E đang mở, dùng E1 làm trục xếp hạng chính thay cho A3
 - Chọn top N theo quota ngành
 
 **Bước 6 — Phân bucket + xuất checkpoint**
@@ -466,7 +577,9 @@ Tổng mã qua đường catalyst override (fail B, pass C): [số]. Tổng mã 
 
 ### Ngành [Tên] — [N] mã shortlist
 
-Universe gốc: [X] mã trong ngành → pass D ([Y]) → pass B ([Z]) → pass C catalyst override ([W]) → Universe = [Y] + [W] = [tổng] mã → Top [N] theo ranking.
+Universe gốc: [X] mã trong ngành → pass D ([Y]) → pass B ([Z]) → pass C catalyst ([W]) → pass E dòng tiền ([V], ghi "đường E đóng" nếu không mở) → loại bởi F ([U]) → Universe = [Z] + [W] + [V] − [U] = [tổng] mã → Top [N] theo ranking.
+
+Mã bị loại bởi Vòng F phải liệt kê riêng kèm lý do — đây là thông tin user cần thấy, không được nuốt vào con số tổng.
 
 Bảng shortlist (Top [N]):
 | # | Ticker | Type | Bucket | Đường vào | Zone w | Zone m | Zone q | Zone y | market_rank_pct | week_score |
@@ -647,7 +760,25 @@ Tier 1 đã flag ngành có pattern "đang rơi từ đỉnh" = cảnh báo. Tie
 
 **Xử lý:** Bước 1 workflow phải extract đầy đủ flags tier 1 và áp vào bucket assignment (Section 7 cuối). Ngành có flag "rơi từ đỉnh" → tối thiểu 50% shortlist ngành đó vào Bucket 2 hoặc 3 (chờ pullback confirm), không mở rộng Bucket 1.
 
-### 11.8. Không tính trading value trung bình 20 phiên
+### 11.8. Đọc chỉ tiêu trailing như thể là số quý gần nhất
+
+Lỗi nghiêm trọng nhất đã ghi nhận, tái diễn ở 3 ngành trong một cycle. ROE và các hệ số định giá trong `stock_finstats` là số **trailing 4 quý**. Một quý cũ rất mạnh giữ chỉ tiêu qua ngưỡng dù quý gần nhất đã sụp.
+
+**Xử lý:** chạy kiểm tra đối chiếu trailing với quý gần nhất ở Section 3, cho **mọi mã**, trước khi kết luận pass B. Mã có quý gần nhất âm sâu hơn −30% trong khi ROE trailing vẫn qua ngưỡng phải bị gắn cờ đỏ và hạ một bậc ưu tiên.
+
+### 11.9. Bỏ qua Vòng F vì cho rằng Tier 5A sẽ soi
+
+Spec cũ để việc soi red flag đến Tier 5A. Thực tế ở cycle 2026-08: 8 trong 18 mã shortlist ban đầu phải loại vì sự kiện pháp lý, quản trị hoặc pha loãng — toàn bộ nằm ngoài `agent_db`.
+
+**Xử lý:** Bước 4b là bắt buộc, không phải tuỳ chọn. Chi phí quét web cho 15-25 mã universe nhỏ hơn nhiều so với chi phí chạy Tier 3 và Tier 5B cho mã không dùng được.
+
+### 11.10. Nhầm mức tăng khối lượng phần trăm với sức hút dòng tiền
+
+Bản tin thị trường hay nêu mã "tăng khối lượng 200-300%". Với mã vốn hoá nhỏ, mức tăng đó vẫn có thể chỉ là 2-3 tỷ/phiên.
+
+**Xử lý:** mọi kết luận về dòng tiền phải dựa trên **giá trị tuyệt đối** và **vòng quay trên vốn hoá** (E1), không dựa trên phần trăm thay đổi khối lượng.
+
+### 11.11. Không tính trading value trung bình 20 phiên
 
 Agent chỉ đọc `price.trading_value` từ stock_snapshot = giá trị phiên hôm nay. Phiên có thể spike bất thường (có tin) hoặc tụt đột ngột (nghỉ tết). 1 phiên không đại diện thanh khoản thực.
 

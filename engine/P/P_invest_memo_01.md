@@ -301,8 +301,24 @@ Tin thiếu 1 trong 3 → không tính là catalyst. Treat như context để đ
 | 2. Chính sách ngành | Luật Đất đai hiệu lực, đầu tư công đợt mới, thuế carbon | 3-12 tháng | Trung — lộ trình dần | Ngành cụ thể |
 | 3. Chu kỳ hàng hoá | Giá dầu/thép/urea đảo chiều cấu trúc, USD đỉnh chu kỳ | 6-24 tháng | Thấp-Trung — phụ thuộc global | Ngành nhạy hàng hoá |
 | 4. Sự kiện doanh nghiệp | KQKD Q tới, M&A, thoái vốn NN, tăng vốn, niêm yết sàn mới | 0-6 tháng | Biến động — tin đồn vs công bố | Mã cụ thể |
+| 5. Sự kiện lịch | Kỳ cơ cấu chỉ số (VN30, FTSE, MSCI), giao dịch nội bộ đã đăng ký, đợt phát hành đã có ngày, thương vụ đã ký chờ hoàn tất | 0-3 tháng | **Cao nhất trong 5 loại** — có văn bản và ngày xác định | Mã cụ thể hoặc nhóm mã |
 
-**Scope tier 0:** chỉ quét catalyst loại 1, 2, 3 (cấp ngành trở lên). Catalyst loại 4 (doanh nghiệp) quét ở tier 2 trong từng ngành đã chọn.
+**Scope tier 0:** quét catalyst loại 1, 2, 3 (cấp ngành trở lên). Loại 4 và 5 quét ở tier 2 trong từng ngành đã chọn.
+
+**Vì sao tách loại 5 khỏi loại 4.** Loại 4 gộp chung mọi sự kiện doanh nghiệp và gán độ chắc "biến động — tin đồn vs công bố". Nhưng có một nhóm con **độ chắc cao nhất trong toàn bộ bảng**: sự kiện đã có văn bản và ngày cụ thể, không phụ thuộc dự báo. Gộp chúng vào loại 4 làm agent chấm điểm thấp một cách sai lệch.
+
+Bốn nhóm thuộc loại 5, đều lấy từ ca thật cycle 2026-08:
+
+| Nhóm | Ca thật | Vì sao quyết định |
+|---|---|---|
+| Kỳ cơ cấu chỉ số | TPB bị loại khỏi VN30 kỳ tháng 7/2026 | Giải thích trọn vẹn việc TPB bị bán ròng 554 tỷ — dữ liệu định lượng thấy dòng tiền nhưng không thấy nguyên nhân |
+| Giao dịch nội bộ đã đăng ký | VCI — cổ đông lớn nhất đăng ký mua 31,05 triệu cp, giao dịch 04/08–02/09/2026 | Lực đỡ có ngày bắt đầu và kết thúc nằm trọn trong horizon |
+| Đợt phát hành đã có ngày | BID — 498,2 triệu cp, 6,84% vốn, thực hiện quý 2–quý 3/2026 | Nguồn cung mới rơi đúng cửa sổ nắm giữ. Đây là catalyst **âm** |
+| Thương vụ đã ký chờ hoàn tất | SHB — Krungsri mua 50% còn lại SHBFinance, hoàn tất giữa quý 3/2026 | Thặng dư vốn có thời điểm xác định |
+
+**Catalyst loại 5 có thể mang dấu âm.** Bảng catalyst phải ghi rõ chiều tác động, không mặc định catalyst là tin tốt. Đợt phát hành lớn rơi trong horizon là catalyst âm mạnh với chính mã đó.
+
+**Nguồn quét loại 5:** không có trong `agent_db`. Phải web search và tra công bố thông tin của sở giao dịch. Quét ở tier 2, cùng lượt với Vòng F (`P_invest_memo_03` Section 5c).
 
 ### Quy trình quét catalyst
 

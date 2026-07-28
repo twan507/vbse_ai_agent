@@ -4,6 +4,64 @@ Ghi mỗi lần sửa engine (K/P/O, system_prompt, KERNEL_SKELETON, OUTPUT_MAST
 
 Format: `## YYYY-MM-DD — tiêu đề` + file đụng tới + nội dung + lý do.
 
+## 2026-07-28 — P_invest_memo: thêm Vòng E, Vòng F, catalyst loại 5, luật đọc chuỗi
+
+**Bối cảnh:** rút từ cycle invest_memo 2026-08 chạy thật qua Tier 0 → Tier 2, có ba vòng phản hồi của user và một đợt rà tin tức 5 ngành bằng 5 subagent. Đây là lần đầu pack `P_invest_memo` được chạy đầy đủ trên dữ liệu thật, và nó lộ ra bốn lỗ hổng mà spec viết trên lý thuyết không thấy.
+
+**File đụng tới:** `engine/P/P_invest_memo_03.md` (mục 2, 3, 5b mới, 5c mới, 8, 11) · `engine/P/P_invest_memo_01.md` (mục 4).
+
+### Lỗ hổng 1 — Vòng B chỉ đọc quý gần nhất, bị chỉ tiêu trailing đánh lừa
+
+**Đây là lỗi nghiêm trọng nhất, tái diễn ở 3 ngành trong cùng một cycle.**
+
+`stock_finstats` trả ROE và các hệ số định giá dưới dạng **trailing 4 quý**. Một quý cũ rất mạnh giữ chỉ tiêu qua ngưỡng dù quý gần nhất đã sụp. Ba ca thật:
+
+| Mã | Chỉ tiêu trailing | Quý gần nhất | Hệ quả |
+|---|---|---|---|
+| DIG | ROE 7,7% — pass B | ICR **−0,8**, dòng tiền **−437 tỷ**, lỗ ròng 9,9 tỷ | Đã xếp rank 1 ngành BĐS |
+| HDC | ROE 24,8% — pass B | **ICR âm 3 quý liên tiếp**, dòng tiền −579/−462/−276 tỷ | Đã vào shortlist |
+| VIX | ROE 25,58%, P/E 5,82 | LNST **−94/−95% YoY**, tự doanh lỗ ròng 200 tỷ | Đã xếp rank 1 ngành CK |
+
+Cả ba lọt Vòng B nhờ đúng một cơ chế. Không có bước nào trong spec cũ đối chiếu hai loại số.
+
+**Sửa:** thêm hai khối vào `P_invest_memo_03` Section 3 — quy tắc **đọc chuỗi 4-6 quý** cho ICR, dòng tiền kinh doanh và tăng trưởng lợi nhuận; và **kiểm tra đối chiếu trailing với quý gần nhất**, gắn cờ đỏ khi quý gần nhất âm sâu hơn −30% mà ROE trailing vẫn qua ngưỡng. Thêm failure mode 11.8.
+
+### Lỗ hổng 2 — không có đường vào cho mã hút dòng tiền mạnh nhưng fail cơ bản
+
+Kiến trúc gốc `(B ∩ D) ∪ (C ∩ D)` đặt cơ bản làm bộ lọc loại thẳng, dòng tiền chỉ ở tầng xếp hạng. Đúng với horizon 3-6 tháng. **Sai với horizon 1-3 tháng bắt nhịp hồi** — lợi nhuận đến từ mức nén giá phục hồi, cần dòng tiền chứ không cần EPS.
+
+User yêu cầu đưa CEO, DXG, TAL vào dù trượt Vòng B, với lý do "sóng ngắn nên ưu tiên hút dòng tiền". Không có chỗ nào trong spec cho việc này — nó không phải catalyst play.
+
+**Sửa:** thêm **Vòng E — Sức hút dòng tiền** (Section 5b mới), ba chỉ tiêu cần đạt 2/3: vòng quay thanh khoản trên vốn hoá tính bằng điểm cơ bản · hiệu suất 6 tháng sau các đáy chu kỳ so với trung vị ngành · bằng chứng dòng tiền đang hoạt động có ngày và nguồn. Công thức universe thành `[(B ∩ D) ∪ (C ∩ D) ∪ (E ∩ D)] − F`.
+
+**Vòng E mặc định ĐÓNG**, chỉ mở khi user chốt horizon ngắn và tuyên bố ưu tiên dòng tiền — vì nó đảo thứ tự hai tầng của kiến trúc gốc. Mở là quyết định của user, phải ghi audit.
+
+Kèm ba cảnh báo bắt buộc, trong đó có một rút từ mâu thuẫn thật: **TAL vào bằng lý do hút dòng tiền nhưng vòng quay chỉ 5,3 điểm cơ bản, thấp nhất trong 22 mã đã đo** — mã đi ngược chính nguyên tắc đưa nó vào.
+
+### Lỗ hổng 3 — không có bộ loại trừ cứng cho sự kiện ngoài dữ liệu
+
+Spec để việc soi red flag đến Tier 5A. Thực tế: **8 trong 18 mã shortlist ban đầu phải loại vì sự kiện pháp lý, quản trị hoặc pha loãng**, toàn bộ nằm ngoài `agent_db`. Nếu để đến 5A thì đã tốn trọn công Tier 3 và 5B cho mã không dùng được.
+
+Cả 5 ngành đều có ca: VCG và DGC khởi tố lãnh đạo · DGC bị HoSE hạn chế giao dịch · DPG bị phạt thao túng giá · NVL chậm trả nợ gốc trái phiếu · DIG mất hết cổ đông lớn vì giải chấp · TPB bị loại khỏi VN30 · BID, VND, VPB, BCM, DPM pha loãng lớn trong horizon · CII trái phiếu chuyển đổi giá sát thị giá.
+
+**Sửa:** thêm **Vòng F — Loại trừ cứng** (Section 5c mới), áp sau cùng, loại thẳng kể cả mã đã lọt B ∩ D. F1 sự kiện pháp lý và quản trị; F2 nguồn cung cổ phiếu tương lai rơi trong horizon. Thêm **Bước 4b bắt buộc** vào workflow. Thêm failure mode 11.9.
+
+Riêng F2 là **biến hoàn toàn không có trong spec cũ**, dù ngành ngân hàng đang huy động ~128.000 tỷ vốn cổ phần trong 2026, gấp hơn 7 lần năm trước.
+
+### Lỗ hổng 4 — thiếu loại catalyst có độ chắc cao nhất
+
+Bảng 4 loại catalyst ở `P_invest_memo_01` gộp mọi sự kiện doanh nghiệp vào loại 4 với độ chắc "biến động — tin đồn vs công bố". Nhưng có một nhóm con **độ chắc cao nhất bảng**: sự kiện đã có văn bản và ngày cụ thể.
+
+**Sửa:** tách **loại 5 — Sự kiện lịch**: kỳ cơ cấu chỉ số, giao dịch nội bộ đã đăng ký, đợt phát hành đã có ngày, thương vụ đã ký chờ hoàn tất. Ghi rõ **catalyst loại 5 có thể mang dấu âm** — đợt phát hành lớn trong horizon là catalyst âm mạnh.
+
+Bốn ca thật minh hoạ: TPB rời VN30 (giải thích trọn vẹn việc bị bán ròng 554 tỷ mà dữ liệu định lượng thấy nhưng không giải thích được) · VCI cổ đông lớn nhất đăng ký mua 31,05 triệu cp giao dịch 04/08–02/09 · BID phát hành 498,2 triệu cp quý 2–quý 3 · SHB thương vụ Krungsri hoàn tất giữa quý 3.
+
+### Điều KHÔNG sửa, và lý do
+
+**Không đổi Vòng A và logic bucket** dù cycle này không dùng được chúng. Cycle 2026-08 có override riêng của user là không dùng tầng chỉ báo nội bộ, nên phải thay bằng đại lượng khách quan. Đó là **hoàn cảnh của một cycle, không phải lỗi của spec** — cycle sau không có override thì Vòng A gốc vẫn đúng. Ghi lại ở đây để người sau không nhầm bản thay thế tạm thời là chuẩn mới.
+
+**Không đổi constraint 10 catalyst** ở Tier 0 dù nghịch lý đã nêu (catalyst timing dài bị loại đầu tiên dù tác động toàn thị trường). Cycle này xử lý bằng cách tách đợt 1 của lộ trình thành catalyst riêng, nằm trong spec, không cần sửa.
+
 ## 2026-07-28 — Sửa 6 sai lệch schema K_agent_db so với DB thật
 
 **Bối cảnh:** phát hiện khi chạy Tier 0 của cycle invest_memo 2026-08. Cần lấy chuỗi chỉ số nhiều năm để tính mùa vụ tháng 8, đọc doc thấy ghi `history_index` chỉ có VNINDEX, query thật thì ra 8 chỉ số. Kéo dây thì lòi thêm 5 chỗ nữa.
