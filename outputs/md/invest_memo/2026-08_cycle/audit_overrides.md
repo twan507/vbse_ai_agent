@@ -34,6 +34,30 @@ Ghi mỗi lần user override quyết định hoặc phương pháp mặc địn
 
 ---
 
+## 2026-07-28 — CP3 — Loại: thêm/bớt mã theo chỉ định user (chốt bản confirmed)
+
+**Quyết định Agent (bản rev3):** Chứng khoán 6 mã · BĐS 7 mã (gồm DXS) · Ngân hàng 6 mã (SHB, MBB, CTG, STB, LPB, MSB). ACB và BID bị loại; HDB không được đưa vào.
+
+**User override:** "bank phải có HDB và ACB, BĐS loại bớt DXS vì hơi nhỏ".
+
+**Lý do user:** chỉ định thành phần nhóm ngân hàng; DXS thanh khoản quá nhỏ.
+
+**Agent xử lý:** Ngân hàng lên **8 mã** (thêm HDB, ACB), BĐS xuống **6 mã** (bỏ DXS). Tổng shortlist 20 mã.
+
+**Ba điểm agent phải nêu, không phải để phản đối mà để Tier 3 biết mà xử lý:**
+
+1. **ACB — cảnh báo giữ nguyên.** Nợ nhóm 2 **tăng 93,4%** trong 6 tháng (2.493 → 4.822 tỷ), nhóm 3 +76,6%, nhóm 4 +73,9%; LNTT quý 2 −11,9% do dự phòng tăng hơn gấp đôi. NPL 0,97% mà bộ lọc chấm 4/4 là **số quá khứ**; nợ nhóm 2 là nợ xấu của 1-2 quý tới. Đây là rủi ro có hướng rõ, không phải rủi ro ngẫu nhiên.
+2. **HDB vào qua đường E, không phải đường B.** Trượt Vòng B vì NPL 2,60% vượt ngưỡng 2,5% và **LLCR chỉ 50,0% — thấp nhất trong 8 mã**, so với 80,03% của toàn ngành. Nhưng bằng chứng dòng tiền rất mạnh và agent xác nhận đây là lựa chọn hợp lý theo nguyên tắc đã chốt: **khối ngoại mua ròng +338 tỷ trong tháng, cao nhất trong toàn bộ mã đã đo của cycle này**, cộng 6T lãi trước thuế ~6.800 tỷ (+44%) và room ngoại nới lên 49%.
+3. **Nhóm ngân hàng vượt trần constraint của spec.** `P_invest_memo_03` giới hạn tổng đường phụ 1-3 mã/ngành; nhóm này có **4 mã qua đường E** (HDB, STB, MSB, LPB). Agent không tự cắt vì thành phần do user chỉ định, nhưng đã ghi vào bản confirmed mục 5.1 như một lý do để Tier 3 chấm khắt khe hơn.
+
+**Một hệ quả tích cực ngoài dự kiến:** việc thêm HDB và ACB làm nhóm ngân hàng **tách thành hai loại vị thế khác bản chất** — nhóm đã nén (SHB −29,9% năm, CTG −10,0%, MBB +0,5%) và nhóm chưa nén đang tăng (HDB +16,1%, ACB +7,7%, MSB +23,9%, STB +34,3%, LPB +59,9%). Đây là phân tán rủi ro thật: nếu thị trường hồi thì nhóm nén bật mạnh hơn, nếu đi ngang thì nhóm chưa nén giữ giá tốt hơn. Agent đã viết thành mục 4 của bản confirmed và yêu cầu Tier 3 không lấy cả 3 mã từ cùng một nhóm.
+
+**Sửa kèm — quy tắc phân bucket.** Việc thêm năm mã chưa bị nén làm lộ lỗi trong quy tắc bucket của bản draft: quy tắc cũ chỉ nhìn tín hiệu bật ở phiên 28/07, nên đẩy cả HDB, ACB, STB, LPB, MSB xuống Bucket 3 chỉ vì chúng **không bật — mà lý do không bật là chúng không giảm**. Đã sửa quy tắc: Bucket 1 nay gồm cả trường hợp "quý và năm đều dương với tháng không giảm quá 5%". Chi tiết mục 3 bản confirmed.
+
+**Cách đánh giá override này sau 3-6 tháng:** so lợi suất ACB và HDB với sáu mã ngân hàng còn lại tại mốc 30/09/2026 và 31/12/2026. Kiểm riêng: (a) nợ nhóm 2 của ACB có chuyển thành nợ xấu thật ở quý 3 không; (b) LLCR của HDB có được nâng lên không; (c) nhóm chưa nén có giữ giá tốt hơn nhóm đã nén trong kịch bản thị trường đi ngang không.
+
+---
+
 ## 2026-07-28 — CP3 — Loại: thay đổi nguyên tắc xếp hạng (dòng tiền trên cơ bản)
 
 **Đây là override có sức lan rộng nhất của cycle — nó đổi kiến trúc bộ lọc, không chỉ đổi một quyết định.**
