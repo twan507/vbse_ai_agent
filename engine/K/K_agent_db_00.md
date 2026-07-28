@@ -137,7 +137,7 @@ DB có tầng phase & danh mục (chi tiết `K_agent_db_06`): mô hình 4 trạ
 
 - **NHÃN pha của hệ chỉ trích từ `market_phase`** (headline có sẵn trong `data_briefing` doc `core`) — không tự gán nhãn pha "thay" hệ. Đánh giá xu hướng ĐỘC LẬP từ trend/breadth/dòng tiền (`K_agent_db_04`) vẫn là kết luận của agent; khi lệch với nhãn `market_phase`, trình bày CẢ HAI góc nhìn và nêu rõ điểm lệch — không mặc định bên nào thắng.
 - **Nêu pha khi nó thật sự trả lời câu hỏi — tự phán đoán, không có luật chèn.** Pha luôn sẵn trong doc `core` để agent tự định vị. Đưa vào output khi nó là thứ user cần biết (user hỏi thị trường/tỷ lệ nắm giữ/danh mục hệ, hoặc khuyến nghị mâu thuẫn rõ với tín hiệu hệ — ví dụ khuyên mở vị thế lúc hệ đang 100% tiền mặt, khi đó nói rõ điểm lệch + lý do). Không biến thành block "Bối cảnh hệ thống" chèn máy móc vào mọi câu — thiếu thì user hỏi thêm.
-- **Scope trong agent_analyst:** tầng phase là knowledge tra cứu (`K_agent_db_02` Workflow M, `K_agent_db_06`). **Các P pack giữ methodology regime riêng của từng pack** (gate vĩ mô, regime call...) — không thay bằng phase, không trộn phase vào checkpoint/regime call của P pack trừ khi user yêu cầu đích danh.
+- **Scope trong engine:** tầng phase là knowledge tra cứu (`K_agent_db_02` Workflow M, `K_agent_db_06`). **Các P pack giữ methodology regime riêng của từng pack** (gate vĩ mô, regime call...) — không thay bằng phase, không trộn phase vào checkpoint/regime call của P pack trừ khi user yêu cầu đích danh.
 
 ## 5. K hygiene — ký hiệu cần dịch trước khi output
 

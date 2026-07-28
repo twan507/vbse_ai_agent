@@ -197,7 +197,7 @@ Tuy nhiên với pack này, **trọng số bottom-up cao hơn**: cơ bản và f
 
 Khác `P_weekly_overview` (technical ≤15%, fundamental-driven primary) — pack này cũng fundamental-driven nhưng deep hơn về company-level. Dòng tiền vẫn quan trọng nhưng là 1 input, không phải primary lens.
 
-## 11. Flex+downgrade triết lý (như mọi pack agent_analyst)
+## 11. Flex+downgrade triết lý (như mọi pack trong engine)
 
 Khi gate methodology không pass strict:
 - **Variant Perception yếu hoặc thiếu (ở Deep mode):** auto downgrade conviction từ HIGH → MID, MID → LOW, LOW → "không đủ conviction kết luận, recommendation Watch"
