@@ -1,81 +1,98 @@
 # Claude Project — Hệ thống agent phân tích chứng khoán
 
-Workspace AI cho VBSE: 2 agent phân tích chứng khoán độc lập (engine) + kho lưu trữ deliverable/input + domain marketing khởi tạo. Runtime linh hoạt: Claude Desktop Project (upload knowledge) hoặc Cowork (đọc trực tiếp filesystem). AI session đọc `CLAUDE.md` trước (router + luật vận hành); file này cho con người và cho AI khi cần hiểu sâu kiến trúc từng agent.
+Workspace AI cho VBSE: **một engine** phân tích chứng khoán (tri thức + quy trình + output spec) và kho lưu trữ deliverable/input. Runtime: **filesystem** (Claude Code / Cowork đọc thẳng thư mục). AI session đọc `CLAUDE.md` trước (router + luật vận hành); file này cho con người và cho AI khi cần hiểu sâu kiến trúc engine.
 
 ---
 
 ## 1. Tổng quan dự án
 
-### 1.1. Hai agent
+### 1.1. Một engine
 
-| Agent | Folder | Mục đích | Số file |
+| Thành phần | Folder | Mục đích | Số file |
 |---|---|---|---|
-| **agent_analyst** | `agent_analyst/` | Phân tích cổ phiếu Việt Nam đa giai đoạn, output MD final structured (memo, báo cáo tuần, khuyến nghị mua, single-stock deep report) | 51 |
-| **db_agent** | `agent_db/` | Phân tích single-shot nhanh: tra cứu, query MongoDB `agent_db`, đưa nhận định lẻ không qua workflow đa stage. v2 (fnx05): audience nhà đầu tư cá nhân, thêm tầng phase & danh mục | 7 |
+| **engine** | `engine/` | Tri thức + quy trình + output spec cho toàn bộ phân tích chứng khoán VN. Mọi báo cáo tham chiếu từ đây | 51 |
 
-### 1.2. Use case từng agent
+Trước rev 8 workspace có 2 agent (`agent_analyst` + `agent_db`) với 2 bản knowledge gần identical. Ràng buộc sinh ra chúng là Claude Desktop Project — mỗi project upload knowledge riêng, không share file được. Runtime nay chỉ còn filesystem nên ràng buộc mất; 2 agent gộp làm 1. Chi tiết: mục 8.3.
 
-- **agent_analyst** — khi cần một báo cáo deliverable hoàn chỉnh: viết memo deep-dive cho 1 mã, sinh báo cáo thị trường tuần 12 phần, soạn pitch khuyến nghị mua gửi khách hàng, lập portfolio plan, review cycle. Workflow có nhiều giai đoạn + checkpoint, output MD final structured (user copy/save thủ công).
-- **db_agent** — khi chỉ cần tra cứu hoặc nhận định nhanh không cần qua workflow: "VNM giá bao nhiêu", "thị trường tuần qua dòng tiền thế nào", "ngành thép Q1 ra sao". Output dạng conversational, không cần file deliverable.
+### 1.2. Hai chế độ dùng — cùng một engine
+
+- **Tra cứu nhanh (mặc định)** — "VNM giá bao nhiêu", "thị trường tuần qua dòng tiền thế nào", "chỉ báo zone AAA nghĩa là gì". Chỉ đọc K pack, **không activate P/O pack**, trả lời inline. Đây là chế độ mặc định của mọi query.
+- **Chạy workflow** — khi cần deliverable hoàn chỉnh: memo deep-dive 1 mã, báo cáo thị trường tuần 12 phần, chiến lược tháng, stock report. Activate P + O pack, có checkpoint, output MD final structured.
+
+Ranh giới giữa 2 chế độ do **luật gate** giữ (`CLAUDE.md` mục 3): mặc định là tra cứu; chỉ activate pack khi query có ý định deliverable tường minh; tiền tố `tra nhanh:` ép inline.
 
 ### 1.3. Quy tắc kiến trúc cốt lõi
 
-**Mỗi agent độc lập 100%.** File trong agent này KHÔNG reference path / tên file của agent khác. Communication giữa 2 agent qua MD file mà user copy/paste thủ công, không có shared state hay cross-agent runtime call.
+**Ba tầng, mỗi tầng một địa chỉ duy nhất.** Đây là bài học từ rev 8: hai bản knowledge cũ lệch nhau ở 27 chỗ, và cả 27 chỉ là con trỏ cross-reference — hệ quả của việc tầng "luật nền" bị cất ở hai nơi.
+
+| Tầng | Ở đâu | Nội dung |
+|---|---|---|
+| 1. Persona, audience, tone nền | `engine/system_prompt.md` mục 11 | Vai trò, negative scope, audience (tham số), tone khi không có O pack |
+| 2. Luật nền domain | `engine/K/K_agent_db_00.md` | Nguồn dữ liệu, luật query, đơn vị, K hygiene, phase, domain rules |
+| 3. Dữ liệu & methodology | `engine/K/K_agent_db_01..06.md` | Schema, query patterns, anti-patterns, methodology, news, phase |
 
 Hệ quả thực tế:
-- Sửa 1 agent không phá agent khác
-- Có thể swap / extend / tắt 1 agent độc lập
-- Cùng 1 knowledge base có thể tồn tại ở 2 agent dưới dạng duplicate (hiện tại `K_agent_db_*` trong agent_analyst và `agent_db_*` trong db_agent có content gần identical — đây là chấp nhận được vì 2 agent độc lập, chứ không refactor về 1 nguồn).
+- File tầng 3 **không được trỏ ngược lên system_prompt của một runtime cụ thể** — chỉ trỏ tới `K_agent_db_00`. Đây chính là thứ khiến bản cũ không dùng chung được dù nội dung giống hệt.
+- Audience là **tham số**, không phải hằng số nhúng trong knowledge (`system_prompt.md` mục 11.2).
+- `K_agent_db_*` giữ tên: `agent_db` ở đây là tên **database MongoDB** đang vận hành, không phải thư mục agent cũ.
 
-### 1.4. Cấu trúc workspace (rev 7 — 2026-07-22)
+### 1.4. Cấu trúc workspace (rev 8 — 2026-07-28)
 
 Workspace tách 2 tầng: **engine** (knowledge/process/output spec — ổn định, sửa có kiểm soát, log tại `_ops/CHANGELOG.md`) và **kho** (artifact — append-only, không sửa ngược).
 
 ```
-CLAUDE.md          cửa vào cho AI: router domain + luật vận hành (governance, luồng intake)
-agent_analyst/     engine phân tích — gốc: system_prompt, KERNEL_SKELETON, OUTPUT_MASTER; pack trong K/ P/ O/
-agent_db/          engine tra cứu — 7 file phẳng
-agent_marketing/   engine marketing/thiết kế — stub, lớn dần khi dùng thật
-brand/             brand asset dùng chung (O pack branded mode + marketing)
-inputs/            đầu vào đã dùng (bctc/<TICKER>/, external/)
-outputs/           deliverable theo loại + INDEX.md sổ cái
-_ops/              check_sync.sh + sync_baseline/ + CHANGELOG.md
+CLAUDE.md    cửa vào cho AI: router domain + luật gate + luật vận hành repo
+engine/      tri thức + quy trình + output spec
+             gốc: system_prompt, KERNEL_SKELETON, OUTPUT_MASTER; pack trong K/ P/ O/
+inputs/      đầu vào đã dùng (bctc/<TICKER>/, external/)
+outputs/     deliverable 4 cây (md/ pptx/ docx/ sent/) + INDEX.md sổ cái
+_ops/        CHANGELOG.md + GOTCHAS.md + specs/
+.claude/     settings.json — PreToolUse hook cưỡng chế luật git
 ```
 
-**Luật vận hành cốt lõi (chi tiết `CLAUDE.md` mục 2):** user không bao giờ tự tay sửa file trong workspace — mọi ghi/đổi qua AI; input user gửi qua chat, AI chuẩn hoá tên theo convention rồi mới lưu; AI phát hiện bất thường thì báo user, không tự xử; kho append-only — đính chính bằng bản mới + đánh dấu superseded trong INDEX, không ghi đè.
+Bốn thư mục gốc sắp alphabet ra đúng thứ tự đọc: `_ops` → `engine` → `inputs` → `outputs`. Ranh giới: **`engine/` = làm thế nào cho đúng nghiệp vụ; `CLAUDE.md` = làm thế nào cho đúng repo.**
 
-**Version control:** git local branch `main`, AI commit theo lượt việc (deliverable / intake / engine tách commit riêng), lịch sử append-only không rewrite, `.gitattributes` ép LF. Remote `origin` = GitHub `twan507/vbse_ai_agent`; AI commit — user push thủ công (sandbox không có credential; chi tiết `CLAUDE.md` mục 7.7). Chuỗi truy vết 4 lớp: front-matter (file tự mô tả) → `outputs/INDEX.md` (sổ cái) → `_ops/CHANGELOG.md` (log ngữ nghĩa engine) → git log (audit trail máy).
+**Luật vận hành cốt lõi (chi tiết `CLAUDE.md` mục 2):** AI là người ghi duy nhất — ngoại lệ duy nhất là `outputs/sent/`, nơi user sửa tay bản gửi khách; input user gửi qua chat, AI chuẩn hoá tên theo convention rồi mới lưu; AI phát hiện bất thường thì báo user, không tự xử; kho append-only — đính chính bằng bản mới + đánh dấu superseded trong INDEX, không ghi đè.
+
+**Version control:** git local branch `main`, AI commit theo lượt việc (deliverable / intake / engine / ops tách commit riêng), lịch sử append-only không rewrite, `.gitattributes` ép LF. Remote `origin` = GitHub `twan507/vbse_ai_agent`; AI commit — user push thủ công (sandbox không có credential; chi tiết `CLAUDE.md` mục 7.7). `outputs/pptx/` và `outputs/docx/` gitignore — bản máy sinh lại được; bản không tái tạo được nằm ở `outputs/sent/`. Chuỗi truy vết 4 lớp: front-matter (file tự mô tả) → `outputs/INDEX.md` (sổ cái) → `_ops/CHANGELOG.md` (log ngữ nghĩa engine) → git log (audit trail máy).
 
 ---
 
-## 2. Triển khai (Claude Desktop)
+## 2. Runtime
 
-### 2.1. Mỗi agent = 1 Claude Desktop Project
+### 2.1. Filesystem, không upload
 
-Tạo 2 project riêng trong Claude Desktop app:
+Runtime là **Claude Code / Cowork đọc thẳng thư mục**. Không còn bước upload knowledge, không còn re-upload khi sửa file — sửa file là session sau thấy ngay.
 
-| Project name (đề xuất) | Source folder | Custom Instructions | Knowledge files |
-|---|---|---|---|
-| `Analysis Agent` | `agent_analyst/` | Paste nội dung `agent_analyst/system_prompt.md` | Upload toàn bộ `.md` trong `K/` + `P/` + `O/` (48 file) + `KERNEL_SKELETON.md` + `OUTPUT_MASTER.md` (tổng 50 file) |
-| `DB Agent` | `agent_db/` | Paste nội dung `agent_db/system_prompt.md` | Upload `agent_db_01` đến `agent_db_06` (6 file) |
+Session khởi động đọc `CLAUDE.md` (nạp tự động), rồi theo bảng router mục 3 của file đó mà đọc tiếp `engine/system_prompt.md` và pack cần thiết. Toàn bộ `engine/` **không** nạp tự động — chỉ đọc theo nhu cầu, đúng mô hình một tầng chỉ mục (`KERNEL_SKELETON.md`) rồi lấy nội dung khi cần.
 
-### 2.2. Khi cần update file
+### 2.2. Đổi máy hoặc môi trường mới
 
-Sửa file ở folder gốc → re-upload vào project knowledge tương ứng. Claude Desktop project knowledge không tự sync với filesystem — phải update thủ công.
+Những gì đi theo repo: toàn bộ `engine/`, `CLAUDE.md`, `_ops/`, `.claude/settings.json` (hook).
 
-Khi sửa `system_prompt.md` của agent nào → paste lại vào ô Custom Instructions của project đó.
+Những gì **không** đi theo repo, phải cài lại:
+- Kết nối MongoDB `agent_db` qua MCP
+- Thư viện render: `python-pptx`, `python-docx`, `openpyxl`, `pypdf`
+- Plugin `document-skills` (`claude plugin install document-skills@anthropic-agent-skills`) — license cấm copy file skill vào repo
+- Auto memory của Claude Code (machine-local, không có thẩm quyền — xem `CLAUDE.md` mục 9)
 
 ### 2.3. MongoDB connection
 
-`agent_analyst` và `db_agent` đều giả định có quyền read MongoDB database tên `agent_db`. Tools để query DB không nằm trong project knowledge — phải được provide qua Claude Desktop integration / MCP server cấu hình bên ngoài. Schema 35 collection và query patterns được document trong `agent_db_01.md` (db agent) và `K_agent_db_01.md` (agent_analyst).
+Engine giả định quyền **read-only** trên MongoDB database `agent_db`, cung cấp qua MCP server. Verify 2026-07-28: 35 collection, 122 MB, đọc được. Schema và query patterns document ở `engine/K/K_agent_db_01.md` và `_02.md`.
+
+Không có kết nối thì chỉ làm được phần methodology — phải nói rõ với user, không đoán số.
 
 ### 2.4. Behavioral guidelines (`CLAUDE.md`)
 
-File `CLAUDE.md` ở root là cửa vào cho mọi session AI: router domain, luật vận hành workspace (AI là người ghi duy nhất, luồng intake, báo bất thường), convention kho outputs/inputs, và 4 behavioral guidelines (think before acting, simplicity first, surgical changes, goal-driven execution). KHÔNG upload vào project knowledge của các agent (agent có system_prompt riêng) — đây là guideline cho dev / AI khi vận hành và maintain workspace.
+File `CLAUDE.md` ở root là cửa vào cho mọi session AI: router domain, **luật gate** (tra cứu vs chạy workflow), luật vận hành workspace (AI là người ghi duy nhất, luồng intake, báo bất thường), convention kho outputs/inputs, và 4 behavioral guidelines (think before acting, simplicity first, surgical changes, goal-driven execution).
+
+Ranh giới với `engine/system_prompt.md`: **`CLAUDE.md` lo repo** (ghi file ở đâu, đặt tên thế nào, commit ra sao); **`system_prompt.md` lo nghiệp vụ** (persona, router pack, meta-rules phân tích, self-audit). Không trộn.
+
+`CLAUDE.md` là **context, không phải enforcement** — Claude đọc và cố theo, nhưng không có gì đảm bảo tuân thủ tuyệt đối. Luật nào phải chắc chắn thì viết thành hook (`.claude/settings.json`), hiện đang cưỡng chế 3 lệnh git ở mục 7.4.
 
 ---
 
-## 3. `agent_analyst` — chi tiết
+## 3. `engine/` — chi tiết
 
 ### 3.1. Kiến trúc 3 layer + 1 index
 
@@ -253,70 +270,59 @@ Pack K mới (1 file `K_sector_framework.md`) cung cấp khung phân tích ngàn
 
 ---
 
-## 5. DB agent (`agent_db/`) — chi tiết
+## 5. Chế độ tra cứu nhanh — không activate pack
 
 ### 5.1. Vai trò
 
-Agent phân tích **single-shot, conversational**. Query MongoDB `agent_db`, kết hợp web search, đưa nhận định chuyên môn có luận cứ. Không có workflow đa stage, không có deliverable file, không có checkpoint.
+Trả lời **single-shot, conversational**. Query MongoDB `agent_db`, kết hợp web search, đưa nhận định chuyên môn có luận cứ. Không workflow đa stage, không deliverable file, không checkpoint.
 
 Use case điển hình:
 - Tra cứu nhanh: "VNM giá hôm nay", "KLGD HPG tuần qua"
-- Hỏi nhận định nhanh: "thị trường tuần này dòng tiền thế nào", "ngành thép Q1 2026 có gì đáng chú ý"
+- Nhận định nhanh: "thị trường tuần này dòng tiền thế nào", "ngành thép Q1 2026 có gì đáng chú ý"
 - Lookup methodology: "chỉ báo zone AAA nghĩa là gì"
 
-### 5.2. File structure
+Trước rev 8 đây là một agent riêng với bản knowledge riêng. Nay nó là **trạng thái không-pack-nào-active** của cùng engine — đúng đường fallback đã có sẵn ở `KERNEL_SKELETON.md` mục 4.
 
-| File | Vai trò |
-|---|---|
-| `system_prompt.md` | v2 — file resident duy nhất (paste vào Custom Instructions): vai trò, tone, bản đồ collection, đơn vị, phase (tín hiệu tham chiếu), khuyến nghị + hiệu suất 2 tầng, meta-rules, bảng dịch rút gọn, manifest. Gộp `agent_db_00` cũ (đã nghỉ hưu) |
-| `agent_db_01.md` | Schema 35 collection (+ Section I phase & danh mục; khối E 3 nhóm lịch sử: giá mỗi phiên / định giá `history_finratios_*` mỗi tuần / khối ngoại `history_nntd_*` mỗi phiên) + URL pattern finext.vn |
-| `agent_db_02.md` | Query patterns 13 workflow A-M (M = phase & danh mục) |
-| `agent_db_03.md` | Anti-patterns 11 case (case 9-10: bối cảnh phase, hiệu suất 2 tầng; case 11 + Rule 10: granularity/độ trễ chuỗi lịch sử định giá) |
-| `agent_db_04.md` | Methodology diễn giải chỉ báo + PTCB 4 type doanh nghiệp + mục D6 định giá tương đối theo lịch sử + bảng dịch taxonomy đầu file |
-| `agent_db_05.md` | News methodology — 4 loại tin + framework chấm impact |
-| `agent_db_06.md` | Phase & 3 danh mục hệ thống: 4 trạng thái, exposure, 7 chỉ số, bộ số FROZEN + disclaimer |
+### 5.2. Đọc gì
 
-### 5.3. Quan hệ với `K_agent_db_*` của agent_analyst
+`engine/system_prompt.md` (persona + meta-rules + tone nền mục 11) → `K_agent_db_00` (luật nền) → file con `K_agent_db_01..06` theo nhu cầu câu hỏi.
 
-Content của 6 file `agent_db_01..06` (db agent) gần **identical** với `K_agent_db_01..06` (agent_analyst) — port 2026-07-13, sync lần gần nhất 2026-07-22 (35 collection + mục D6). Khác biệt chỉ:
-- File name prefix + internal cross-reference (`agent_db_XX` vs `K_agent_db_XX`)
-- Reference đến system_prompt section number (db agent: mục 5/8.x/9; analysis: mục 5.x + `K_agent_db_00` mục 4.x/5.x/6)
-- `K_agent_db_00` là file riêng của agent_analyst (db agent v2 gộp master vào system_prompt; analysis giữ `_00` theo rule master-first)
-- Audience: db agent = nhà đầu tư cá nhân (clarify nới lỏng); analysis = analyst nội bộ (clarify 2 câu giữ nguyên)
+**Không** đọc `KERNEL_SKELETON.md` khi không cần deliverable — đó là chỉ mục P/O pack, đọc nó là mở cửa cho việc activate nhầm.
 
-**Đây là chấp nhận có chủ đích**: 2 agent độc lập về deployment (2 Claude Desktop Project riêng), nên knowledge base duplicate. Trade-off: maintenance burden khi update methodology phải apply 2 chỗ; lợi ích: 2 agent hoàn toàn không coupling, có thể swap/extend độc lập.
+`K_sector_framework` cũng không dùng ở chế độ này: nó phục vụ deep-dive workflow, P pack chủ động pull chứ không tự activate.
 
-**Lưu ý:** `K_sector_framework` (agent_analyst) **không** có bản sao trong db_agent — đây là pack chuyên cho deep-dive analysis workflow, không phục vụ single-shot lookup.
+### 5.3. Ranh giới giữ bằng gate, không bằng thư mục
 
-**Convention khi update methodology:**
-- Sửa 1 nguồn (ưu tiên `agent_db/agent_db_*` vì đơn giản hơn) → manual port sang nguồn còn lại
-- Verify bằng `_ops/check_sync.sh` (so hiện trạng với baseline khác-biệt-có-chủ-đích trong `_ops/sync_baseline/`); port xong chạy `--rebase` chốt baseline mới + ghi `_ops/CHANGELOG.md`
+Trước rev 8, ranh giới là vật lý: 2 thư mục, 2 bộ knowledge upload riêng. Với runtime filesystem thì ranh giới đó **đã mất từ trước** — một phiên nhìn thấy cả hai thư mục cùng lúc.
+
+Nay ranh giới nằm ở **luật gate** (`CLAUDE.md` mục 3): mặc định inline; activate P/O chỉ khi có ý định deliverable tường minh; `tra nhanh:` ép inline; pack ngoài `KERNEL_SKELETON.md` coi như không tồn tại.
+
+Đánh đổi phải biết: gate là **văn bản, không phải enforcement**. Rủi ro còn lại là activate nhầm khi câu hỏi mập mờ — nên luật viết rõ "nghi ngờ thì hỏi, không tự activate".
 
 ---
 
-## 6. Communication giữa 2 agent
-
-2 agent **không call cross-agent runtime**. Communication qua **MD file / context user copy/paste thủ công**:
+## 6. Luồng làm việc end-to-end
 
 ```
-┌─────────────────────┐
-│  agent_analyst     │  → Output: MD final (memo / weekly / pitch)
-│  (3 layer K/P/O)    │     User copy/save thủ công, dùng tool render
-└─────────────────────┘     bên ngoài nếu cần binary (pptx/docx).
-
-┌─────────────────────┐
-│  db_agent           │  ← Tra cứu lẻ, không gắn với pipeline
-│  (single-shot)      │     Output: response inline trong chat
-└─────────────────────┘
+Câu hỏi ──► gate (CLAUDE.md mục 3)
+             │
+             ├── không có ý định deliverable ──► inline lookup
+             │                                    K pack → trả lời trong chat
+             │
+             └── có ý định deliverable ────────► K + P + O
+                                                  │
+                     outputs/md/<loại>/... ◄──────┘  carrier MD, nguồn phân tích
+                              │
+                              ├─► outputs/pptx|docx/  bản render máy (gitignore)
+                              │            │
+                              │            └─► outputs/sent/  AI copy sang
+                              │                      │
+                              │                      └─► USER sửa tay ──► gửi khách
+                              │
+                              └─► outputs/INDEX.md   1 dòng sổ cái
 ```
 
-**Workflow điển hình end-to-end:**
-1. User mở `agent_analyst` project, request "viết báo cáo tổng quan tuần [DD/MM]" hoặc "báo cáo chiến lược tháng [N]"
-2. agent_analyst chạy pack tương ứng (`P_weekly_overview` 2 stage 1 checkpoint hoặc `P_vbse_strategy` 4 stage 2 checkpoint), xuất MD final structured trong chat
-3. User copy MD ra ngoài, nếu cần render branded pptx/docx thì dùng tool render bên ngoài (out of scope project này)
-
-**db_agent dùng song song khi cần tra cứu nhanh** trong quá trình:
-- "VNM giá đóng cửa hôm qua bao nhiêu?" → db_agent trả lời inline 1 câu, không cần qua workflow
+**Điểm mấu chốt:** re-render ghi đè `pptx/` và `docx/`, **không bao giờ chạm `sent/`**. Bản trong `sent/` chứa chỉnh sửa tay của user, không tái tạo được — đó là lý do nó vào git còn hai cây kia thì không.
 
 ---
 
@@ -340,7 +346,7 @@ Content của 6 file `agent_db_01..06` (db agent) gần **identical** với `K_a
 - **Nhóm 2 — Taxonomy nội bộ:** "Kịch bản A-G/E1-E3", "Pitfall F1-F12", "HIGH/MID/LOW impact", "framework chấm điểm", tên section như "B5/B6/B7"
 - **Nhóm 3 — Thuật ngữ EN chưa dịch:** "mean-reversion", "exhaustion", "Value Trap", "dead-cat bounce", "priced-in"...
 
-Bảng dịch đầy đủ ở `K_agent_db_00` mục 5 (agent_analyst) hoặc system prompt mục 9 (db agent v2).
+Bảng dịch đầy đủ ở `K_agent_db_00` mục 5; bảng taxonomy đầu `K_agent_db_04`; thuật ngữ tin tức ở `K_agent_db_05` phần 9.
 
 **Exception:** `article_slug` / `report_slug` khi ghép thành URL `https://finext.vn/news/{slug}` là output hợp lệ.
 
@@ -355,7 +361,7 @@ Bảng dịch đầy đủ ở `K_agent_db_00` mục 5 (agent_analyst) hoặc sy
 
 ### 7.5. File naming output
 
-**agent_analyst:**
+**Basename deliverable:**
 - `tier{N}_<YYYYMMDD>_confirmed.md` (state files cycle)
 - `tier5C_<TICKER>_<YYYYMMDD>_confirmed.md` (memo deep-dive per-stock)
 - `tier6_portfolio_<YYYYMMDD>_confirmed.md`
@@ -364,7 +370,17 @@ Bảng dịch đầy đủ ở `K_agent_db_00` mục 5 (agent_analyst) hoặc sy
 - `vbse_strategy_monthly_<YYYYMM>.md` (tháng báo cáo chiến lược)
 - `vbse_strategy_weekly_<YYYYMMDD>.md` (ngày cuối tuần update chiến lược)
 
-**Vị trí lưu:** các file trên lưu trong `outputs/` theo cây `outputs/<loại>/...` (chi tiết `CLAUDE.md` mục 4): weekly_overview theo năm, vbse_strategy tách monthly/weekly theo năm, stock_report theo ticker, invest_memo theo cycle `<YYYY-MM>_cycle/`, marketing theo `<YYYY>/<YYYYMM>_<slug>/` dạng bundle. Mỗi deliverable có front-matter metadata + 1 dòng trong `outputs/INDEX.md`.
+**Vị trí lưu:** carrier MD nằm ở `outputs/md/<loại>/...` (chi tiết `CLAUDE.md` mục 4): weekly_overview theo năm, vbse_strategy tách monthly/weekly theo năm, stock_report theo ticker, invest_memo theo cycle `<YYYY-MM>_cycle/`.
+
+Bản render và bản gửi đi dùng **đúng đường dẫn và basename đó** ở ba cây còn lại, chỉ khác extension:
+
+```
+outputs/md/weekly_overview/2026/weekly_overview_20260803.md      carrier
+outputs/pptx/weekly_overview/2026/weekly_overview_20260803.pptx  bản máy
+outputs/sent/weekly_overview/2026/weekly_overview_20260803.pptx  bản đã sửa tay
+```
+
+`sent/` không chia theo format — extension đã phân biệt. Mỗi deliverable có front-matter metadata (`derived` ghi đường dẫn tương đối đầy đủ) + 1 dòng trong `outputs/INDEX.md`.
 
 ### 7.6. Constraint cốt lõi (audience cuối có thể là KH)
 
@@ -382,15 +398,21 @@ Pack `P_weekly_overview` và `P_vbse_strategy` (có mode branded gửi KH) tuân
 
 ## 8. Design decisions chính
 
-### 8.1. Render binary out of scope của agent_analyst
+### 8.1. Render binary IN scope (đảo lại từ rev 6)
 
-`agent_analyst` xuất **MD final** là output cuối. Render pptx/docx/xlsx là concern downstream của tool render bên ngoài (out of scope project này). MD final đã đủ structured (heading hierarchy + chart annotation YAML + citation + locale) để tool render consume.
+**Rev 6 chốt render binary out of scope; rev 8 đảo lại.** Lý do: runtime nay có filesystem và thư viện Python (`python-pptx`, `python-docx`, `openpyxl`) nên render là việc engine làm được ngay, không phải "concern downstream".
 
-Lý do tách: render binary là concern khác với analysis quality. Tách giúp `agent_analyst` focus vào content depth, không bị phân tán bởi presentation/branding.
+Điều kiện thật là **filesystem + thư viện Python**. Skill `document-skills` của Anthropic chỉ là tiện nghi — nó cũng chỉ gọi hai thư viện đó.
 
-**Note:** Tại rev 6, 16/16 section "Guide render docx/pptx" trong các O pack đã được marked `[LEGACY]` (kèm note "Render binary out of scope, section giữ làm reference cho tool render bên ngoài"). Content section giữ nguyên — pass cleanup tiếp theo có thể xoá hẳn nếu cần thu gọn knowledge base. Không ảnh hưởng workflow runtime vì master rule rev 6 đã chốt MD final là output cuối.
+**Note về nhãn `[LEGACY]`:** 16/16 section "Guide render docx/pptx" trong các O pack bị marked `[LEGACY]` từ rev 6 kèm note "out of scope". Nhãn đó nay đọc là **"reference spec cho render"**, không phải "đã bỏ" — `CLAUDE.md` mục 6 chỉ định dùng chúng làm style baseline. Không xoá.
 
-### 8.2. Triết lý flex+downgrade thay strict reject (agent_analyst)
+**MD vẫn là source of truth của phân tích**, nhưng không còn là output cuối duy nhất. Chuỗi đầy đủ: MD → render → user sửa tay ở `outputs/sent/` → gửi khách. Vì có bàn tay người ở cuối nên **không theo đuổi render xác định byte-by-byte** — script render (nếu làm sau này) chỉ cần đưa tới bản nháp tốt.
+
+### 8.1b. Vì sao chưa viết script render
+
+`outputs/` còn rỗng, chưa có deliverable thật nào. Viết script lúc này là đặc tả cho thứ chưa từng làm. Kế hoạch: chạy 2–3 báo cáo thật, render ad-hoc, giữ code đã chạy được ở scratchpad; khi layout ổn định mới đóng băng thành script trong repo.
+
+### 8.2. Triết lý flex+downgrade thay strict reject
 
 Khi gate methodology không pass strict (Variant Perception yếu, Bear Case rebuttal yếu, R/R thấp), agent **không tự reject** mã. Thay vào đó:
 - Flag cảnh báo cụ thể
@@ -401,11 +423,21 @@ Lý do: discipline ở dạng force user explicit aware về rủi ro, không ch
 
 **Exception — Nguyên tắc 5 (P_invest_memo) vẫn strict reject:** "Dòng tiền dương + catalyst tiêu cực → loại" giữ behavior strict (không flex+downgrade). Khác với 5 nguyên tắc còn lại — Variant Perception / Bear Case / R/R là đánh giá **chủ quan** có thể debate, còn pattern "dòng tiền dương + catalyst tiêu cực" là **objective historical pattern** với base rate lỗi rất cao (retail trap kinh điển ở thị trường VN: dòng tiền vào muộn priced-in tin xấu chưa lộ). Đưa cho user "quyết" với pattern này là ép user override discipline về 1 loại lỗi đã có evidence rõ. Giữ strict reject ở đây là design decision có chủ đích.
 
-### 8.3. Knowledge base duplicate (agent_analyst K + db_agent agent_db)
+### 8.3. Gộp 2 agent thành 1 engine (rev 8, đảo lại rev 7)
 
-2 pack content gần identical, chấp nhận duplicate vì priority "agent độc lập 100%" cao hơn DRY. Trade-off đã document ở mục 5.3.
+Rev 7 chấp nhận duplicate knowledge vì ưu tiên "agent độc lập 100%" cao hơn DRY. Rev 8 bỏ quyết định đó.
 
-### 8.4. Conviction memo mới được vào position (agent_analyst P_invest_memo)
+**Lý do đảo:** luật độc lập sinh ra từ ràng buộc Claude Desktop Project (mỗi project upload knowledge riêng, không share file được). Runtime nay chỉ còn filesystem → ràng buộc mất. Và cách ly vật lý **thực ra đã mất từ trước**: một phiên filesystem nhìn thấy cả hai thư mục cùng lúc, nên duplicate không còn mua được cách ly nào.
+
+**Bằng chứng quyết định:** khảo sát 6 file baseline trong `_ops/sync_baseline/` (đã xoá — xem lại bằng `git show 4763865:_ops/sync_baseline/db_03.diff`) cho thấy **27/29 khác biệt chỉ là con trỏ cross-reference** (`system prompt mục 8.5` vs `K_agent_db_00 mục 5` — cùng một luật, khác chỗ cất). Chỉ 2 khác biệt là ngữ nghĩa thật: ghi chú audience, và policy clarification. Tức nguyên nhân gốc không phải duplication mà là **file knowledge trỏ ngược lên system_prompt của một agent cụ thể** — khiến nó không tái sử dụng được dù nội dung giống hệt.
+
+**Đã xoá kèm:** `agent_db/` (7 file), `_ops/check_sync.sh`, `_ops/sync_baseline/` (6 diff), và mệnh đề "port hai chiều" ở `CLAUDE.md` mục 2.4.
+
+**Giữ lại có chủ đích:** tên `K_agent_db_*` — `agent_db` ở đây là tên database MongoDB đang vận hành, không phải thư mục đã xoá. Đổi tên nhóm file này mới là làm sai.
+
+Spec đầy đủ: `_ops/specs/2026-07-28-tai-cau-truc-workspace-design.md`.
+
+### 8.4. Conviction memo mới được vào position (`P_invest_memo`)
 
 Trong workflow đầu tư (P_invest_memo), không vào position nếu chưa hoàn thành memo deep-dive (Tier 5C). Memo là gate cuối cùng — viết được memo 7 phần (Recommendation / Thesis / Variant / Business / Financial / Catalysts / Bear / Exit) đủ chuẩn mới được conviction để sizing.
 
@@ -413,43 +445,47 @@ Trong workflow đầu tư (P_invest_memo), không vào position nếu chưa hoà
 
 ## 9. Hướng mở rộng
 
-### 9.1. Thêm pack mới trong `agent_analyst`
+### 9.1. Thêm pack mới trong `engine/`
 
-Pattern cũ (3 layer K/P/O):
+Pattern 3 layer K/P/O:
 1. Identify domain — pack mới là K, P, hay O?
-2. Tạo file theo naming convention: `K_{domain}_{NN}.md` / `P_{flow_name}_{NN}.md` / `O_{format_or_style}_{NN}.md`
+2. Tạo file theo naming convention: `K_{domain}_{NN}.md` / `P_{flow_name}_{NN}.md` / `O_{format_or_style}_{NN}.md`, đặt vào `engine/K|P|O/`
 3. Pack có ≥3 file phải có file `_00` master (mục đích pack + manifest file con + flow + output contract)
-4. Thêm entry vào `KERNEL_SKELETON.md` với trigger activation
-5. Re-upload toàn bộ agent_analyst project knowledge
+4. Thêm entry vào `KERNEL_SKELETON.md` với **trigger activation cụ thể** — trigger mơ hồ là nguyên nhân activate nhầm, xem luật gate `CLAUDE.md` mục 3
+5. Ghi `_ops/CHANGELOG.md`, commit type `engine`
+
+Cross-reference trong nội dung pack dùng **tên trần** (`K_agent_db_04`), không dùng đường dẫn — nhờ vậy di chuyển thư mục không phải sửa nội dung.
 
 ### 9.2. Thêm domain mới (vd thị trường ngoài VN)
 
-Hiện tại 2 agent đều scope cho thị trường VN (giả định MongoDB `agent_db` chứa data VN). Để extend ra thị trường khác:
+Engine hiện scope cho thị trường VN (giả định MongoDB `agent_db` chứa data VN). Để extend ra thị trường khác:
 - Build pack K mới (`K_us_market_*` chẳng hạn) cho schema/data nguồn US
 - Build pack P mới phù hợp methodology US (DCF, peer multiples — khác VN ở P/E benchmark, dynamics ngành)
 - Build pack O mới cho format US (USD, MM-DD-YYYY, etc.)
 - KHÔNG mix VN + US trong cùng pack — methodology + locale + audience khác nhau
 
-### 9.3. Thêm audience mới (vd retail, intern)
+### 9.3. Thêm audience mới
 
-`agent_analyst` hiện assume audience analyst/broker nội bộ (được phép nhận khuyến nghị cụ thể). Để serve audience khác:
-- Build agent riêng (project Claude Desktop riêng) với system_prompt + K pack restricted
-- Không nên sửa K_agent_db cũ — break audience analyst hiện tại
+**Từ rev 8, audience là tham số chứ không phải hằng số** — không cần build agent riêng nữa. Hai audience đã hỗ trợ sẵn (`engine/system_prompt.md` mục 11.2, `K_agent_db_00` mục 4.4):
+
+| Audience | Được nhận | Hành văn |
+|---|---|---|
+| analyst / broker nội bộ (default) | Khuyến nghị cụ thể, conviction, TP/SL số | Thuật ngữ dùng thẳng |
+| NĐT cá nhân / khách hàng | Quan điểm định tính, không TP/SL số | Thuật ngữ kèm giải thích ngắn |
+
+Thêm audience thứ ba: bổ sung dòng vào bảng đó, không tạo K pack mới. O pack có bảng audience riêng (vd `O_stock_report_00` mục 5) override trong phạm vi pack đó.
 
 ---
 
 ## 10. Note về deployment legacy
 
-**Lịch sử:** Một số file P/O packs trong `agent_analyst` từng có reference đến:
-- Path `/mnt/user-data/outputs/` (Linux)
-- Tool `present_files`
-- Skill `/mnt/skills/public/docx`, `/mnt/skills/public/pptx`
+**Lịch sử:** Một số file P/O packs từng có reference đến path `/mnt/user-data/outputs/`, tool `present_files`, skill `/mnt/skills/public/docx|pptx`. Đây là legacy từ deployment Claude Code / Claude skill đời cũ.
 
-Đây là legacy từ deployment Claude Code / Claude skill (môi trường có filesystem + skill tool). Trên **Claude Desktop** (môi trường hiện tại) các path/tool này không tồn tại.
+Rev 6 clean các reference active, thay bằng wording "xuất MD trong message, user copy/save thủ công" — hợp với runtime Claude Desktop lúc đó.
 
-**Trạng thái hiện tại (rev 6):** Các reference active đã được clean — thay bằng wording "xuất nội dung MD trong message (Claude Desktop), user copy/save thủ công". Các section render binary đã được marked `[LEGACY]`. Reference legacy còn lại chỉ trong các block historical note có chủ đích.
+**Rev 8 đảo lại lần nữa:** runtime là filesystem, agent ghi thẳng file vào `outputs/`. Wording "user copy/save thủ công" ở các pack nay đã lỗi thời theo hướng ngược lại. Đường dẫn đúng: `outputs/md/<loại>/...` theo `CLAUDE.md` mục 4.
 
-Output flow đúng trên Claude Desktop: Claude trả về MD final trong message, user copy/save thủ công, hoặc Claude tạo artifact trong chat.
+**Chưa dọn:** wording đó còn rải rác trong P/O packs. Không sửa trong rev 8 vì nằm ngoài phạm vi "cấu trúc + dọn trùng lặp", và không gây lỗi runtime (agent theo `CLAUDE.md` để biết ghi ở đâu). Dọn ở pass sau khi chạy báo cáo thật và biết chính xác chỗ nào vướng.
 
 ---
 
@@ -462,7 +498,9 @@ File `CLAUDE.md` ở root (tạo 2026-07-22) là cửa vào cho AI — router do
 3. **Surgical Changes** — touch only what must, clean up only own mess, match existing style
 4. **Goal-Driven Execution** — define success criteria, loop until verified
 
-Áp dụng khi maintain project: thêm pack, sửa methodology, refactor structure. Không upload vào project knowledge của 2 agent (2 agent có system_prompt riêng) — đây là guideline cho dev / AI dev assistant.
+Áp dụng khi maintain project: thêm pack, sửa methodology, refactor structure.
+
+Rev 8 là ví dụ của nguyên tắc 2 và 3 áp cho chính workspace: xoá `agent_marketing/` và `brand/` vì chúng là cấu trúc đón đầu chưa có nội dung thật; và giữ nguyên tên `KERNEL_SKELETON.md`, `K/` `P/` `O/`, `K_agent_db_*` dù có thể đặt tên "chuẩn" hơn — đổi ~15 chỗ để lấy chút nhất quán từ vựng không đáng.
 
 ---
 
@@ -470,9 +508,9 @@ File `CLAUDE.md` ở root (tạo 2026-07-22) là cửa vào cho AI — router do
 
 ### 12.1. Agent không hiểu request
 
-- Verify đã upload đúng files vào project knowledge (agent_analyst: 50 file knowledge + system_prompt paste, db agent: 6 file `agent_db_01..06` + system_prompt paste)
-- Verify Custom Instructions đã paste đúng `system_prompt.md` của agent đó
-- Re-upload knowledge nếu vừa sửa file gốc
+- Verify session đã đọc `CLAUDE.md` (nạp tự động) và `engine/system_prompt.md` — chạy `/context` để xem file nào thực sự vào context
+- Verify đã đọc `KERNEL_SKELETON.md` nếu cần chạy workflow; nếu chỉ tra cứu thì **đúng là không nên đọc** (mục 5.2)
+- Trigger của pack có mơ hồ không — trigger mờ là nguyên nhân activate nhầm hoặc không activate
 
 ### 12.2. Output format không đúng
 
@@ -482,26 +520,36 @@ File `CLAUDE.md` ở root (tạo 2026-07-22) là cửa vào cho AI — router do
 
 ### 12.3. Workflow stuck ở checkpoint
 
-- agent_analyst có checkpoint discipline strict: agent KHÔNG tự chuyển stage qua CP. User phải explicit confirm/override
-- Nếu agent skip CP, có thể system_prompt chưa load đúng → re-paste Custom Instructions
+- Engine có checkpoint discipline strict: agent KHÔNG tự chuyển stage qua CP. User phải explicit confirm/override
+- Nếu agent skip CP, có thể `engine/system_prompt.md` chưa được đọc → kiểm bằng `/context`
 
-### 12.4. K methodology không sync giữa agent_analyst và db_agent
+### 12.4. Activate nhầm pack khi chỉ muốn tra cứu
 
-- Chạy `_ops/check_sync.sh`: OK = chỉ còn khác biệt có chủ đích; DRIFT = có sửa chưa port, script in chi tiết → báo user
-- Port xong chạy `_ops/check_sync.sh --rebase` chốt baseline mới + ghi `_ops/CHANGELOG.md` (xem mục 5.3)
+Triệu chứng: hỏi một câu ngắn, agent bắt đầu chạy pre-flight / hỏi checkpoint / xuất báo cáo nhiều phần.
 
----
-
-## 13. Khi mở session Claude Desktop mới
-
-Project knowledge đã đủ context cho AI hoạt động. Nhưng nếu cần dev/maintenance (sửa pack, thêm pack, audit), AI session sau nên đọc:
-
-1. **`CLAUDE.md`** ở root — router domain + luật vận hành + behavioral guidelines
-2. **`README.md`** ở root (file này) — kiến trúc tổng thể
-3. Tuỳ task:
-   - Sửa agent_analyst → đọc `agent_analyst/system_prompt.md` + `agent_analyst/KERNEL_SKELETON.md` + master file của pack liên quan (`*_00.md` trong `K/` / `P/` / `O/`)
-   - Sửa db agent → đọc `agent_db/system_prompt.md` (v2 — master gộp vào đây)
+- Nguyên nhân thường gặp: câu hỏi chứa từ khoá gần giống trigger deliverable ("chiến lược", "báo cáo", "đánh giá")
+- Cách chữa ngay: gõ lại với tiền tố `tra nhanh:` — ép inline, cấm activate pack
+- Cách chữa gốc: siết trigger của pack đó trong `KERNEL_SKELETON.md` cho hẹp lại, ghi CHANGELOG
+- Ngược lại — muốn chạy workflow mà agent trả lời inline: nêu tường minh loại deliverable ("viết báo cáo tuần", "stock report VNM")
 
 ---
 
-**Cập nhật convention/methodology:** thay đổi nội dung file → ghi `_ops/CHANGELOG.md` + commit git type `engine` (+ `_ops/check_sync.sh --rebase` nếu đụng knowledge DB) → re-upload vào Claude Desktop project tương ứng nếu còn dùng runtime đó. Không có auto-sync giữa filesystem và Claude Desktop project knowledge.
+## 13. Khi mở session mới
+
+`CLAUDE.md` nạp tự động, đủ để bắt đầu. Đọc thêm tuỳ task:
+
+| Task | Đọc |
+|---|---|
+| Tra cứu nhanh | `engine/system_prompt.md` → `K_agent_db_00` → file con theo nhu cầu. **Không** đọc `KERNEL_SKELETON.md` |
+| Chạy báo cáo | + `KERNEL_SKELETON.md` + `OUTPUT_MASTER.md` → `_00` master của pack trước file con |
+| Sửa engine | `engine/system_prompt.md` + `KERNEL_SKELETON.md` + master file pack liên quan + `_ops/CHANGELOG.md` |
+| Tái cấu trúc workspace | File này + `_ops/specs/` |
+| Gặp lỗi đã gặp trước đó | `_ops/GOTCHAS.md` |
+
+**Đầu session:** `git status` phải sạch (`CLAUDE.md` mục 7.1). Bẩn = bất thường, báo user trước khi làm tiếp.
+
+---
+
+**Cập nhật convention/methodology:** sửa nội dung file → ghi `_ops/CHANGELOG.md` → commit git type `engine` (CHANGELOG entry nằm trong cùng commit). Không còn bước re-upload nào — runtime đọc thẳng filesystem.
+
+**Cuối session:** working tree phải sạch. Có commit chưa push thì nhắc user một câu — AI không tự push được (`CLAUDE.md` mục 7.7).
