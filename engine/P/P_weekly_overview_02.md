@@ -2,7 +2,7 @@
 
 File này cover compose **phần 6-9** của báo cáo `weekly_overview`. Dependency: master `P_weekly_overview_00` cho philosophy (fundamental-driven supremacy) + weight balance + Nguyên tắc 1 (fundamental trigger bắt buộc). Phần 2-5 ở `_01`, checkpoint + phần 10-12 + phần 1 ở `_03`, methodology ở `_04`. Render qua `O_weekly_overview_00`.
 
-> **CRITICAL CALLOUT — Phần 9 trigger:** 3 kịch bản VNINDEX **BẮT BUỘC trigger primary là vĩ mô / cơ bản / chính sách / catalyst**. Technical chỉ confirmation phụ (≤30% nội dung phần 9.3). Vi phạm = re-write trước khi render. Đây là khác biệt cốt lõi so với pack tiền nhiệm `P_weekly_market` (đã nghỉ hưu, không còn trong project knowledge).
+> **CRITICAL CALLOUT — Phần 9 trigger:** 3 kịch bản VNINDEX **BẮT BUỘC trigger primary là vĩ mô / cơ bản / chính sách / catalyst**. Technical chỉ confirmation phụ (≤30% nội dung phần 9.3). Vi phạm = re-write trước khi render. Đây là khác biệt cốt lõi so với pack tiền nhiệm `P_weekly_market` (đã nghỉ hưu, không còn trong `engine/`).
 
 ## 1. Phần 6 — Biến động 18 ngành whitelist
 

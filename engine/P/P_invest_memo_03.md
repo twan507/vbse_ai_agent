@@ -667,4 +667,4 @@ Output tier 2 lưu file `tier2_YYYYMMDD_confirmed.md` (sau khi user confirm), g�
 6. **Danh sách mã sát nút** — để tier 3 tham khảo nếu shortlist không đạt chất lượng
 7. **Link audit log** nếu có override
 
-File này được enable vào project knowledge session tier 3 kế tiếp. Tier 3 dùng làm input chính, không re-run B/C/D/A cho mã khác.
+File này lưu tại `outputs/md/invest_memo/<YYYY-MM>_cycle/`; tier 3 đọc trực tiếp từ đó ở session kế tiếp. Tier 3 dùng làm input chính, không re-run B/C/D/A cho mã khác.

@@ -598,4 +598,4 @@ Output tier 3 lưu file `tier3_YYYYMMDD_confirmed.md` (sau khi user confirm), g�
 6. **Danh sách PDF user cần upload** — cho từng mã top 3, list 3 file: BCTC soát xét kỳ gần nhất, BCTC năm mới nhất, BCTN mới nhất
 7. **Link audit log** nếu có override
 
-File này được enable vào project knowledge session tier 5A kế tiếp. Tier 5A chạy riêng từng mã (per-stock checkpoint CP5A) nên có thể tách nhiều session.
+File này lưu tại `outputs/md/invest_memo/<YYYY-MM>_cycle/`; tier 5A đọc trực tiếp từ đó ở session kế tiếp. Tier 5A chạy riêng từng mã (per-stock checkpoint CP5A) nên có thể tách nhiều session.

@@ -65,7 +65,9 @@ Khung tư duy tổng quát, structure flex theo phát hiện thực tế của t
 - Monthly: `vbse_strategy_monthly_<YYYYMM>.md` — YYYYMM là tháng báo cáo (vd `vbse_strategy_monthly_202605.md` cho tháng 5/2026)
 - Weekly update: `vbse_strategy_weekly_<YYYYMMDD>.md` — YYYYMMDD là ngày kết thúc tuần update
 
-**Lưu trữ:** agent KHÔNG lưu file qua session. User tự archive. Mode weekly bắt buộc user upload file monthly đang active — pack không tự nhớ thesis tháng.
+**Lưu trữ:** agent **ghi carrier MD vào kho**, đường dẫn theo `CLAUDE.md` mục 4 — `outputs/md/vbse_strategy/monthly/<YYYY>/` hoặc `.../weekly/<YYYY>/` — kèm front-matter và 1 dòng `outputs/INDEX.md`.
+
+**Mode weekly cần file monthly đang active:** tra `outputs/INDEX.md` hoặc đường dẫn xác định ở trên để lấy bản monthly của tháng tương ứng. Chỉ khi kho chưa có (báo cáo tháng đó soạn trước khi có kho) mới yêu cầu user upload. Pack không tự nhớ thesis tháng — nó **đọc lại từ kho**.
 
 ## 3. Từ điển thuật ngữ cốt lõi
 
@@ -250,13 +252,15 @@ Eval block 4 phần: Status carry-over / Watchlist W-1 tracking / Action item W-
 
 **Quyền override + audit trail:** user có quyền override mọi checkpoint. Override ghi inline note trong trục liên quan của báo cáo cuối + mention trong user overlay log (xem `P_vbse_strategy_09`). Pack KHÔNG dùng file `audit_overrides.md` riêng — log nằm trong báo cáo cuối.
 
-## 8. Hướng dẫn dùng trong Claude project
+## 8. Hướng dẫn dùng
 
-### 8.1. Setup project knowledge
+### 8.1. File cần đọc
 
-**Layer meta (luôn active):** system prompt + `KERNEL_SKELETON.md`.
+Runtime đọc thẳng filesystem — không có bước load/upload nào.
 
-**Pack dependency:** `K_agent_db` (6 file `_00` đến `_05`).
+**Layer meta:** `engine/system_prompt.md` + `engine/KERNEL_SKELETON.md`.
+
+**Pack dependency:** `K_agent_db` (7 file `_00` đến `_06`, trong `engine/K/`).
 
 **Pack này:** `P_vbse_strategy_00` (master) + 9 file tier (`_01` đến `_09`).
 

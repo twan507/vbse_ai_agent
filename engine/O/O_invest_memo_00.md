@@ -93,7 +93,7 @@ Nếu không rõ báo cáo nào → hỏi user clarify.
 
 **Bước 6 — Compose content MD.** Dù format cuối là gì, **luôn produce MD trước làm nguồn truth**. MD này chứa toàn bộ nội dung + chart annotation dạng YAML block (xem Phần 7). Nếu format cuối là MD → đây là output cuối, không cần render tiếp.
 
-**Bước 7 — Present MD cho user.** Trên Claude Desktop, xuất nội dung MD trong message để user copy/save thủ công. MD final là source of truth — luôn deliver MD trước.
+**Bước 7 — Ghi carrier MD vào kho.** Ghi file vào `outputs/md/invest_memo/<YYYY-MM>_cycle/` theo `CLAUDE.md` mục 4, kèm front-matter và 1 dòng `outputs/INDEX.md`. Báo user đường dẫn đã lưu. MD là source of truth — luôn có MD trước khi render bất kỳ format nào.
 
 **Bước 8 — Render binary (chỉ khi user explicit yêu cầu).** Nếu user yêu cầu pptx hoặc docx:
 1. Confirm format đã chọn (theo Nguyên tắc 1 mục 2)

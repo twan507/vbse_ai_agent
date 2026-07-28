@@ -4,6 +4,22 @@ Ghi mỗi lần sửa engine (K/P/O, system_prompt, KERNEL_SKELETON, OUTPUT_MAST
 
 Format: `## YYYY-MM-DD — tiêu đề` + file đụng tới + nội dung + lý do.
 
+## 2026-07-28 — Dọn tàn dư runtime Claude Desktop trong engine (rev 8, pass cuối)
+
+**Phạm vi:** 17 file. Lượt trước ghi "chưa dọn, cố ý"; user yêu cầu dọn hết trước khi vào việc thật. Phân loại kỹ vì phần lớn chữ "upload" là **đúng** — user gửi BCTC PDF qua chat vẫn là luồng hiện hành, không đụng.
+
+**Nhóm 1 — chỉ thị hành vi SAI (nặng nhất).** Hai pack ra lệnh agent không được lưu file:
+- `P_vbse_strategy_00` mục 2 và `P_weekly_overview_00` mục 2: *"agent KHÔNG lưu file qua session. User tự archive"* → nay agent ghi carrier MD vào `outputs/md/...` kèm front-matter + dòng INDEX.
+- Kéo theo: chỗ nào bảo "user upload báo cáo N-1 / W-1 / monthly active" nay đổi thành **tra `outputs/INDEX.md` trước**, chỉ khi kho chưa có mới yêu cầu upload. Sửa ở `P_vbse_strategy_00/07`, `P_weekly_overview_00`. Trực tiếp phục vụ Stage 0 (`P_vbse_strategy` cần N-1, `P_weekly_overview` cần W-1) — trước đây mâu thuẫn với `CLAUDE.md` mục 3.
+
+**Nhóm 2 — `system_prompt.md` execution loop trái luật gate.** Bước 1 cũ là *"Đọc `KERNEL_SKELETON.md` nếu chưa đọc trong session"* — tức mọi câu hỏi, kể cả tra cứu giá, đều nạp chỉ mục pack. Ngược hẳn luật gate vừa lập ở `CLAUDE.md` mục 3. Loop mới: **phân loại intent trước**, tra cứu thì bỏ qua chỉ mục pack luôn. Ghi tương ứng ở `KERNEL_SKELETON.md` đầu file. Đây là chỗ luật gate thực sự có hiệu lực — không có nó thì gate chỉ nằm trên giấy.
+
+**Nhóm 3 — wording "project knowledge" / "Claude Desktop".** 14 chỗ mô tả cơ chế lưu file của runtime cũ. Đổi sang đường dẫn kho thật: state file tier 0-7 của `P_invest_memo` nằm ở `outputs/md/invest_memo/<YYYY-MM>_cycle/`, tier sau đọc trực tiếp file tier trước. Mục "Setup project knowledge" đổi thành "File cần đọc".
+
+**Bắt được nhân tiện:** `P_vbse_strategy_00` và `P_weekly_overview_00` ghi `K_agent_db` có **6 file `_00`–`_05`**; thực tế **7 file `_00`–`_06`** (`_06` phase & danh mục thêm ở v2). Đã sửa.
+
+**Không đụng:** 4 chỗ "xuất block trong message" ở `P_vbse_strategy_00/07` — đó là **checkpoint block** trình user duyệt giữa stage, bản chất hội thoại, không phải deliverable. Hành vi vẫn đúng.
+
 ## 2026-07-28 — Audit rev 8: gỡ 5 chỉ thị "render binary out of scope" trong engine
 
 **Phát hiện khi audit sau khi đã đóng rev 8.** Sửa README mục 8.1 và CLAUDE.md mục 6 ở commit trước là chưa đủ — mâu thuẫn còn sống **bên trong engine**, ở dạng chỉ thị hành vi chứ không phải mô tả.

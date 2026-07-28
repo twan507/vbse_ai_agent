@@ -47,7 +47,9 @@ Dùng dạng observation/luận điểm phân tích, **không dùng từ command
 
 **Naming file output:** `weekly_overview_<YYYYMMDD>.md` — YYYYMMDD là ngày kết thúc tuần (Chủ Nhật).
 
-**Lưu trữ:** agent KHÔNG lưu file qua session. User tự archive sau khi nhận. Khi cần file W-1 cho phần Review, agent yêu cầu user upload.
+**Lưu trữ:** agent **ghi carrier MD vào kho** — `outputs/md/weekly_overview/<YYYY>/` theo `CLAUDE.md` mục 4 — kèm front-matter và 1 dòng `outputs/INDEX.md`.
+
+**Cần file W-1 cho phần Review:** tra `outputs/INDEX.md` hoặc đường dẫn xác định ở trên. Chỉ khi kho chưa có mới yêu cầu user upload.
 
 ## 3. Từ điển thuật ngữ cốt lõi
 
@@ -168,7 +170,7 @@ Mỗi call (regime, sector bias ngành, watchlist mã) bắt buộc đủ 3 thà
 - **Horizon:** 1-2 tuần / 2-4 tuần
 - **Disconfirming signal:** 2-3 chỉ báo cụ thể sẽ invalidate call
 
-Đây là **mới so với pack tiền nhiệm `P_weekly_market` (đã nghỉ hưu, không còn trong project knowledge)** — chuẩn institutional buy-side report.
+Đây là **mới so với pack tiền nhiệm `P_weekly_market` (đã nghỉ hưu, không còn trong `engine/`)** — chuẩn institutional buy-side report.
 
 **Nguyên tắc 4 — Mỗi stage kết thúc bằng checkpoint, agent không tự chuyển stage.**
 
@@ -184,13 +186,15 @@ Pack có **1 checkpoint duy nhất** (Checkpoint 1), đặt giữa phần 9 và 
 - Mention trong **User overlay log** ở metadata cuối (block ngắn 1-3 dòng tóm tắt view user inject + trạng thái xử lý: confirm / partial confirm / decline + lý do)
 - Pack KHÔNG dùng file `audit_overrides.md` riêng
 
-## 8. Hướng dẫn dùng trong Claude project
+## 8. Hướng dẫn dùng
 
-### 8.1. Setup project knowledge
+### 8.1. File cần đọc
 
-**Layer meta (luôn active):** system prompt + `KERNEL_SKELETON.md`.
+Runtime đọc thẳng filesystem — không có bước load/upload nào.
 
-**Pack dependency:** `K_agent_db` (6 file `_00` đến `_05`).
+**Layer meta:** `engine/system_prompt.md` + `engine/KERNEL_SKELETON.md`.
+
+**Pack dependency:** `K_agent_db` (7 file `_00` đến `_06`, trong `engine/K/`).
 
 **Pack này:** `P_weekly_overview_00` (master) + 4 file (`_01` đến `_04`).
 

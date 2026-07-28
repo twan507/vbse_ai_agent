@@ -1,6 +1,8 @@
 # KERNEL SKELETON
 
-File index của project knowledge. Agent đọc file này đầu session để biết pack nào available và trigger nào activate pack nào. Chi tiết nội dung pack nằm trong file `_00` master của pack tương ứng, không duplicate vào đây.
+File index của `engine/`. Liệt kê pack available + trigger activation. Chi tiết nội dung pack nằm trong file `_00` master của pack tương ứng, không duplicate vào đây.
+
+**Đọc file này khi nào:** chỉ khi cần chạy workflow deliverable. Tra cứu nhanh thì **không đọc** — đọc chỉ mục pack là mở cửa cho việc activate nhầm. Luật gate: `CLAUDE.md` mục 3.
 
 ## Cách dùng file này
 

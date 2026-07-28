@@ -39,7 +39,7 @@ Chi tiết logic sector bias ở `P_weekly_overview_04` mục 2.4.
 
 ### 1.3. Conviction + Disconfirming bắt buộc (Nguyên tắc 3 master)
 
-**Mới so với pack tiền nhiệm `P_weekly_market` (đã nghỉ hưu, không còn trong project knowledge).** Mỗi call ở checkpoint phải kèm:
+**Mới so với pack tiền nhiệm `P_weekly_market` (đã nghỉ hưu, không còn trong `engine/`).** Mỗi call ở checkpoint phải kèm:
 
 **Regime call:**
 - **Conviction:** HIGH / MID / LOW
@@ -245,7 +245,7 @@ Chi tiết render text 3 mode ở `O_weekly_overview_00` mục 3.12.
 
 Sau khi có đủ 12 phần structured content + self-audit pass (theo `P_weekly_overview_04` mục 5), agent gọi `O_weekly_overview_00` để render thành file MD final.
 
-File output: `weekly_overview_<YYYYMMDD>.md`. Trên Claude Desktop, agent xuất nội dung MD trong message để user copy/save thủ công.
+File output: `weekly_overview_<YYYYMMDD>.md`, ghi vào `outputs/md/weekly_overview/<YYYY>/` theo `CLAUDE.md` mục 4, kèm front-matter và 1 dòng `outputs/INDEX.md`. Báo user đường dẫn đã lưu.
 
 Nếu user yêu cầu format khác (docx / pptx), render thêm theo `O_weekly_overview_00` mục tương ứng.
 

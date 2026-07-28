@@ -44,7 +44,7 @@ Workflow flex 4 stage, ngăn cách bằng 2 checkpoint (sau Stage 0 evaluation +
   Xuất trong message
 ```
 
-**Lưu ý:** DB `agent_db` KHÔNG có collection storage cho báo cáo chiến lược cũ (theo schema `K_agent_db_01`). Vì vậy "đọc lại strategy cũ" phụ thuộc 100% vào **file user upload** trong session. Agent có thể đọc file MD user đã save trước đó (vd `vbse_strategy_monthly_202604.md`). DB chỉ dùng để query **actual data** cross-check với thesis cũ (giá, dòng tiền, BCTC, vĩ mô).
+**Lưu ý:** DB `agent_db` KHÔNG có collection storage cho báo cáo chiến lược cũ (theo schema `K_agent_db_01`) — báo cáo cũ nằm ở **kho `outputs/`**, không nằm ở DB. Đọc lại strategy N-1: tra `outputs/INDEX.md` hoặc đường dẫn xác định `outputs/md/vbse_strategy/monthly/<YYYY>/vbse_strategy_monthly_<YYYYMM>.md`. Chỉ khi kho chưa có mới cần user upload. DB dùng để query **actual data** cross-check với thesis cũ (giá, dòng tiền, BCTC, vĩ mô).
 
 ## 2. Pre-flight monthly
 

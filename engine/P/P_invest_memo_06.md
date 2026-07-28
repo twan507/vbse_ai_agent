@@ -726,4 +726,4 @@ Output tier 5B lưu file `tier5B_<ticker>_YYYYMMDD_confirmed.md` per-stock.
    - Sensitivity biến quan trọng nhất (input cho phần rủi ro)
 9. **Link audit log** nếu user override giả định
 
-File này enable vào project knowledge cho tier 5C session.
+File này lưu tại `outputs/md/invest_memo/<YYYY-MM>_cycle/`; tier 5C đọc trực tiếp từ đó.

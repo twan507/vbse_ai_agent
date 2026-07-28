@@ -675,6 +675,6 @@ Output tier 6 lưu file `tier6_portfolio_YYYYMMDD_confirmed.md`.
 8. **Link tier 5C memo files** (reference cho exit triggers)
 9. **Audit log** nếu user override bất kỳ constraint nào
 
-File này enable vào project knowledge session tier 7 (monitoring + exit management, `P_invest_memo_09`).
+File này lưu tại `outputs/md/invest_memo/<YYYY-MM>_cycle/`; tier 7 (monitoring + exit management, `P_invest_memo_09`) đọc trực tiếp từ đó.
 
 Sau tier 6 confirm, user đặt orders thực tế qua broker. Khi orders filled, Agent chuyển sang tier 7 để monitor positions + execute exit triggers khi condition match.

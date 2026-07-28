@@ -771,4 +771,4 @@ Output tier 5A lưu file `tier5A_<ticker>_YYYYMMDD_confirmed.md` per-stock.
    - Exception Q4: chỉ BCTC năm (quý gần nhất là Q4 đã gộp) — độ tin cậy cao, ghi rõ lý do
 7. **Link audit log** nếu user override
 
-File này enable vào project knowledge cho tier 5B session. Với mã đỏ (loại), không có tier 5B/5C — file chỉ để archive, ghi nhận đã loại + lý do.
+File này lưu tại `outputs/md/invest_memo/<YYYY-MM>_cycle/`; tier 5B đọc trực tiếp từ đó. Với mã đỏ (loại), không có tier 5B/5C — file chỉ để archive, ghi nhận đã loại + lý do.

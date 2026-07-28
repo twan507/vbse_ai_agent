@@ -276,32 +276,32 @@ Sau 3-6 tháng, review audit log để:
 - Phát hiện pattern override (user có xu hướng bias nhóm nào)
 - Calibrate lại rule Agent nếu override đúng ≥ 80%
 
-Chi tiết format audit log và cách Agent append entry xem phần "Setup project knowledge" dưới đây và trong từng file tier.
+Chi tiết format audit log và cách Agent append entry xem phần "File cần đọc" dưới đây và trong từng file tier.
 
-## 7. Hướng dẫn dùng trong Claude app
+## 7. Hướng dẫn dùng
 
-Pack `P_invest_memo` chạy trong Claude project với architecture 3 layer: system prompt (meta-rules cố định) + `KERNEL_SKELETON.md` (liệt kê pack available) + pack K/P/O. Chi tiết kiến trúc xem system prompt và `KERNEL_SKELETON.md`.
+Pack `P_invest_memo` chạy trên architecture 3 layer: system prompt (meta-rules) + `KERNEL_SKELETON.md` (chỉ mục pack) + pack K/P/O. Chi tiết kiến trúc xem system prompt và `KERNEL_SKELETON.md`.
 
-### Setup project knowledge
+### File cần đọc
 
-Claude project cần chứa các thành phần sau để agent chạy đúng:
+Runtime đọc thẳng filesystem — không có bước load/upload nào. Agent đọc theo nhu cầu:
 
-**Layer meta (luôn active):**
-- System prompt: đã load vào Claude project settings, không nằm trong knowledge
-- `KERNEL_SKELETON.md`: file index liệt kê các pack available
+**Layer meta:**
+- `engine/system_prompt.md` — meta-rules, router, persona
+- `engine/KERNEL_SKELETON.md` — chỉ mục pack, đọc khi chạy workflow
 
-**Pack dependency (bắt buộc load trước khi chạy workflow):**
-- Pack `K_agent_db` — 6 file (`K_agent_db_00` đến `K_agent_db_05`) chứa schema, query patterns, anti-patterns, methodology diễn giải chỉ báo và tin tức. P_invest_memo gọi K_agent_db như thư viện cho mọi query định lượng.
+**Pack dependency:**
+- Pack `K_agent_db` (`engine/K/`) — 7 file (`K_agent_db_00` đến `K_agent_db_06`) chứa schema, query patterns, anti-patterns, methodology diễn giải chỉ báo và tin tức. `P_invest_memo` gọi `K_agent_db` như thư viện cho mọi query định lượng.
 
 **Pack này:**
-- `P_invest_memo_00` (file master này) + 9 file tier con (`P_invest_memo_01` đến `P_invest_memo_09`).
+- `P_invest_memo_00` (file master này) + 9 file tier con (`P_invest_memo_01` đến `P_invest_memo_09`), trong `engine/P/`.
 
-**State artifacts (runtime, tạo và update theo thời gian):**
-- Các memo đã viết — Agent reference khi đánh giá position mới tương tự hoặc khi re-review position cũ
-- Danh sách catalyst active hiện tại (update hàng tuần sau CP1)
-- File `audit_overrides.md` — append entry mỗi khi user override quyết định agent
+**State artifacts — nằm trong kho, không phải trong engine:**
+- Các memo và file tier đã viết: `outputs/md/invest_memo/<YYYY-MM>_cycle/` — Agent đọc lại khi đánh giá position mới tương tự hoặc re-review position cũ. Tra `outputs/INDEX.md` để định vị.
+- Danh sách catalyst active hiện tại (update hàng tuần sau CP1) — nằm trong file tier 0 của cycle.
+- `audit_overrides.md` trong thư mục cycle — append entry mỗi khi user override quyết định agent.
 
-Agent có thể search cross-file trong project knowledge khi cần. Không cần upload lại mỗi session.
+State file sống qua session vì nằm trong kho. Tier sau đọc trực tiếp file tier trước, không cần user đưa lại.
 
 ### Cách start session mới
 

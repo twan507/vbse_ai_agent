@@ -363,7 +363,7 @@ Giá urea đáy chu kỳ 2 năm | 3 | 6-12 tháng | 2 | Phân bón | —
 NHNN nới tín dụng ngành SX | 1 | 1 tháng | 3 | Thép, hoá chất, dệt may | —
 ```
 
-**Bảng này được lưu vào file và đưa vào project knowledge** để tier 1-4 reference. Update hàng tuần khi chạy tier 0.
+**Bảng này nằm trong file tier 0 ở kho** (`outputs/md/invest_memo/<YYYY-MM>_cycle/`) để tier 1-4 đọc lại. Update hàng tuần khi chạy tier 0.
 
 ---
 
@@ -535,4 +535,4 @@ Output tier 0 phải lưu thành file markdown, đặt tên `tier0_YYYYMMDD_conf
    - Cảnh báo về khung trend năm quá mua (nếu có) để tier 3 cân nhắc bucket 3 chặt hơn
 4. **Link audit log** nếu có override
 
-File này được enable vào project knowledge session tier 1 kế tiếp.
+File này lưu tại `outputs/md/invest_memo/<YYYY-MM>_cycle/`; tier 1 đọc trực tiếp từ đó ở session kế tiếp.

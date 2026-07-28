@@ -446,7 +446,7 @@ Khi user yêu cầu render stock memo (ví dụ "xuất memo VNM"):
 - Nếu docx/pptx → hỏi template
 
 **Bước 2 — Load 3 state file:**
-- Tìm trong project knowledge: `tier5A_<VNM>_*`, `tier5B_<VNM>_*`, `tier5C_<VNM>_*`
+- Tìm trong kho `outputs/md/invest_memo/<YYYY-MM>_cycle/`: `tier5A_<VNM>_*`, `tier5B_<VNM>_*`, `tier5C_<VNM>_*`
 - Lấy version confirmed mới nhất (theo YYYYMMDD)
 - Nếu thiếu state → flag user theo rule ở mục 1
 

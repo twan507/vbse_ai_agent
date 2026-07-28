@@ -572,4 +572,4 @@ Output tier 1 lưu thành file markdown, tên `tier1_YYYYMMDD_confirmed.md` (sau
 5. **Danh sách ngành sát nút** — để tier 2 tham khảo nếu shortlist quá ít
 6. **Link audit log** nếu có override
 
-File này được enable vào project knowledge session tier 2 kế tiếp. Tier 2 dùng làm input chính, không query lại Funnel B/C/A cho các ngành không trong shortlist.
+File này lưu tại `outputs/md/invest_memo/<YYYY-MM>_cycle/`; tier 2 đọc trực tiếp từ đó ở session kế tiếp. Tier 2 dùng làm input chính, không query lại Funnel B/C/A cho các ngành không trong shortlist.
