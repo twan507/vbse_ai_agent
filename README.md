@@ -54,7 +54,7 @@ Bốn thư mục gốc sắp alphabet ra đúng thứ tự đọc: `_ops` → `e
 
 **Luật vận hành cốt lõi (chi tiết `CLAUDE.md` mục 2):** AI là người ghi duy nhất — ngoại lệ duy nhất là `outputs/sent/`, nơi user sửa tay bản gửi khách; input user gửi qua chat, AI chuẩn hoá tên theo convention rồi mới lưu; AI phát hiện bất thường thì báo user, không tự xử; kho append-only — đính chính bằng bản mới + đánh dấu superseded trong INDEX, không ghi đè.
 
-**Version control:** git local branch `main`, AI commit theo lượt việc (deliverable / intake / engine / ops tách commit riêng), lịch sử append-only không rewrite, `.gitattributes` ép LF. Remote `origin` = GitHub `twan507/vbse_ai_agent`; AI commit — user push thủ công (sandbox không có credential; chi tiết `CLAUDE.md` mục 7.7). `outputs/pptx/` và `outputs/docx/` gitignore — bản máy sinh lại được; bản không tái tạo được nằm ở `outputs/sent/`. Chuỗi truy vết 4 lớp: front-matter (file tự mô tả) → `outputs/INDEX.md` (sổ cái) → `_ops/CHANGELOG.md` (log ngữ nghĩa engine) → git log (audit trail máy).
+**Version control:** git local branch `main`, AI commit theo lượt việc (deliverable / intake / engine / ops tách commit riêng), lịch sử append-only không rewrite, `.gitattributes` ép LF. Remote `origin` = GitHub `twan507/vbse_ai_agent`; **AI commit xong thì push luôn** — verify 2026-07-28 là push từ sandbox chạy được qua SSH của máy user (chi tiết `CLAUDE.md` mục 7.7). `outputs/pptx/` và `outputs/docx/` gitignore — bản máy sinh lại được; bản không tái tạo được nằm ở `outputs/sent/`. Chuỗi truy vết 4 lớp: front-matter (file tự mô tả) → `outputs/INDEX.md` (sổ cái) → `_ops/CHANGELOG.md` (log ngữ nghĩa engine) → git log (audit trail máy).
 
 ---
 
@@ -289,7 +289,7 @@ Trước rev 8 đây là một agent riêng với bản knowledge riêng. Nay n�
 
 **Không** đọc `KERNEL_SKELETON.md` khi không cần deliverable — đó là chỉ mục P/O pack, đọc nó là mở cửa cho việc activate nhầm.
 
-`K_sector_framework` cũng không dùng ở chế độ này: nó phục vụ deep-dive workflow, P pack chủ động pull chứ không tự activate.
+`K_sector_framework` **dùng được ở chế độ này** khi user hỏi đích danh về một ngành ("phân tích sâu ngành X", "outlook ngành X"). Nó là K pack, mà gate chỉ chặn P/O — pull nó không phá gate, miễn trả lời inline chứ không sinh deliverable file. Nó không tự activate; phải có bên chủ động pull (P pack, hoặc câu hỏi ngành tường minh).
 
 ### 5.3. Ranh giới giữ bằng gate, không bằng thư mục
 
@@ -404,7 +404,16 @@ Pack `P_weekly_overview` và `P_vbse_strategy` (có mode branded gửi KH) tuân
 
 Điều kiện thật là **filesystem + thư viện Python**. Skill `document-skills` của Anthropic chỉ là tiện nghi — nó cũng chỉ gọi hai thư viện đó.
 
-**Note về nhãn `[LEGACY]`:** 16/16 section "Guide render docx/pptx" trong các O pack bị marked `[LEGACY]` từ rev 6 kèm note "out of scope". Nhãn đó nay đọc là **"reference spec cho render"**, không phải "đã bỏ" — `CLAUDE.md` mục 6 chỉ định dùng chúng làm style baseline. Không xoá.
+**Đính chính về nhãn `[LEGACY]` (2026-07-28):** README các rev trước ghi "16/16 section Guide render docx/pptx bị marked `[LEGACY]`", và `CLAUDE.md` mục 6 chỉ định dùng chúng làm style baseline. **Nhãn đó chưa từng tồn tại trong repo** — `git log -S"[LEGACY]"` trên toàn lịch sử trả về rỗng, baseline rev 7 cũng 0 lần. Nó là mô tả sót lại từ rev 6 tiền-git. Đã gỡ khỏi cả hai chỗ.
+
+**Hiện trạng spec render binary** (verify 2026-07-28, đếm trên cả 10 file O pack):
+
+| O pack | Spec layout binary |
+|---|---|
+| `O_invest_memo_*` | **Có thật** — bảng slide 15-20 slide ở `_02`, layout docx/pptx ở `_00`/`_01`/`_03`/`_05` |
+| `O_weekly_overview_00` · `O_vbse_strategy_00` · `O_stock_report_00` | **Không có** — 0 lần nhắc "slide"; chỗ duy nhất nhắc pptx là con trỏ ngược về `system_prompt.md` mục 4, mà mục đó lại trỏ ngược về O pack. Tham chiếu vòng tròn |
+
+Với 3 pack sau, render binary vẫn **trong scope** nhưng style phải hỏi user (`system_prompt.md` mục 4 Bước 2). Viết spec cho chúng sau khi chạy 2-3 báo cáo thật và biết layout ổn định trông thế nào — cùng lý do với mục 8.1b.
 
 **MD vẫn là source of truth của phân tích**, nhưng không còn là output cuối duy nhất. Chuỗi đầy đủ: MD → render → user sửa tay ở `outputs/sent/` → gửi khách. Vì có bàn tay người ở cuối nên **không theo đuổi render xác định byte-by-byte** — script render (nếu làm sau này) chỉ cần đưa tới bản nháp tốt.
 

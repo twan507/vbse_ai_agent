@@ -55,9 +55,11 @@ Không lưu thẳng file với tên gốc user gửi. Chuẩn hoá xong mới l�
 
 **Luật gate — mặc định là tra cứu, không phải chạy workflow:**
 
-- Mặc định mọi query là **inline lookup**. Chỉ activate P/O pack khi query có **ý định deliverable tường minh** ("viết báo cáo", "memo deep-dive", "chiến lược tháng", "stock report", tên tier/giai đoạn cụ thể).
-- Nghi ngờ thì **hỏi**, không tự activate. Activate nhầm tốn cả chục nghìn token và đổi hẳn dạng output.
-- Tiền tố `tra nhanh:` **ép** inline, cấm activate pack bất kể nội dung câu hỏi.
+- Mặc định mọi query là **inline lookup**. Chỉ activate P/O pack khi query có **ý định deliverable tường minh**: "viết báo cáo", "memo deep-dive", "chiến lược tháng", "báo cáo tuần", "stock report", "phân tích cổ phiếu [mã]", "phân tích sâu [mã]", "brief [mã] cho KH", "so sánh [mã] vs [mã]", hoặc tên tier/giai đoạn cụ thể. Danh sách đầy đủ theo từng pack: khối **Trigger** trong `KERNEL_SKELETON.md`.
+- **Chủ đề không phải ý định.** Bảng router trên kê theo chủ đề (chiến lược, cổ phiếu, tuần); câu hỏi chạm chủ đề mà không có động từ tạo-ra-thứ-gì thì vẫn là tra cứu. "Đánh giá ngành ngân hàng thế nào" = tra cứu; "viết báo cáo chiến lược ngành ngân hàng" = deliverable.
+- **Query nằm ở vùng rìa:** được phép đọc **riêng khối Trigger** trong `KERNEL_SKELETON.md` để quyết định — không đọc phần mô tả pack. Đọc xong mà vẫn không rõ thì **hỏi**, không tự activate. Activate nhầm tốn cả chục nghìn token và đổi hẳn dạng output.
+- **K pack không bị gate chặn.** Gate chỉ chặn P/O. Pull `K_agent_db` hay `K_sector_framework` ở chế độ tra cứu là hợp lệ, miễn không sinh deliverable file.
+- Tiền tố `tra nhanh:` **ép** inline, cấm activate P/O bất kể nội dung câu hỏi.
 - Pack không có trong `KERNEL_SKELETON.md` = không tồn tại. Không suy diễn pack ngoài danh sách.
 
 Pack file nằm trong 3 thư mục con `K/`, `P/`, `O/` — cross-reference trong nội dung pack là tên trần (`K_agent_db_04`) nên không phụ thuộc đường dẫn. Trigger activation từng pack: `KERNEL_SKELETON.md`.
@@ -118,7 +120,7 @@ status: final          # draft | final | sent | superseded
 
 Điều kiện: **filesystem + thư viện Python** (`python-pptx`, `python-docx`, `openpyxl`). Skill `document-skills` là tiện nghi, không phải điều kiện cần.
 
-- Style baseline: render spec trong O pack tương ứng (kể cả section đánh dấu `[LEGACY]` — dùng làm reference spec), cộng branding info user cung cấp ở pre-flight khi cần bản branded.
+- Style baseline: render spec trong O pack tương ứng, cộng branding info user cung cấp ở pre-flight khi cần bản branded. **Chỉ pack `O_invest_memo` có spec layout binary thật** (bảng slide ở `O_invest_memo_02`); `O_weekly_overview`, `O_vbse_strategy`, `O_stock_report` **chưa có** — với 3 pack đó phải hỏi style user, không tự đoán (`engine/system_prompt.md` mục 4 Bước 2). `since: 2026-07 | review: 2026-Q4` — viết spec sau khi chạy 2-3 báo cáo thật.
 - Font body: Roboto, fallback Roboto → Open Sans → Arial (`engine/system_prompt.md` mục 4).
 - Render xong: đặt vào `outputs/pptx/` hoặc `docx/` đúng đường dẫn gương với MD, rồi **copy một bản sang `outputs/sent/`** để user sửa tay. Ghi cả hai vào front-matter `derived` + cập nhật INDEX.
 
@@ -126,7 +128,7 @@ status: final          # draft | final | sent | superseded
 
 - **MD là nguồn của phân tích.** Sửa nội dung phân tích thì sửa MD rồi re-render.
 - **Bản trong `sent/` là nguồn của thứ khách thực sự nhận.** User sửa tay ở đó; nội dung có thể khác MD — hợp lệ, không phải bất thường.
-- **Re-render chỉ ghi đè `pptx/` và `docx/`. TUYỆT ĐỐI không chạm `sent/`.** Muốn thay bản đã gửi thì hỏi user trước, hoặc đổi tên bản cũ.
+- **Re-render chỉ ghi đè `pptx/` và `docx/`. TUYỆT ĐỐI không chạm `sent/`.** Muốn thay bản trong `sent/` thì **phải hỏi user trước** — không có ngoại lệ. Được user đồng ý rồi thì đổi tên bản cũ giữ lại (`<basename>_superseded_<YYYYMMDD>.<ext>`) chứ không ghi đè.
 
 ## 7. Quy tắc git
 
