@@ -10,6 +10,22 @@ Entry mới thêm lên đầu.
 
 ---
 
+## Hook git chặn cả khi lệnh chỉ *nhắc tới* chuỗi bị cấm
+
+**Symptom.** Chạy một lệnh hoàn toàn vô hại — ví dụ script test chính cái hook, hoặc `echo` một đoạn hướng dẫn — nhưng bị chặn với thông báo vi phạm mục 7.4. Lệnh không hề thực thi git rewrite nào.
+
+**Root cause.** Hook match **regex trên chuỗi lệnh**, không phân tích cú pháp. Chuỗi `git commit --amend` nằm trong mảng dữ liệu test, trong biến, trong comment, hay trong tham số `-m` đều khớp như nhau. Hook không có cách nào biết đâu là lệnh sắp chạy, đâu là văn bản.
+
+**Fix.** Không "sửa" — đây là hành vi đúng theo thiết kế. Cần dùng thì tách chuỗi ra (`'git ' + 'commit --amend'`), đọc từ file, hoặc dùng tool Write/Edit thay vì Bash/PowerShell (hook chỉ gắn matcher `Bash|PowerShell`).
+
+**Vì sao cách sửa hiển nhiên lại sai:** phản xạ đầu tiên là siết regex cho "thông minh" hơn — chỉ khớp khi chuỗi đứng đầu dòng, hoặc bỏ qua phần trong dấu nháy. Cả hai đều đổi **false positive lấy false negative**, và hai loại lỗi này không hề cân nhau. Một lần chặn nhầm thì thấy ngay, khó chịu 10 giây, xử lý được. Một lần chặn sót thì **im lặng** — lịch sử git bị rewrite, không ai biết, và đó đúng là thứ hook sinh ra để ngăn. Với guard bảo vệ lịch sử, luôn chọn nghiêng về chặn thừa.
+
+**Where.** `.claude/hooks/block-git-rewrite.ps1`, `.claude/settings.json` (matcher `Bash|PowerShell`)
+
+**Ghi chú.** Hook có hiệu lực **ngay trong phiên đang chạy** khi `.claude/settings.json` vừa được tạo, không phải chờ phiên sau. Xác nhận thực nghiệm 2026-07-28.
+
+---
+
 ## Hook PowerShell im lặng fail-open khi script có ký tự ngoài ASCII
 
 **Symptom.** PreToolUse hook chặn git viết xong, test thử thì **mọi** case đều lọt — kể cả `git commit --amend`. Chạy tay script thấy exit code 1 ở tất cả input, không phải 0 hay 2.
