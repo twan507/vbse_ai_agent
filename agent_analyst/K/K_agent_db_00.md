@@ -15,7 +15,7 @@ Pack `K_agent_db` cung cấp knowledge base cho phân tích chứng khoán Việ
 **Negative scope:**
 - Không dùng cho thị trường ngoài VN (cổ phiếu US, crypto, hàng hoá quốc tế trừ khi làm bối cảnh)
 - Không thay thế model DCF chuyên sâu của analyst lâu năm
-- Không hỗ trợ tư vấn cho retail/client cuối — pack này giả định audience là analyst/broker nội bộ (xem mục 4.4)
+- Không tư vấn cá nhân hoá cho từng nhà đầu tư cụ thể. Audience là **tham số** (analyst nội bộ hoặc NĐT cá nhân/KH) — xem mục 4.4
 - Không thực hiện ghi dữ liệu vào DB, chỉ đọc (find, aggregate)
 - Không đặt lệnh, không thao tác tài khoản, không có dữ liệu lệnh thật/tài khoản cá nhân
 
@@ -71,7 +71,7 @@ Lý do: nếu đoán sai giả định gốc, toàn bộ phân tích sau dính l
 
 ### 4.2. Clarification format cho domain này
 
-Khi cần clarify trước câu hỏi phân tích (theo rule system prompt mục 5.4), domain này dùng 2 câu hỏi chuẩn:
+Mặc định của rule là **nêu giả định rồi trả lời**, không hỏi lại (system prompt mục 5.4). Khi rơi đúng vào trường hợp mơ hồ thật và cần clarify, domain này dùng 2 câu hỏi chuẩn:
 
 > **1. Khung thời gian quan tâm:**
 > (a) Ngắn hạn dưới 1 tháng
@@ -83,7 +83,7 @@ Khi cần clarify trước câu hỏi phân tích (theo rule system prompt mục
 > (b) Cân nhắc mở vị thế mới
 > (c) Review vị thế đang cầm
 
-Skip clarification khi: tra cứu đơn lẻ ("VNM giá bao nhiêu", "KLGD HPG hôm nay"), trạng thái nhanh có 1 cách hiểu ("thị trường hôm nay thế nào"), hoặc câu hỏi tiếp nối khi context đã rõ từ turn trước.
+Skip clarification khi: tra cứu đơn lẻ ("VNM giá bao nhiêu", "KLGD HPG hôm nay"), trạng thái nhanh có 1 cách hiểu ("thị trường hôm nay thế nào"), câu hỏi tiếp nối khi context đã rõ từ turn trước, **hoặc khi ghi rõ giả định là đủ để trả lời có ích** — đây là trường hợp phổ biến nhất.
 
 ### 4.3. Đưa số có cơ sở
 
@@ -99,9 +99,16 @@ Skip clarification khi: tra cứu đơn lẻ ("VNM giá bao nhiêu", "KLGD HPG h
 
 ### 4.4. Giới hạn tư vấn
 
-Pack giả định user là analyst/broker nội bộ, được phép nhận khuyến nghị cụ thể. Nếu project chuyển cho audience khác (retail, client cuối, intern chưa chứng chỉ), cần swap sang K pack phù hợp — pack này không phục vụ được vì constraint nội dung rộng hơn mức cho phép retail.
+**Audience là tham số, không phải hằng số.** Engine phục vụ 2 audience; xác định ở đầu session hoặc pre-flight của pack, không rõ thì mặc định **analyst nội bộ**. Định nghĩa đầy đủ ở system prompt mục 11.2.
 
-**Lưu ý hành văn file con:** một số đoạn trong file con (đặc biệt `K_agent_db_06`) kế thừa từ bản gốc soạn cho agent phục vụ nhà đầu tư cá nhân, hành văn "khách/anh chị" — đọc là "user cuối của output". Nội dung số liệu và luật trình bày giữ nguyên giá trị.
+| Audience | Được nhận | Hành văn |
+|---|---|---|
+| **analyst / broker nội bộ** (default) | Khuyến nghị cụ thể, conviction HIGH/MID/LOW, TP/SL số | Thuật ngữ chuyên môn dùng thẳng |
+| **NĐT cá nhân / khách hàng** | Quan điểm định tính, không render TP/SL số cụ thể | Thuật ngữ chuyên sâu kèm giải thích ngắn lần đầu dùng |
+
+O pack có bảng audience riêng (vd `O_stock_report_00` mục 5) override bảng này trong phạm vi pack đó.
+
+**Lưu ý hành văn file con:** một số đoạn trong file con (đặc biệt `K_agent_db_06`) hành văn hướng "khách/anh chị". Đọc là "user cuối của output" — hợp lệ với cả hai audience, nội dung số liệu và luật trình bày giữ nguyên giá trị.
 
 Khuyến nghị phải:
 - Gắn với giả định rõ (khung thời gian, mức rủi ro, vốn giả định) — nêu tự nhiên trong bài, khi kết luận phụ thuộc vào nó

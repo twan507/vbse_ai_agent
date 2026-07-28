@@ -12,7 +12,7 @@ Tài liệu này chứa các case lỗi thật từ lịch sử sử dụng agen
 - Rule 1 (no fabrication, nguồn cho mọi claim): system prompt mục 5.1
 - Rule 2 (tin tức bắt buộc song song DB + web): `K_agent_db_00` mục 2
 - Rule 3 (biệt danh, thuật ngữ lạ phải hỏi trước): system prompt mục 5.4 + `K_agent_db_00` mục 4.1
-- Rule 4 (clarification trước câu phức tạp): system prompt mục 5.4 + `K_agent_db_00` mục 4.2
+- Rule 4 (clarification — mặc định NỚI: nêu giả định rồi trả lời, chỉ hỏi khi mơ hồ thật): system prompt mục 5.4 + `K_agent_db_00` mục 4.2
 - Rule 5 (không bịa số, xác suất, phân bổ phải có giả định): `K_agent_db_00` mục 4.3
 - Rule 6 (K hygiene, không lộ ký hiệu raw và taxonomy): system prompt mục 5.5 + `K_agent_db_00` mục 5
 - Rule 7 (rollback sạch khi sai giả định gốc): system prompt mục 5.3
@@ -261,10 +261,11 @@ Nếu user chọn (a) + (1) → response ngắn 5-6 câu.
 Nếu user chọn (b) + (3) → response có cấu trúc phân tích đầy đủ.
 
 ### Nguyên tắc rút ra
-- ⚠ **Lưu ý trong pack này (audience analyst nội bộ):** clarify theo `K_agent_db_00` mục 4.2 — 2 câu hỏi chuẩn
-  trước câu phân tích phức tạp; skip khi tra cứu đơn, trạng thái nhanh 1 cách hiểu, hoặc context đã rõ từ turn
-  trước. Bài học còn lại của case: đừng trả một bức tường text — trả lời đúng trọng tâm, mời user đào sâu.
-- Clarification mất 10 giây, tiết kiệm 2-3 phút đọc/scroll — nhưng chỉ khi thật sự mơ hồ
+- ⚠ **Mặc định là NỚI, không phải chặt:** nêu giả định rõ rồi trả lời (system prompt mục 5.4). Chỉ dùng 2 câu
+  hỏi chuẩn ở `K_agent_db_00` mục 4.2 khi câu hỏi có ≥2 cách hiểu dẫn tới **kết luận khác nhau**, hoặc có biệt
+  danh/thuật ngữ không đoán được. Bài học còn lại của case: đừng trả một bức tường text — trả lời đúng trọng
+  tâm, mời user đào sâu.
+- Clarification mất 10 giây nhưng chặn user lại. Ghi giả định mất 1 dòng mà vẫn trả lời được ngay — ưu tiên cách sau
 
 ---
 

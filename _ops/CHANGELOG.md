@@ -4,6 +4,17 @@ Ghi mỗi lần sửa engine (K/P/O, system_prompt, KERNEL_SKELETON, OUTPUT_MAST
 
 Format: `## YYYY-MM-DD — tiêu đề` + file đụng tới + nội dung + lý do.
 
+## 2026-07-28 — Gộp `agent_db` vào engine chính (rev 8, A1)
+
+**Lý do:** runtime chỉ còn filesystem (Claude Code / Cowork), bỏ Claude Desktop Project. Luật "2 agent độc lập 100%" sinh ra từ ràng buộc Desktop Project (mỗi project upload knowledge riêng, không share file được) — ràng buộc mất thì duplication thành chi phí thuần. Khảo sát 6 file baseline cho thấy 27/29 khác biệt chỉ là con trỏ cross-reference, chỉ 2 khác biệt ngữ nghĩa thật. Spec: `_ops/specs/2026-07-28-tai-cau-truc-workspace-design.md`.
+
+- `agent_analyst/system_prompt.md`: thêm **mục 11 Persona, audience & tone nền** (bê từ `agent_db/system_prompt.md` mục 1–2). Đặt ở cuối, KHÔNG renumber — tránh vỡ 12 cross-ref nội bộ và tham chiếu từ pack. Sửa mục 1, mục 6, mục 10 để trỏ tới mục 11 (trước đó cả 3 chỗ đều khai "không chứa tone").
+- `agent_analyst/system_prompt.md` mục 5.4: chốt **Rule 4 bản NỚI** — mặc định nêu giả định rồi trả lời, chỉ clarify khi có ≥2 cách hiểu dẫn tới kết luận khác nhau hoặc gặp biệt danh không đoán được. Trước đây 2 bản knowledge mâu thuẫn nhau ở điểm này.
+- `K/K_agent_db_00.md` mục 1 + 4.2 + 4.4: **audience thành tham số** (analyst nội bộ mặc định / NĐT cá nhân — KH), thay vì hằng số "analyst nội bộ" chốt cứng. Đồng bộ mục 4.2 theo Rule 4 bản nới.
+- `K/K_agent_db_03.md`: đồng bộ Rule 4 ở bảng rule đầu file + nguyên tắc rút ra của Case 7.
+- **Xoá `agent_db/`** (7 file). 27 cross-ref trong `K_agent_db_01..06` đã trỏ về `K_agent_db_00` nên không phải sửa cross-ref nào.
+- Lưu ý: `K_agent_db_*` GIỮ NGUYÊN TÊN — `agent_db` ở đây là tên database MongoDB đang vận hành (verify 2026-07-28: 35 collection, 122 MB), không phải thư mục vừa xoá.
+
 ## 2026-07-22 — Khởi tạo git (chuẩn hoá cuối trước vận hành)
 
 - `git init` branch `main`, config repo-local: user Finext <finext.vn@gmail.com>, `core.autocrlf false`, `core.fileMode false`. Chưa có remote — lập khi user yêu cầu.
