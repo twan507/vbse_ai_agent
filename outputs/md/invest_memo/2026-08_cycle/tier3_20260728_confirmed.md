@@ -17,16 +17,20 @@ Hệ quả cần biết trước: **không mã nào trong danh sách này đã q
 
 ## 1. Summary
 
-**Giữ toàn bộ 20 mã**, phân ba nhóm ưu tiên thay vì cắt xuống 9. Theo chỉ đạo user: thêm được, không cần bớt, mã nào tốt thì giữ.
+**Giữ toàn bộ 24 mã** qua **5 ngành**, phân bốn nhóm thay vì cắt xuống 9. Theo chỉ đạo user: thêm được, không cần bớt, mã nào tốt thì giữ.
 
 | Nhóm | Số mã | Vai trò |
 |---|---|---|
-| **Ưu tiên 1 — Lõi** | 9 | Top 3 mỗi ngành theo bảng chấm. Danh mục thực tế nên xây quanh nhóm này |
-| **Ưu tiên 2 — Bổ sung** | 8 | Điểm sát top 3, có lý do riêng đủ mạnh để giữ. Dùng khi muốn mở rộng hoặc thay thế |
+| **Ưu tiên 1 — Lõi** | 9 | Top 3 mỗi ngành chính theo bảng chấm. Danh mục thực tế nên xây quanh nhóm này |
+| **Ưu tiên 2 — Bổ sung** | 8 | Điểm sát top 3, có lý do riêng đủ mạnh để giữ. Dùng khi mở rộng hoặc thay thế |
 | **Nhóm 3 — Giao dịch thuần** | 3 | Cơ bản yếu rõ, chỉ giữ vì dòng tiền. Size nhỏ, kỷ luật thoát chặt |
+| **Nhóm 4 — Ngành dự bị** | 4 | Thi công Xây dựng và BĐS Khu công nghiệp. Bổ sung ở mục 5b |
 
 **Regime kế thừa:** Risk-on selective, cash buffer 30%.
-**Conviction toàn danh sách: 0 High · 15 Medium · 5 Low.** Không mã nào đạt 15/18.
+**Conviction toàn danh sách: 0 High · 18 Medium · 6 Low.** Không mã nào đạt 15/18.
+
+**Ba ngành chính** (Chứng khoán, BĐS Dân dụng, Tài chính ngân hàng) — 20 mã, mục 2 đến 5.
+**Hai ngành dự bị** (Thi công Xây dựng, BĐS Khu công nghiệp) — 4 mã, mục 5b.
 
 ## 2. Danh sách đầy đủ 20 mã
 
@@ -103,6 +107,70 @@ Ba mã này **cơ bản yếu rõ ràng** và chỉ giữ vì dòng tiền. Ph�
 | **TAL** | Cơ bản thực ra tốt: ROE 15,62% cao nhất ngành BĐS, ICR 8,1, pass đủ 4/4 | Vòng quay 5,3 — **thấp nhất trong 22 mã BĐS đã đo** | **Size trần cứng ~800 triệu** theo trần 5% khối lượng bình quân. Mã tốt nhưng gần như không vào được size có ý nghĩa |
 
 **TAL nằm ở nhóm này vì lý do ngược với hai mã kia** — không phải cơ bản yếu mà là thanh khoản quá mỏng. Ghi rõ để không đọc nhầm.
+
+## 5b. Nhóm 4 — Hai ngành dự bị, 4 mã
+
+Bổ sung sau khi user hỏi. Hai ngành **Thi công Xây dựng** và **Bất động sản Khu công nghiệp** được Tier 1 giữ ở ghế dự bị và đã nghiên cứu ở cấp ngành, nhưng **chưa từng screen cấp mã**. Phần này chạy nốt Vòng B, D, F và chấm điểm để danh sách đầy đủ.
+
+### 5b.1. Phễu lọc
+
+| Ngành | Mã đạt thanh khoản | Pass Vòng B | Loại bởi Vòng F | Còn lại |
+|---|---|---|---|---|
+| Thi công Xây dựng | 10 | 5 | **3** | 2 |
+| BĐS Khu công nghiệp | 9 | 5 | 3 | 2 |
+
+**Ba mã xây dựng bị Vòng F loại — và một trong số đó do chính luật mới vừa thêm vào engine bắt được:**
+
+- **VCG** — F1: nguyên Chủ tịch và Phó Tổng giám đốc **bị khởi tố, bắt tạm giam** vì vi phạm quy định đấu thầu. Đáng tiếc vì bảng chấm cho VCG bộ số tốt nhất ngành: ROE 38,92%, P/E 2,58, pass B 3/4.
+- **DPG** — F1: cá nhân bị phạt **1,5 tỷ vì thao túng chính cổ phiếu DPG**, cấm giao dịch 3 năm. Cũng đáng tiếc: pass B **4/4**, ROE 14,27%, ICR 4,11.
+- **CII** — **F2: trái phiếu chuyển đổi giá 12.500đ so với thị giá 13.000đ.** Giá chuyển đổi **thấp hơn thị giá** nghĩa là pha loãng gần như chắc chắn kích hoạt. Đây đúng là ca mà điều khoản F2 vừa thêm vào `P_invest_memo_03` được viết ra để bắt.
+
+CII bị loại dù chấm được **13 điểm** — thanh khoản cao nhất ngành (137,7 tỷ/phiên), khối ngoại mua ròng +49 tỷ với tuần gần nhất +40 tỷ đang tăng tốc, và MBS đặt giá mục tiêu 23.000đ so với thị giá 13.000đ. Nhưng cơ bản thì rất xấu: **lợi nhuận quý 2 chỉ 16,9 tỷ, giảm 91%, và lỗ gộp** — lãi đến từ tài chính và thanh lý bất động sản đầu tư; ROE 1,43%, ICR 0,95, dòng tiền kinh doanh −243 tỷ.
+
+Bên KCN: **BCM** loại vì thiếu dữ liệu tài chính cộng đợt đấu giá 300 triệu cp quy mô ~20.880 tỷ (F2); **SZC** loại vì lợi nhuận quý 2 giảm 80%; **KOS** loại vì không phải doanh nghiệp KCN đúng nghĩa (P/E 396,65).
+
+### 5b.2. Bốn mã giữ lại
+
+| Mã | Ngành | Điểm | Conviction | Bucket | ADV (tỷ) | ROE | P/E | P/B | ICR | NN 1T |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **CTD** | Xây dựng | **13** | Medium | 2 | 36,1 | 9,09% | 7,64 | 0,68 | **1,37** | **+96** |
+| **VGC** | KCN | **11** | Medium | 2 | 13,8 | 14,55% | 12,35 | 1,33 | 7,03 | −23 |
+| **IDC** | KCN | **11** | Medium | 2 | 40,3 | **29,15%** | 6,57 | 1,38 | 5,39 | −51 |
+| **HHV** | Xây dựng | 10 | Low | 3 | 29,0 | 5,76% | 9,19 | **0,44** | 1,81 | +28 |
+
+**CTD — 13đ, cao nhất trong bốn mã và ngang mã tốt nhất của ba ngành chính.**
+
+Catalyst đạt 3 điểm: **trúng tổng thầu đường sắt tốc độ cao Hà Nội – Quảng Ninh, tổng mức đầu tư trên 147.000 tỷ đồng (~5,6 tỷ USD)**, cộng backlog **65.500 tỷ (~2,5 tỷ USD) — kỷ lục lịch sử công ty**, ký mới 18.000 tỷ chỉ trong một quý. MBS giá mục tiêu 84.500đ so với thị giá 57.600đ. Khối ngoại mua ròng +96 tỷ, cao nhất nhóm dự bị. Phiên 28/07 tăng **+4,35%**.
+
+Hai điểm trừ thật và nặng: **ICR chỉ 1,37** — EBIT chỉ phủ 1,37 lần chi phí lãi vay; và **dòng tiền kinh doanh −1.733 tỷ**, mức âm sâu nhất trong toàn bộ 39 mã đã soi ở cycle này. Nguyên nhân là rủi ro cố hữu của tổng thầu dân dụng: **94% backlog đến từ bốn chủ đầu tư bất động sản** (Vingroup, Sun Group, Masterise, MIK) — tập trung khách hàng rất cao, và khoản phải thu là rủi ro thật chứ không phải lý thuyết. Tiêu chí quản trị cũng chỉ 1 điểm vì có Quyết định 1178/2026 của TAND Quận 5 mà công ty chưa công bố chi tiết.
+
+**VGC — 11đ, chất lượng ổn định nhất nhóm dự bị.**
+
+Là mã **duy nhất trong bốn mã đã công bố kết quả quý 2 thật**: lợi nhuận sau thuế **1.036 tỷ, tăng 42%**; sáu tháng 1.452 tỷ, tăng 27% — tốt nhất nhóm KCN. Quỹ đất khu công nghiệp **lớn nhất miền Bắc, trên 5.966 ha qua 20 khu**; năm tháng đã cho thuê 113 trên 125 ha kế hoạch cả năm. Pass Vòng B đủ 4/4, ICR 7,03.
+
+Điểm trừ: thanh khoản chỉ 13,8 tỷ/phiên nên **size trần cả vị thế khoảng 2,1 tỷ**; và vì đã dùng gần hết kế hoạch cho thuê sau năm tháng, dư địa vượt kế hoạch nửa cuối năm hẹp.
+
+**IDC — 11đ, ROE cao nhất nhóm và là mã KCN duy nhất có bằng chứng dòng tiền định danh.**
+
+ROE **29,15%, gấp 2,47 lần median ngành**. Vietstock ngày 27/07 xếp IDC trong nhóm tăng mạnh thanh khoản của khối bất động sản; MBS khuyến nghị Tích lũy ngày 14/07. Kế hoạch 2026 cho thuê 100 ha, tăng 32%.
+
+Điểm trừ: doanh thu quý 1 **giảm 17,2%** và lợi nhuận giảm 21%; **kế hoạch lợi nhuận cả năm 2026 đặt đi ngang −0,5%**, tức chính doanh nghiệp không kỳ vọng tăng trưởng. Khối ngoại bán ròng 51 tỷ.
+
+**HHV — 10đ, Low, Bucket 3.**
+
+Trượt Vòng B (2/4) vì ROE 5,76% dưới median ngành 6,47% và ICR 1,81. Vào qua đường dòng tiền. Điểm cộng thật: **P/B 0,44 — rẻ nhất trong toàn bộ 24 mã của hai ngành dự bị**; dòng tiền kinh doanh **dương 415 tỷ**, trái ngược hẳn CTD; ký thêm gần 2.000 tỷ hợp đồng bán niên; và là mã duy nhất trong nhóm có tin **giảm chi phí vốn** — tổ chức tín dụng cam kết hạ và cố định lãi vay cho hầm Đèo Cả và Bắc Giang – Lạng Sơn. Khối ngoại mua ròng +28 tỷ.
+
+Ở Bucket 3 vì phiên 28/07 chỉ tăng 0,31%, chưa đủ tín hiệu bật.
+
+### 5b.3. Đọc nhóm này thế nào
+
+**Hai ngành chất lượng chênh nhau rõ rệt.** KCN có 5 trong 9 mã pass Vòng B với ROE median 11,81%; Xây dựng chỉ 5 trong 10 pass và **ba trong năm mã pass lại bị Vòng F loại**, bao gồm hai mã có bộ số tốt nhất ngành. Ngành xây dựng rẻ nhất thị trường (P/B 0,63) nhưng chất lượng doanh nghiệp và quản trị là lý do thật của mức rẻ đó, không phải bị bán quá.
+
+**Catalyst đầu tư công có thật nhưng đã chạy.** Giải ngân đến 16/07 đạt 37,3% kế hoạch, phần còn lại khoảng 748.700 tỷ phải giải ngân trong hơn năm tháng — tốc độ nửa cuối phải gấp ba lần nửa đầu, và cơ chế truyền dẫn vào lợi nhuận nhà thầu là nghiệm thu quyết toán quý cuối năm, tức rơi đúng cửa sổ. Nhưng câu chuyện đã chạy từ phiên 29/06 sau Nghị quyết 168/NQ-CP và **không nằm trong nhóm dẫn dắt các phiên 27–28/07**. Đồng thời biên nhà thầu đang bị bào: cát đá tăng 10–30%, thép tăng nhiều đợt, xi măng tăng 50.000–100.000 đồng/tấn, trong khi nhiều hợp đồng ký trọn gói theo đơn giá tại thời điểm ký.
+
+**Với KCN, hai yếu tố trái chiều gần như triệt tiêu nhau.** Ưu đãi tín dụng là thật (Công văn 4551/NHNN-CSTT ngày 29/05/2026) nhưng chỉ loại phần dư nợ tăng thêm, tác động thực chỉ 1–2%, và tin đã ra hai tháng. Rủi ro thuế Section 301 thì lệch tâm khỏi ngành vì nhóm được miễn phần lớn là điện tử, công nghệ cao, bán dẫn — đúng tệp khách thuê cốt lõi. Biến thật cần theo dõi là **số FDI tháng 8 và tháng 9**, vì số sáu tháng rất đẹp (đăng ký 34,65 tỷ USD, tăng 61%) nhưng **đo trước ngày thuế có hiệu lực 24/07**.
+
+**Đề xuất của tôi:** trong bốn mã này, **CTD và VGC là hai mã đáng cân nhắc nhất** — CTD vì catalyst lớn nhất toàn bộ danh sách 24 mã, VGC vì là mã duy nhất có số quý 2 thật và tốt. Nhưng CTD phải đi kèm theo dõi khoản phải thu rất sát, còn VGC thì vướng trần size 2,1 tỷ.
 
 ## 6. Cảnh báo mức độ conviction — giữ nguyên từ bản draft
 
