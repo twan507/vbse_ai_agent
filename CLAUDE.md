@@ -149,7 +149,11 @@ Repo local, branch duy nhất `main`. Remote `origin`: `git@github.com:twan507/v
 
 **7.6. OneDrive:** repo nằm trong folder OneDrive — chấp nhận với 1 máy + 1 session ghi tại một thời điểm; không chạy song song nhiều session cùng ghi.
 
-**7.7. Push — phân công:** AI commit local (mục 7.2); push do USER chạy thủ công từ máy (`git push`, xác thực SSH của máy user). Sandbox không có credential SSH/PAT nên AI KHÔNG tự push được — không thử, không coi là lỗi. Cuối session nếu có commit mới chưa push → nhắc user một câu. Mọi trường hợp: cấm force push.
+**7.7. Push:** AI push được. Kiểm chứng 2026-07-28: `git push` từ sandbox thành công qua SSH của máy user (11 commit lên `origin/main`). Luật cũ ghi "sandbox không có credential, AI không tự push được" — **đã sai, đã gỡ**.
+
+Phân công hiện tại: AI commit theo lượt việc (mục 7.2) rồi push luôn sau khi lượt việc hoàn chỉnh. Không dồn nhiều lượt rồi push một thể — push đi kèm commit để `origin` luôn phản ánh trạng thái đã verify.
+
+Mọi trường hợp: **cấm force push** (mục 7.4, có hook cưỡng chế). `since: 2026-07 | review: 2026-Q4` — nếu môi trường đổi và push bắt đầu fail, kiểm chứng lại rồi sửa mục này, đừng kết luận vội theo một lần lỗi.
 
 ## 8. Behavioral guidelines
 
