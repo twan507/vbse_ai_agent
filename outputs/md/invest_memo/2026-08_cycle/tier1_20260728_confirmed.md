@@ -25,6 +25,23 @@ Universe gốc theo quy trình chỉ có 2 ngành (Ngân hàng, BĐS Dân dụng
 
 **Và dữ liệu thực nghiệm ủng hộ override này rất mạnh** — mạnh hơn cả lập luận catalyst mà nó thay thế. Đo hiệu suất sau hai đáy chu kỳ gần nhất, Công ty Chứng khoán là ngành dẫn đầu ở cả hai lần: **+101,2% sau đáy 11/2022** và **+79,2% sau đáy 04/2025** trong 6 tháng, xếp hạng 1 và 2 trên tổng 24 ngành. Không ngành nào khác có tính nhất quán đó. Chi tiết ở mục 3.
 
+### 1.1. Bản chất vị thế — đọc kỹ trước khi xuống Tier 2
+
+**Đây là vị thế đánh nhịp hồi phục ngắn hạn sau khi giá bị nén mạnh trong thời gian ngắn, KHÔNG phải vị thế nắm giữ dài hạn theo giá trị.**
+
+- **Horizon chính: 1-3 tháng.** Đoạn 3-6 tháng là phần mở rộng có điều kiện, chỉ giữ tiếp nếu các điều kiện xác nhận ở mục 7 được thoả.
+- **Nguồn lợi nhuận kỳ vọng** là mức nén giá phục hồi, không phải tăng trưởng lợi nhuận doanh nghiệp tích luỹ qua nhiều năm.
+- **Tiêu chí thoát là kỷ luật giá và thời gian**, không phải "chờ doanh nghiệp tốt lên". Nếu nhịp hồi không xảy ra trong khung thời gian dự kiến thì thoát, kể cả khi luận điểm cơ bản chưa hỏng.
+
+Hệ quả cho việc đọc phần định giá ở mục 3: chỉ số P/E và P/B ở đây dùng để **đo mức độ bị nén và biên an toàn khi sai**, không phải để lập luận nắm giữ dài hạn. Một ngành đắt theo chuẩn dài hạn vẫn có thể là ứng viên tốt cho nhịp hồi ngắn, và ngược lại.
+
+**Nhưng rủi ro dài hạn không biến mất chỉ vì horizon ngắn.** Hai rủi ro dưới đây phải được ghi vào memo Tier 5C và nhắc lại ở mỗi kỳ review, vì chúng quyết định điều gì xảy ra nếu vị thế bị kẹt quá khung thời gian dự kiến:
+
+1. **Bất động sản Dân dụng — rủi ro vĩ mô cấu trúc.** Chi tiết ở mục 4.2 phần rủi ro dài hạn.
+2. **Công ty Chứng khoán — rủi ro định giá cao.** P/B 1,63 bằng đúng median 3 năm và cao hơn P/B tại hai đáy chu kỳ 43-46%. Chi tiết ở mục 4.1.
+
+Nếu nhịp hồi không đến, hai ngành này là hai ngành **mất nhiều nhất**, mỗi ngành vì một lý do khác nhau.
+
 ## 2. Bối cảnh đầu vào
 
 - Regime kế thừa Tier 0: **Risk-on selective** (user override từ Defensive only), cash buffer 30%
@@ -139,7 +156,31 @@ Xếp hạng trên tổng 24 ngành theo lợi suất 6 tháng: Chứng khoán *
 3. **Mức giảm hiện tại nông hơn cả hai tiền lệ** — 12,8% so với 40,3% và 18,1%. Quan hệ trong chính mẫu này là giảm càng sâu thì bật càng mạnh: Chứng khoán bật 101,2% sau cú giảm 40,3% và 79,2% sau cú giảm 18,1%. Suy ra **kỳ vọng hợp lý cho cú giảm 12,8% phải thấp hơn cả hai**, không được lấy trung bình +90,2% làm mục tiêu.
 4. **Hai đáy đó không có Fed đang xoay hawkish.** Bối cảnh vĩ mô lần này khác: chi phí vốn toàn cầu đang tăng chứ không giảm.
 
-### 3.7. Hiệu chỉnh kỳ vọng dùng cho mục 4
+### 3.7. Đo mức nén — trục quyết định của luận điểm ngắn hạn
+
+Vì đây là vị thế đánh nhịp hồi (mục 1.1), câu hỏi quan trọng ngang định giá là **giá bị nén bao nhiêu và nén trong bao lâu**. Nén sâu trong thời gian ngắn tạo nhịp hồi kỹ thuật mạnh hơn nén nông kéo dài, dù mức giảm tổng cộng có thể bằng nhau.
+
+Đo trên cửa sổ 60 phiên gần nhất, tính từ đỉnh của chính ngành trong cửa sổ đó:
+
+| Ngành | Giảm từ đỉnh 60 phiên | Số phiên từ đỉnh | **Tốc độ nén (%/phiên)** | Đang trên đáy 60 phiên |
+|---|---|---|---|---|
+| **Công ty Chứng khoán** | −17,4% | **15** | **−1,16%** | +3,7% |
+| Tài chính ngân hàng | −10,2% | 19 | −0,54% | +0,5% |
+| BĐS Khu công nghiệp | −21,0% | 51 | −0,41% | +0,7% |
+| **BĐS Dân dụng** | −22,9% | 59 | −0,39% | +1,9% |
+| Thi công Xây dựng | −17,8% | 59 | −0,30% | +0,9% |
+
+**Đây là dữ liệu hoà giải mâu thuẫn giữa định giá và luận điểm ngắn hạn.**
+
+Công ty Chứng khoán **đắt nhất so với đáy** (P/B +45,5%) nhưng lại là ngành **bị nén nhanh nhất, gấp ba lần tốc độ của BĐS Dân dụng**: mất 17,4% chỉ trong 15 phiên, trong khi BĐS mất 22,9% nhưng rải qua 59 phiên. Hai ngành này đang chơi hai trò khác nhau:
+
+- **Chứng khoán là vị thế nhịp hồi thuần tuý.** Giá vừa bị đập mạnh và nhanh, phản ứng hồi kỹ thuật thường đến sớm — phiên 28/07 ngành này bật **+3,72%**, mạnh nhất trong năm ngành, và hiện đã cách đáy 60 phiên 3,7%, cao nhất nhóm. Không có đệm định giá nghĩa là nếu nhịp hồi không đến thì không có gì đỡ.
+- **BĐS Dân dụng là vị thế nén kéo dài cộng định giá rẻ.** Giảm đều suốt 59 phiên, đỉnh cửa sổ nằm ở ngay đầu cửa sổ tức xu hướng giảm liên tục không có nhịp hồi nào đáng kể. Kiểu này thường cần nhiều thời gian hơn để đảo chiều, nhưng có đệm định giá thật (P/B loại Vin 1,07, rẻ hơn cả hai đáy).
+- **Ngân hàng nén nông nhất** — chỉ −10,2%. Ít dư địa hồi kỹ thuật nhất, nhưng cũng là ngành ít rủi ro nhất nếu thị trường giảm tiếp.
+
+**Hàm ý phân bổ, chuyển sang Tier 2 và Tier 6:** ba ngành có ba đặc tính rủi ro khác hẳn nhau, nên **không phân bổ đều 1/3 mỗi ngành**. Chứng khoán nên có size nhỏ hơn tỷ trọng ngang bằng và kỷ luật thoát chặt hơn vì không có đệm; Ngân hàng đóng vai neo danh mục; BĐS Dân dụng phần ngoài ba trụ Vin có biên an toàn tốt nhất nhưng cần kiên nhẫn hơn về thời gian.
+
+### 3.8. Hiệu chỉnh kỳ vọng dùng cho mục 4
 
 Trung bình hai lần cho lợi suất 6 tháng, chiết khấu theo tỷ lệ độ sâu điều chỉnh (12,8% so với trung bình 29,2% của hai tiền lệ, hệ số khoảng 0,44), làm tròn xuống cho thận trọng:
 
@@ -205,6 +246,14 @@ P/B cao hơn đáy 2022 **43,0%** và cao hơn đáy 2025 **45,5%**. Muốn về
 
 **Rủi ro chính:** không có biên an toàn định giá. Nếu thị trường không tạo đáy ở đây, ngành này giảm mạnh nhất — hệ số beta cao thể hiện rõ trong đường giá 8 phiên gần nhất: −5,18% · −0,55% · −0,78% · +2,91% · −3,71% · −5,26% · **+3,72%**, biên độ lớn nhất trong sáu ngành đã kiểm.
 
+**Rủi ro dài hạn — phải giữ trong tầm nhìn kể cả khi đánh ngắn hạn.** Đây là ngành phù hợp nhất cho nhịp hồi (nén nhanh nhất, mục 3.7) và cũng là ngành **tệ nhất để bị kẹt lâu**:
+
+1. **Định giá không có đệm ở bất kỳ thước nào.** P/B 1,63 bằng đúng median 3 năm; cao hơn P/B đáy 2022 43,0% và đáy 2025 45,5%; dư địa hồi phục về median bằng 0,0%. Nếu vị thế bị kẹt quá 3 tháng mà thanh khoản không cải thiện, không có lực đỡ định giá nào — giá về mức đáy chu kỳ nghĩa là giảm thêm khoảng 30%.
+2. **Lợi nhuận ngành mang tính chu kỳ cao và đang ở nền cao.** Doanh thu quý gần nhất tăng 43,64% và bốn quý gần nhất tăng lần lượt 16,37% · 77,16% · 62,15% · 43,64%. Nền so sánh cho các quý tới rất cao. Đồng thời biên gộp đã co **6,67 điểm phần trăm** qua 4 quý, từ 63,70% xuống 57,03% — dấu hiệu cạnh tranh phí đang bào mòn biên.
+3. **Rủi ro nội tại của mô hình cho vay margin.** Dư nợ toàn ngành 418.725 tỷ, tăng 50,2% so cùng kỳ. Trong đợt giải chấp, ngành này chịu hai lần: giá cổ phiếu giảm theo thị trường, và chất lượng dư nợ cho vay xấu đi. Đây là rủi ro tương quan, không phải rủi ro độc lập — đúng lúc cần nó khoẻ thì nó yếu.
+
+**Kết luận cho Tier 6:** đây là vị thế có kỷ luật thời gian chặt nhất trong rổ. Nếu điều kiện thanh khoản không đạt trong khung 1-3 tháng thì thoát, không chuyển thành nắm giữ dài hạn với lý do "cơ bản vẫn tốt".
+
 ### 4.2. Bất động sản Dân dụng
 
 **Quy mô:** vốn hoá 2.530.100 tỷ VND · 83 mã · EPS 3.081 đ · BVPS 22.908 đ.
@@ -262,7 +311,16 @@ Chuỗi tự tính từ dữ liệu cấp mã của 83 mã trong ngành, 156 đi
 
 1. **Tách bạch hai luận điểm ngay từ Tier 2.** Hoặc chơi dòng vốn nâng hạng qua ba trụ Vin, hoặc chơi chiết khấu tài sản qua 80 mã còn lại. Trộn hai luận điểm là tự lừa mình. Khuyến nghị của tôi: đi hướng thứ hai, vì luận điểm cycle này là bắt đáy theo định giá.
 2. **Tín dụng bất động sản.** Tăng trưởng tín dụng toàn hệ thống mới +7,86% so mục tiêu ~15%; phần giải ngân vào bất động sản trong nửa cuối năm là biến quyết định thanh khoản ngành. Theo dõi số liệu tín dụng hàng tháng.
-3. **Mức giảm còn động lượng.** Ngành đã giảm 28,34% trong một năm và 22,09% trong ba tháng — sâu nhất rổ. Cần thấy **hai tuần liên tiếp không tạo đáy mới** trước khi vào quá 50% size dự kiến.
+3. **Mức giảm còn động lượng.** Ngành đã giảm 28,34% trong một năm và 22,09% trong ba tháng — sâu nhất rổ. Đo trên cửa sổ 60 phiên, đỉnh nằm ở **phiên thứ 59**, tức xu hướng giảm liên tục gần như không có nhịp hồi đáng kể nào (mục 3.7). Cần thấy **hai tuần liên tiếp không tạo đáy mới** trước khi vào quá 50% size dự kiến.
+
+**Rủi ro dài hạn — rủi ro vĩ mô cấu trúc, khác hẳn bản chất rủi ro của Chứng khoán.** Ngành này có đệm định giá tốt nhất rổ nhưng rủi ro nằm ở tầng vĩ mô, tức thứ không tự hết theo thời gian:
+
+1. **Phụ thuộc tín dụng, mà dư địa tín dụng đang bị bó bởi tỷ giá và lạm phát.** Luận điểm catalyst của ngành dựa vào khoảng 7 điểm phần trăm dư địa tín dụng nửa cuối năm. Nhưng CPI bình quân 6 tháng đã **4,38%** với lạm phát lõi 4,12%, và tỷ giá bán 26.520 chỉ cách trần biên độ 26.557 **37 đồng**. Nếu tỷ giá căng tiếp, Ngân hàng Nhà nước buộc phải ưu tiên ổn định tỷ giá hơn bơm tín dụng — và bất động sản là nhóm bị siết đầu tiên trong mọi chu kỳ thắt chặt.
+2. **Chi phí vốn toàn cầu đang tăng, không giảm.** Fed đã nâng dự phóng lãi suất cuối 2026 từ 3,4% lên 3,8%; lợi suất trái phiếu chính phủ Mỹ 10 năm 4,64-4,67%. Bất động sản là nhóm nhạy lãi suất nhất trong ba ngành. Đây là yếu tố cấu trúc kéo dài quá horizon 1-3 tháng.
+3. **Chất lượng phân tán rất rộng trong 83 mã**, gồm nhiều doanh nghiệp còn dư âm khủng hoảng trái phiếu 2022 — pháp lý dự án chậm, nợ đến hạn, hàng tồn kho dở dang. Mức P/B 1,07 của phần ngoài Vin là **trung bình của một tập rất không đồng đều**, không phải mức chung áp cho mọi mã. Rủi ro chọn mã ở đây cao nhất rổ.
+4. **Tập trung Vingroup 85%** khiến chỉ số ngành gần như vô dụng để theo dõi vị thế: ngành có thể xanh vì VIC tăng trong khi 80 mã còn lại giảm. Tier 6 phải theo dõi rổ mã thực nắm, không theo chỉ số ngành.
+
+**Kết luận cho Tier 6:** đây là vị thế cần kiên nhẫn hơn về thời gian nhưng có đệm khi sai. Ngược hoàn toàn với Chứng khoán. Không áp cùng một kỷ luật thoát cho hai ngành này.
 
 ### 4.3. Tài chính ngân hàng
 
@@ -380,7 +438,11 @@ Vốn hoá 231.479 tỷ · 16 mã · EPS 2.066 đ · BVPS 20.069 đ. Cấu trúc
 | Giá 1 năm | −26,84% | −28,34% | **−2,82%** | −18,32% | −20,66% |
 | Mùa vụ T8 | **+15,38% · 6/6** | +7,79% · 6/6 | +7,28% · 5/6 | +9,46% · 4/6 | +6,70% · 6/6 |
 | Sau đáy 6T, TB | **+90,2%** | +63,4% | +55,1% | +64,9% | +44,6% |
+| Giảm từ đỉnh 60 phiên | −17,4% | −22,9% | −10,2% | −17,8% | −21,0% |
+| Số phiên từ đỉnh | **15** | 59 | 19 | 59 | 51 |
+| **Tốc độ nén (%/phiên)** | **−1,16%** | −0,39% | −0,54% | −0,30% | −0,41% |
 | Kỳ vọng 6T đã chiết khấu | ~+40% | ~+28% | ~+24% | — | — |
+| **Bản chất vị thế** | Nhịp hồi thuần, không đệm | Nén dài + đệm định giá | Neo danh mục | — | — |
 
 ## 7. Điều kiện huỷ chung cho cả rổ
 
