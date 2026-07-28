@@ -128,7 +128,7 @@ Dùng nhất quán cho `technical_indicator`, `technical_zone`, `trend`, `change
 
 ### `stock_info` — Thông tin tĩnh cổ phiếu
 
-**Số lượng:** 1 doc / ticker (~674 doc)
+**Số lượng:** 1 doc / ticker (679 doc — verify 2026-07-28)
 **Cập nhật:** EOD (hoặc khi có thay đổi niêm yết/phân loại)
 **Dùng khi:** giới thiệu công ty, tra cứu ngành/vốn hoá/lĩnh vực kinh doanh, cấu trúc sở hữu.
 
@@ -714,9 +714,10 @@ Khối này có **3 nhóm khác nhau**, đừng lẫn:
 
 ### `history_index` — Lịch sử chỉ số thị trường
 
-**Số lượng:** 1 doc (hiện tại chỉ `VNINDEX`)
+**Số lượng:** **8 doc — mỗi doc một chỉ số**, khoá `index`. Miền giá trị đầy đủ: `VNINDEX`, `VN30`, `HNXINDEX`, `HNX30`, `UPINDEX`, `VNXALL`, `FNXINDEX`, `FNX100` (verify 2026-07-28).
+**Độ sâu:** 1.638 phiên mỗi chỉ số, từ 2020-01-02 — cả 8 doc cùng độ dài.
 **Cập nhật:** EOD (append phiên mới)
-**Dùng khi:** chart VNINDEX nhiều năm, phân tích chu kỳ thị trường, so sánh giai đoạn, backtest macro.
+**Dùng khi:** chart chỉ số nhiều năm, phân tích chu kỳ thị trường, so sánh giai đoạn, **so sánh hiệu suất giữa các rổ** (vd VN30 so với UPINDEX để đọc phân hoá trụ – đầu cơ), backtest macro.
 
 ```json
 {
@@ -731,7 +732,10 @@ Khối này có **3 nhóm khác nhau**, đừng lẫn:
 }
 ```
 
-**Lưu ý:** `volume` index thường là `0` hoặc bị omit (index là tính toán). Dùng `close` để chart trend dài hạn.
+**Lưu ý:**
+- `volume` **CÓ dữ liệu đầy đủ cho cả 8 chỉ số**, không phải `0` (verify 2026-07-28, phiên cuối: UPINDEX ~16,2 triệu · HNX30 ~44,9 triệu · VN30 ~281,6 triệu · VNINDEX ~634,2 triệu · FNXINDEX ~701,8 triệu đơn vị). Dùng được để đọc thanh khoản theo rổ.
+- Query bắt buộc lọc `index` — không lọc thì trả về cả 8 doc, mỗi doc 1.638 phiên.
+- Chỉ số là **điểm số, không cộng được với nhau**. Muốn có đại lượng toàn thị trường thì dùng rổ rộng sẵn có (`VNXALL`, `FNXINDEX`) chứ không cộng VNINDEX + HNXINDEX + UPINDEX.
 
 ---
 
@@ -752,9 +756,10 @@ Khối này có **3 nhóm khác nhau**, đừng lẫn:
 
 ---
 
-### `history_stock` — Lịch sử ~500 mã
+### `history_stock` — Lịch sử 679 mã
 
-**Số lượng:** ~500 doc (skip ticker không có data)
+**Số lượng:** 679 doc (verify 2026-07-28) — bằng đúng số doc của `stock_info` và `history_nntd_stock`
+**Độ sâu:** 1.638 phiên, từ 2020-01-02. ⚠ Giá đã được backfill cho cả mã niêm yết sau 2020, nên số mã đứng im suốt lịch sử — **có survivorship bias** khi tính thống kê rổ theo giai đoạn cũ.
 **Cập nhật:** EOD
 **Dùng khi:** chart mã nhiều năm, phân tích pattern dài hạn, backtest, kiểm tra biến động qua các giai đoạn lớn (vd 2020 covid, 2022 sụp, 2023 phục hồi).
 
@@ -766,7 +771,7 @@ Khối này có **3 nhóm khác nhau**, đừng lẫn:
 ```
 
 **Lưu ý quan trọng về performance:**
-- Tổng dung lượng collection lớn (~500 mã × vài trăm phiên/mã). KHÔNG `find({})` không projection.
+- Tổng dung lượng collection lớn (679 mã × 1.638 phiên/mã). KHÔNG `find({})` không projection.
 - Luôn filter theo `ticker` cụ thể.
 - Khi query nhiều mã song song, dùng `$in` + projection + `$slice` để giới hạn output.
 
@@ -887,7 +892,7 @@ Khối này có **3 nhóm khác nhau**, đừng lẫn:
 }
 ```
 
-**Phạm vi:** `"MARKET"` = **tổng 3 sàn** VNINDEX + HNXINDEX + UPINDEX — **đúng phạm vi `market_nntd`** (bản snapshot), nên hai collection nhất quán với nhau. ⚠ KHÁC `history_index` (chỉ VNINDEX) — đừng nhầm khi ghép cặp.
+**Phạm vi:** `"MARKET"` = **tổng 3 sàn** VNINDEX + HNXINDEX + UPINDEX — **đúng phạm vi `market_nntd`** (bản snapshot), nên hai collection nhất quán với nhau. ⚠ Ghép cặp với `history_index` phải chọn doc đúng phạm vi: `history_index` có **8 chỉ số** gồm cả HNXINDEX và UPINDEX, nhưng chỉ số là điểm số không cộng được. Muốn so dòng tiền khối ngoại 3 sàn với diễn biến giá thì dùng rổ rộng (`VNXALL` hoặc `FNXINDEX`) làm đại diện, hoặc nói rõ đang so với riêng VNINDEX.
 **Không bao gồm phái sinh** (VN30F1M, VN100F1Q…) dù nguồn có — agent_db không phục vụ phái sinh.
 Đơn vị/quy ước dấu + cảnh báo độ trễ: **giống `history_nntd_stock`** ở trên.
 
@@ -1021,7 +1026,7 @@ Khi agent muốn duyệt riêng tin hoặc riêng báo cáo, luôn thêm filter 
 
 ### `other_data` — Chỉ số vĩ mô, hàng hoá, thị trường quốc tế
 
-**Số lượng:** 70 doc
+**Số lượng:** 74 doc (verify 2026-07-28)
 **Cập nhật:** liên tục (mỗi chỉ số có `update_date` riêng). Hàng hoá và FX cập nhật hàng ngày; lãi suất liên ngân hàng cập nhật hàng ngày; chỉ số vĩ mô (CPI, xuất nhập khẩu, PMI...) cập nhật theo tháng.
 **Dùng khi:** phân tích bối cảnh vĩ mô, mã/ngành có độ nhạy cao với hàng hoá, tỷ giá, lãi suất, hoặc thị trường quốc tế.
 
@@ -1266,9 +1271,9 @@ Market-level:
   market_itd (standalone)
 
 History (lịch sử dài hạn — query on-demand):
-  history_index      (VNINDEX toàn bộ lịch sử)
+  history_index      (8 chỉ số — VNINDEX/VN30/HNXINDEX/HNX30/UPINDEX/VNXALL/FNXINDEX/FNX100)
   history_industry   (24 ngành lịch sử)
-  history_stock      (~500 mã lịch sử)
+  history_stock      (679 mã lịch sử)
   history_finratios_stock / _industry   (định giá, tần suất TUẦN)
   history_nntd_stock (679 mã — NN/TD mỗi phiên)   ←─ chuỗi dài của  stock_nntd
   history_nntd_index (1 doc MARKET = 3 sàn)       ←─ chuỗi dài của  market_nntd

@@ -4,6 +4,33 @@ Ghi mỗi lần sửa engine (K/P/O, system_prompt, KERNEL_SKELETON, OUTPUT_MAST
 
 Format: `## YYYY-MM-DD — tiêu đề` + file đụng tới + nội dung + lý do.
 
+## 2026-07-28 — Sửa 6 sai lệch schema K_agent_db so với DB thật
+
+**Bối cảnh:** phát hiện khi chạy Tier 0 của cycle invest_memo 2026-08. Cần lấy chuỗi chỉ số nhiều năm để tính mùa vụ tháng 8, đọc doc thấy ghi `history_index` chỉ có VNINDEX, query thật thì ra 8 chỉ số. Kéo dây thì lòi thêm 5 chỗ nữa.
+
+**Toàn bộ đều verify bằng query thật ngày 2026-07-28, không suy đoán:**
+
+| Chỗ | Doc ghi | Thực tế | File |
+|---|---|---|---|
+| `history_index` số doc | 1 doc, "hiện tại chỉ VNINDEX" | **8 doc** — VNINDEX, VN30, HNXINDEX, HNX30, UPINDEX, VNXALL, FNXINDEX, FNX100; mỗi doc 1.638 phiên từ 2020-01-02 | `K_agent_db_01` |
+| `history_index.volume` | "thường là 0 hoặc bị omit (index là tính toán)" | **Có dữ liệu đủ cả 8 chỉ số** — phiên cuối từ ~16,2 triệu (UPINDEX) tới ~701,8 triệu (FNXINDEX) | `K_agent_db_01` |
+| `other_data` | 70 doc | **74 doc** | `K_agent_db_01` |
+| `stock_info` | ~674 doc | **679 doc** | `K_agent_db_01` |
+| `history_stock` | ~500 mã / ~500 doc | **679 doc** — bằng đúng `stock_info` và `history_nntd_stock` | `K_agent_db_01` |
+| Ngưỡng `day_score` | "percentile 674 mã" | **679 mã** | `K_agent_db_04` |
+
+**Sửa kèm — cảnh báo ghép cặp sai phạm vi.** Hai chỗ (`K_agent_db_01` khối `history_nntd_index`, `K_agent_db_02` mục 1.5) viết *"`history_nntd_index` là 3 sàn gộp, khác `history_index` (chỉ VNINDEX)"*. Vế sau sai nên lời khuyên cũng lệch. Viết lại: `history_index` **có** đủ HNXINDEX và UPINDEX, nhưng **chỉ số là điểm số không cộng được với nhau** — muốn so dòng tiền khối ngoại 3 sàn với diễn biến giá thì dùng rổ rộng (`VNXALL`/`FNXINDEX`) làm đại diện, hoặc nói rõ đang so riêng VNINDEX. Thêm nhắc bắt buộc lọc `index` khi query, vì không lọc là kéo về 8 × 1.638 phiên.
+
+**Thêm mới, không phải sửa lỗi:** ghi chú survivorship bias ở `history_stock` — giá đã backfill cho cả mã niêm yết sau 2020 nên số mã đứng im suốt lịch sử. Ai tính thống kê rổ cho giai đoạn 2020-2022 mà không biết điều này sẽ ra kết quả sai lệch có hệ thống.
+
+**Không sửa vì kiểm ra là ĐÚNG:** con số "35 collection" ở `K_agent_db_00` và `KERNEL_SKELETON`. Một subagent khảo sát DB báo là 36, có thêm `temp_history_stock`. Chạy `list-collections` thì `totalCount` = **35** và không có collection nào tên như vậy. Doc đúng, subagent sai.
+
+**Đây là lần thứ hai trong cùng một ngày luật `CLAUDE.md` mục 10.4 cứu một lỗi sắp bị ghi vào engine** — lần trước là `O_invest_memo` có spec render binary thật, lần này là số collection. Cả hai đều là khẳng định định lượng từ subagent, cả hai đều sai theo chiều "báo có cái không có". Giữ nguyên luật: khẳng định định lượng từ subagent phải verify bằng lệnh trước khi ghi vào engine.
+
+**Lý do sửa:** schema doc sai làm agent bỏ qua dữ liệu đang có. Cụ thể ở cycle này, nếu tin doc thì đã không tra được VN30/HNXINDEX/UPINDEX để đối chiếu mùa vụ tháng 8 giữa các rổ — mà đó chính là chỗ cho thấy nhóm vốn hoá vừa và nhỏ có hiệu ứng tháng 8 mạnh hơn nhóm trụ (FNX100 +8,92% so với VN30 +5,65%). Doc sai không chỉ gây trích dẫn sai, nó cắt mất phân tích.
+
+**File đụng tới:** `engine/K/K_agent_db_01.md` (5 mục), `engine/K/K_agent_db_02.md` (1 mục), `engine/K/K_agent_db_04.md` (1 ngưỡng).
+
 ## 2026-07-28 — Luật uỷ thác subagent (CLAUDE.md mục 10) + note 3 việc hoãn
 
 **Vấn đề:** nghiên cứu sâu đọc rất nhiều, một phiên 1M token có thể không đủ. Cần luật để biết khi nào đẩy việc sang subagent thay vì đốt context phiên chính.

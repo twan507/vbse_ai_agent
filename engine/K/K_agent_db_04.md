@@ -95,7 +95,7 @@ Trong đó:
 
 **Khác biệt với pct_change:** day_score đo **chất lượng phiên** (ai đang thắng trong range), không phải mức độ tăng giảm thuần. Một phiên pct_change +1% nhưng close sát high và gap up mạnh vẫn có thể có day_score +60. Ngược lại pct_change +3% nhưng bóng trên dài (close gần low) sẽ có day_score âm.
 
-**Ngưỡng diễn giải** (theo percentile 674 mã toàn thị trường):
+**Ngưỡng diễn giải** (theo percentile 679 mã toàn thị trường):
 
 | Ngưỡng day_score | Mô tả | Percentile |
 |---|---|---|

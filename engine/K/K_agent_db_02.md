@@ -163,7 +163,7 @@ Mỗi điểm: `{date, nn:{buy_value, sell_value, net_value}, td:{...}}` — **t
 - ⚠ `td` = 0 ở nhiều phiên là bình thường (tự doanh không giao dịch mã đó), KHÔNG phải thiếu dữ liệu.
 - ⚠ Chuỗi này có thể **trễ vài phiên** so với `stock_nntd`. Muốn nói "phiên hôm nay" → lấy từ `stock_nntd`;
   luôn đọc `date` điểm cuối trước khi mô tả thời điểm.
-- ⚠ `history_nntd_index` là **3 sàn gộp**, khác `history_index` (chỉ VNINDEX) — đừng ghép cặp nhầm khi so với giá.
+- ⚠ `history_nntd_index` là **3 sàn gộp**. `history_index` có **8 chỉ số** (VNINDEX, VN30, HNXINDEX, HNX30, UPINDEX, VNXALL, FNXINDEX, FNX100) — phải lọc `index` khi query và chọn doc đúng phạm vi. Chỉ số không cộng được với nhau, nên so dòng tiền 3 sàn với giá thì dùng rổ rộng (`VNXALL`/`FNXINDEX`) làm đại diện hoặc nói rõ đang so riêng VNINDEX.
 
 ---
 
