@@ -34,6 +34,27 @@ Ghi mỗi lần user override quyết định hoặc phương pháp mặc địn
 
 ---
 
+## 2026-07-28 — CP2 — Loại: thêm ngành vào shortlist
+
+**Quyết định Agent:** universe (B ∩ C) = 2 ngành — Tài chính ngân hàng (catalyst 4đ), Bất động sản Dân dụng (3đ). Công ty Chứng khoán **trượt Funnel C với 2 điểm**, dưới ngưỡng 3, vì catalyst duy nhất chiếu vào ngành là dòng vốn nâng hạng và nhóm này chỉ nhận khoảng 6,96 triệu USD trong 128,18 triệu đợt 1, tức 5,4%. Agent trình 2 ngành thay vì ép đủ quota 3, theo `P_invest_memo_02` mục 10.2.
+
+**User override:** thêm **Công ty Chứng khoán** thành ngành thứ ba. Đồng thời chỉ định hai ngành theo sau không cấp quota: **Thi công Xây dựng** và **Bất động sản Khu công nghiệp**.
+
+**Lý do user:** chốt rổ 3 ngành gồm chứng khoán, bất động sản, ngân hàng.
+
+**Agent đánh giá override này — ủng hộ, và bằng chứng mạnh hơn cả lập luận catalyst mà nó thay thế.** Đo lợi suất 6 tháng sau hai đáy chu kỳ gần nhất trên toàn bộ 24 ngành, Công ty Chứng khoán xếp **hạng 1 sau đáy 11/2022 (+101,2%)** và **hạng 2 sau đáy 04/2025 (+79,2%)**. Không ngành nào khác giữ được nhóm dẫn đầu ở cả hai lần. Cơ chế lặp lại được: lợi nhuận ngành gắn trực tiếp vào thanh khoản thị trường, mà thanh khoản hồi phục sớm nhất sau đáy. Bảng catalyst Tier 0 không có kênh này — đó là thiếu sót của Tier 0, không phải của ngành.
+
+**Nhưng agent giữ nguyên hai cảnh báo, và một trong hai đã mạnh lên sau khi tính thêm số liệu định giá tại đáy:**
+
+1. **Không có bất kỳ đệm định giá nào.** P/B 1,63 đúng bằng median 3 năm (dư địa hồi phục 0,0%), và **cao hơn P/B tại đáy 2022 43,0% và tại đáy 2025 45,5%**. Muốn về mức định giá của hai đáy trước, giá phải giảm thêm khoảng 30%. Đây là ngành đắt nhất so với chính nó tại đáy trong cả năm ngành đang xét.
+2. **Đây chính là bên cho vay margin**, trong lúc dư nợ toàn ngành 418.725 tỷ tăng 50,2% so cùng kỳ và giải chấp đang diễn ra thật.
+
+**Agent xử lý:** đưa vào shortlist với rank ngang hàng, nhưng gắn ba điều kiện định lượng ở mục 4.1 của bản confirmed, trong đó **điều kiện thanh khoản là điều kiện sống còn chứ không phải điều kiện phụ**: cần trung bình 5 phiên khớp lệnh HOSE vượt 15 nghìn tỷ để xác nhận; xuống dưới 10 nghìn tỷ hai tuần liên tiếp là thoát, không chờ. Flag cho Tier 2: ưu tiên Bucket 2, Bucket 1 chỉ cho mã đầu ngành thanh khoản cao.
+
+**Cách đánh giá override này sau 3-6 tháng:** so lợi suất ngành Chứng khoán với hai ngành còn lại và với VNINDEX tại mốc 30/09/2026 và 31/12/2026. Kiểm riêng hai giả thuyết vì chúng có thể ra kết quả trái nhau: (a) ngành có dẫn đầu như hai tiền lệ sau đáy không; (b) việc thiếu đệm định giá có làm mức sụt lớn hơn hai ngành kia trong kịch bản thị trường giảm tiếp không.
+
+---
+
 ## 2026-07-28 — CP2 — Loại: thay đổi phương pháp (kế thừa override CP1 sang Funnel A)
 
 Không phải override mới của user — là hệ quả bắt buộc của override phương pháp ở CP1, ghi lại để truy vết.
