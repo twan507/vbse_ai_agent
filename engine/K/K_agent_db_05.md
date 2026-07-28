@@ -1,5 +1,23 @@
 # K_agent_db_05 — News Methodology
 
+## Mục lục — đọc lát cắt, đừng đọc trọn file
+
+File này **127 KB**, lớn nhất workspace. Đọc hết là chiếm khoảng một phần sáu context window cho một câu hỏi thường chỉ cần một mục. Xác định loại tin rồi đọc đúng mục của nó.
+
+| Mục | Nội dung | Đọc khi |
+|---|---|---|
+| **0-1** | Giới thiệu + nguyên tắc chung phân tích tin | Lần đầu trong session |
+| **2** | Framework chấm điểm impact (công cụ nội bộ) | Cần xếp hạng mức ảnh hưởng của tin. **Không lộ tên framework ra output** |
+| **3** | Tin trong nước (`trong_nuoc`) + thông cáo Chính phủ (`thong_cao`) | Tin vĩ mô, chính sách, chỉ đạo điều hành |
+| **4** | Tin quốc tế (`quoc_te`) | Fed, OPEC, LME, tin tài chính ngoài VN |
+| **5** | Tin doanh nghiệp (`doanh_nghiep`) | Tin về một mã niêm yết cụ thể |
+| **6** | Workflow khi có nhiều tin đồng thời | Nhiều tin cùng lúc, cần xếp thứ tự ưu tiên |
+| **7** | Xử lý tình huống khó | Tin mâu thuẫn, tin chưa xác minh, tin đã priced-in |
+| **8** | Kết hợp tin với chỉ báo định lượng | Cần đối chiếu tin với dòng tiền/kỹ thuật (`K_agent_db_04`) |
+| **9** | Bảng dịch thuật ngữ tiếng Anh | Soạn output — bắt buộc rà trước khi send |
+| **10** | Checklist cuối trước khi output | Trước khi send, luôn |
+| **Phụ lục** | Tham chiếu chéo file khác | Khi cần lần sang file khác |
+
 ## 0. Giới thiệu
 
 File này cung cấp khung diễn giải và phương pháp phân tích bốn loại tin tức lưu trong `agent_db` — `doanh_nghiep` (tin doanh nghiệp niêm yết cụ thể), `quoc_te` (tin tài chính quốc tế), `trong_nuoc` (bucket rộng gồm mọi tin nội địa, cần lọc thêm qua `category_name` để tách tin vĩ mô/chính sách thực sự ảnh hưởng TTCK), và `thong_cao` (tổng hợp chỉ đạo điều hành Chính phủ/Thủ tướng hàng ngày — volume nhỏ nhưng chứa định hướng chính sách cấp cao). Khác với `K_agent_db_01` mô tả schema các collection tin và `K_agent_db_02` cung cấp query patterns, file này trả lời câu hỏi mang tính diễn giải: có tin rồi thì đọc thế nào cho đúng bối cảnh thị trường Việt Nam, xếp hạng mức độ ảnh hưởng ra sao, và map sang hành động đầu tư cụ thể nào.

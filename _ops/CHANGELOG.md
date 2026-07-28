@@ -4,6 +4,14 @@ Ghi mỗi lần sửa engine (K/P/O, system_prompt, KERNEL_SKELETON, OUTPUT_MAST
 
 Format: `## YYYY-MM-DD — tiêu đề` + file đụng tới + nội dung + lý do.
 
+## 2026-07-28 — Mục lục section cho 2 file K lớn (rev 8, B3)
+
+**Lý do:** `K_agent_db_05` 127 KB và `K_agent_db_04` 73 KB — mỗi file là một "chunk" chiếm tới ~1/6 context window. Đọc trọn file cho một câu hỏi chỉ cần một mục là mất luôn khả năng chọn lọc mà kiến trúc flat progressive disclosure sinh ra để có. Không tách file (đụng cấu trúc pack, không đáng); chỉ thêm bảng "đọc khi nào" ở đầu để session đọc lát cắt.
+
+- `K/K_agent_db_04.md`: thêm mục lục 7 mục A-F + ghi chú D6 là canonical cho câu hỏi đắt/rẻ.
+- `K/K_agent_db_05.md`: thêm mục lục 12 mục, chia theo loại tin để định vị nhanh.
+- Không đổi nội dung methodology nào.
+
 ## 2026-07-28 — Gộp `agent_db` vào engine chính (rev 8, A1)
 
 **Lý do:** runtime chỉ còn filesystem (Claude Code / Cowork), bỏ Claude Desktop Project. Luật "2 agent độc lập 100%" sinh ra từ ràng buộc Desktop Project (mỗi project upload knowledge riêng, không share file được) — ràng buộc mất thì duplication thành chi phí thuần. Khảo sát 6 file baseline cho thấy 27/29 khác biệt chỉ là con trỏ cross-reference, chỉ 2 khác biệt ngữ nghĩa thật. Spec: `_ops/specs/2026-07-28-tai-cau-truc-workspace-design.md`.

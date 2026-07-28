@@ -1,5 +1,21 @@
 # K_agent_db_04 — Interpretation & Methodology
 
+## Mục lục — đọc lát cắt, đừng đọc trọn file
+
+File này **73 KB**. Đọc hết là chiếm phần lớn ngân sách context cho một câu hỏi thường chỉ cần một mục. Xác định mục cần rồi đọc riêng mục đó.
+
+| Mục | Nội dung | Đọc khi |
+|---|---|---|
+| **0** | Giới thiệu, quan hệ với file khác | Lần đầu trong session, hoặc bỏ qua |
+| **A** | Diễn giải chỉ báo dòng tiền | Câu hỏi về dòng tiền, khối ngoại, tự doanh, thanh khoản |
+| **B** | TREND — market breadth mean-reversion | Câu hỏi về xu hướng đa khung, độ rộng thị trường, quá mua/quá bán |
+| **C** | Technical zone & chỉ báo kỹ thuật | Câu hỏi về vùng giá, hỗ trợ/kháng cự, tín hiệu kỹ thuật |
+| **D** | Phân tích cơ bản theo 4 type (SXKD / NH / CK / BH) | PTCB một mã. **Mục D6 là canonical cho mọi câu hỏi đắt/rẻ** (định giá tương đối theo lịch sử) |
+| **E** | Kết hợp 3 lăng kính + 4 kịch bản ticker | Cần kết luận tổng hợp cho một mã, không phải một lăng kính lẻ |
+| **F** | Pitfalls & mâu thuẫn tín hiệu | Tín hiệu các lăng kính chỏi nhau; hoặc trước khi chốt kết luận nghịch trực giác |
+
+Bảng dịch taxonomy nội bộ (K hygiene) nằm ngay đầu mục 0 — tra khi soạn output.
+
 ## 0. Giới thiệu
 
 File này giải thích **cách đọc và áp dụng** các chỉ báo trong `agent_db` để ra quyết định phân tích. Khác với `K_agent_db_01` (mô tả schema) và `K_agent_db_02` (template query), file này trả lời câu hỏi: "Có data rồi, diễn giải thế nào cho đúng?"
