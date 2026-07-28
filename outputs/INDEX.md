@@ -12,6 +12,7 @@ Quy tắc cột:
 | Ngày | Loại | Đường dẫn (bản MD) | Định dạng | Trạng thái | Key call → kết quả | Ghi chú |
 |---|---|---|---|---|---|---|
 | 2026-07-28 | invest_memo | invest_memo/2026-08_cycle/tier0_20260728_draft.md | md | final | Đề xuất gốc của agent: regime Defensive only, cash 60% → (điền kỳ sau) | Bản nghiên cứu nền đầy đủ, giữ nguyên giá trị tham chiếu. Chứa 3 mục mở rộng: định giá P/E-P/B loại nhóm Vingroup kèm phân vị, mùa vụ tháng 8 giai đoạn 2020-2025 cho 8 chỉ số + 24 ngành, nâng hạng FTSE kèm tiền lệ 9 thị trường. Regime đã bị user override ở bản confirmed |
+| 2026-07-28 | invest_memo | invest_memo/2026-08_cycle/tier1_20260728_draft.md | md | draft | Universe 2 ngành: NGANHANG rank 1, BDS Dân dụng rank 2 (loại 3 trụ Vin P/B 1,07 phân vị 0,6%) → (điền kỳ sau) | CP2 chờ user confirm. Không ép đủ quota 3 vì universe chỉ 2 — ràng buộc là thành phần bảng catalyst Tier 0, không phải chất lượng ngành. Đã tính lại BĐS Dân dụng loại VIC/VHM/VRE: từ phân vị P/B 92,3% gộp về 0,6% |
 | 2026-07-28 | invest_memo | invest_memo/2026-08_cycle/tier0_20260728_confirmed.md | md | final | Regime Risk-on selective (user override), quota 3 ngành × 3 mã, cash 30%; ứng viên HOACHAT + KCN + NGANHANG, loại THUYSAN + DETMAY → (điền kỳ sau) | Tier 0 chốt, đầu vào cho Tier 1. Regime do user override từ Defensive only, kèm 3 điều kiện huỷ có ngưỡng số (audit_overrides.md). Phần nghiên cứu nền không lặp lại, nằm ở bản draft |
 
 <!-- Ví dụ format dòng (xoá comment này khi có dòng thật):

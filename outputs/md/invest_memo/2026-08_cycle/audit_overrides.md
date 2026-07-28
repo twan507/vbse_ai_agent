@@ -34,6 +34,29 @@ Ghi mỗi lần user override quyết định hoặc phương pháp mặc địn
 
 ---
 
+## 2026-07-28 — CP2 — Loại: thay đổi phương pháp (kế thừa override CP1 sang Funnel A)
+
+Không phải override mới của user — là hệ quả bắt buộc của override phương pháp ở CP1, ghi lại để truy vết.
+
+**Quyết định Agent theo spec:** `P_invest_memo_02` mục 5 xếp hạng Funnel A bằng bốn tiêu chí R1-R4, toàn bộ dựa trên tầng chỉ báo nội bộ — xếp hạng dòng tiền ngành theo điểm dòng tiền tuần, điểm dòng tiền tuần, xu hướng quý, xu hướng năm. Mục 6 phân loại pattern 20 phiên cũng đọc chỉ báo xu hướng.
+
+**Áp dụng override CP1:** user đã yêu cầu không dùng tầng chỉ báo nội bộ cho cycle này, nên R1-R4 và pattern 20 phiên không dùng được.
+
+**Agent thay bằng bốn đại lượng khách quan:**
+
+1. **Dòng tiền khối ngoại theo ngành** — tự tổng hợp từ dữ liệu giao dịch từng mã ghép phân loại ngành, cộng dồn 1 tháng. Thay cho R1 và R2.
+2. **Biến động giá 4 khung** tuần / tháng / quý / năm — số điểm phần trăm thực tế. Thay cho R3 và R4.
+3. **Phân vị định giá lịch sử** trên chuỗi tuần 156 điểm. Không có trong spec gốc, thêm vào vì regime lần này là bắt đáy nên biên an toàn định giá là trục xếp hạng chính đáng.
+4. **Mùa vụ tháng 8 giai đoạn 2020-2025** — hit rate và trung bình. Không có trong spec gốc.
+
+Pattern 20 phiên thay bằng **đường giá thực tế 8 phiên gần nhất**, đọc trực tiếp giá đóng cửa và phần trăm thay đổi từng phiên.
+
+**Rủi ro:** thứ tự xếp hạng không so sánh được với các kỳ chạy Tier 1 khác nếu kỳ đó dùng R1-R4 gốc. Bù lại, mọi đại lượng dùng ở đây đều tái tạo được từ dữ liệu giá và giao dịch thô, nên kiểm lại được bất cứ lúc nào.
+
+**Ảnh hưởng thực tế tới kết quả:** đáng kể và theo chiều bất lợi cho ngân hàng. Dòng tiền khối ngoại cho thấy Tài chính ngân hàng bị bán ròng nặng nhất toàn sàn (−5.515 tỷ trong tháng) — thông tin này không xuất hiện trong R1-R4 gốc, và nó ngược với flag tôi ghi ở Tier 0 khi xếp ngân hàng là ứng viên hàng đầu. Ngân hàng vẫn giữ rank 1 nhưng vì lý do khác: mức sụt nhẹ nhất và định giá sạch không cần hiệu chỉnh.
+
+---
+
 ## 2026-07-28 — CP1 — Loại: ghi chú chấm điểm catalyst (không phải override)
 
 Ghi lại để minh bạch, không phải override của user.
