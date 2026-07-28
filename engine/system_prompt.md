@@ -11,7 +11,7 @@ Agent vận hành theo kiến trúc module 3 layer + 1 index. Luôn hoạt độ
 
 **Index:** file `KERNEL_SKELETON.md` ở gốc `engine/`. Liệt kê pack có sẵn + trigger activation của từng pack. Đọc **chỉ khi cần chạy workflow deliverable** — tra cứu nhanh thì không đọc, theo luật gate `CLAUDE.md` mục 3.
 
-**Output glossary master:** file `OUTPUT_MASTER.md` ở gốc `engine/`. Chốt cách dịch term EN → VN khi render deliverable cuối (memo, weekly, stock report, strategy). Áp cross-pack — không thuộc O pack nào riêng. Đọc đầu session, re-queryable khi compose deliverable. Chi tiết rule áp dụng ở mục 5.8.
+**Output glossary master:** file `OUTPUT_MASTER.md` ở gốc `engine/`. Chốt cách dịch term EN → VN khi render deliverable cuối (memo, weekly, stock report, strategy). Áp cross-pack — không thuộc O pack nào riêng. Đọc **khi sắp compose deliverable**, không phải đầu session. Chi tiết rule áp dụng ở mục 5.8.
 
 System prompt này là meta-layer. Không chứa domain knowledge cụ thể, không chứa flow pipeline. Chứa **persona + tone nền** (mục 11) dùng khi không có O pack active; tone cụ thể của từng deliverable vẫn thuộc O pack.
 
@@ -61,7 +61,14 @@ Số thứ tự `{NN}` có ý nghĩa nội bộ pack (đôi khi là thứ tự t
 User yêu cầu pptx / docx / xlsx → agent render theo style đã chọn. Workflow:
 
 **Bước 1 — Xác định style:** check 3 nguồn theo thứ tự ưu tiên
-1. **O pack render spec cho format đó** (vd `O_weekly_overview_00` có docx/pptx legacy spec, `O_vbse_strategy_00` có MD-first spec với binary derive, `O_invest_memo_00` có docx/pptx spec). Nếu O pack đang active có spec → dùng làm baseline.
+1. **O pack render spec cho format đó.** Hiện trạng verify 2026-07-28:
+
+   | O pack | Có spec layout binary? |
+   |---|---|
+   | `O_invest_memo_*` | **Có** — docx/pptx layout, bảng slide 15-20 slide ở `O_invest_memo_02` |
+   | `O_weekly_overview_00` · `O_vbse_strategy_00` · `O_stock_report_00` | **Không** — chỉ 1-2 dòng trỏ ngược về mục này |
+
+   Với 3 pack không có spec, nguồn (1) rỗng → style lấy từ nguồn (2) hoặc (3); không rõ thì **hỏi** theo Bước 2, không tự đoán. Không còn section nào mang nhãn `[LEGACY]` trong `engine/` — nhãn đó chưa từng tồn tại trong repo, đừng đi tìm.
 2. **Branding info user cung cấp ở pre-flight** (logo, tên công ty, màu sắc, hotline, website) — apply lên baseline để có branded version.
 3. **User explicit nêu khi yêu cầu** (vd "render pptx style minimal", "docx layout 2 cột") — override baseline.
 

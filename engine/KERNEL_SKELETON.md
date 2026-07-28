@@ -6,7 +6,7 @@ File index của `engine/`. Liệt kê pack available + trigger activation. Chi 
 
 ## Cách dùng file này
 
-1. Agent scan file này đầu session, cùng với `OUTPUT_MASTER.md` (xem mục "Global output convention" bên dưới).
+1. Agent đọc file này **khi đã xác định intent là deliverable** — không phải mặc định đầu session (xem khối "Đọc file này khi nào" ở trên). Phiên tra cứu bỏ qua hoàn toàn file này lẫn `OUTPUT_MASTER.md`.
 2. Khi query user đến, match với trigger của pack để quyết định activate pack nào.
 3. Activate pack thì đọc `_00` master của pack đó trước (bắt buộc theo rule master-first reading trong system prompt mục 5.7).
 4. Nếu không match pack nào, fall back về Default inline hoặc Default report (xem system prompt mục 6).
@@ -23,7 +23,7 @@ File index của `engine/`. Liệt kê pack available + trigger activation. Chi 
 
 **Nội dung:** 3 nhóm term — A (dịch luôn), B (dịch + ngoặc EN lần đầu), C (giữ EN). Polysemy rules + conflict resolution với O pack K hygiene riêng.
 
-**Trigger:** Đọc đầu session. Re-queryable khi compose deliverable cuối ở bất kỳ O pack nào active.
+**Trigger:** Đọc **khi sắp compose deliverable cuối**, không phải đầu session — phiên tra cứu inline không cần glossary. Re-queryable ở bất kỳ O pack nào active.
 
 **Depends:** Không có. Đứng độc lập tương tự `KERNEL_SKELETON.md`.
 
@@ -51,11 +51,11 @@ File index của `engine/`. Liệt kê pack available + trigger activation. Chi 
 
 **Pack chỉ có 1 file (không có `_00` master riêng vì pack đơn file):** `K_sector_framework`
 
-**Trigger:** P pack chủ động pull khi cần industry-level lens — không tự activate. Cụ thể:
+**Trigger:** đây là **K pack**, không phải P/O — luật gate (`CLAUDE.md` mục 3) chỉ chặn P/O, nên pull K pack ở chế độ tra cứu là hợp lệ. Nó không tự activate; phải có bên chủ động pull. Hai đường:
 - `P_invest_memo_05/06/07` (Tier 5A/B/C memo deep-dive): khi compose phần "Business" của memo 7 phần
 - `P_vbse_strategy_04` (Trục 4 Sector allocation): khi compose per-sector tilt rationale
 - `P_weekly_overview_02` (Phần 6 Biến động 18 ngành): chỉ khi ngành có biến động bất thường cần structural watch
-- Standalone: khi user hỏi "phân tích sâu ngành X" hoặc "outlook ngành X 12 tháng tới"
+- **Standalone (không cần P pack, không phá gate):** khi user hỏi đích danh về một ngành — "phân tích sâu ngành X", "outlook ngành X 12 tháng tới", "đánh giá ngành X". Trả lời inline, không sinh deliverable file.
 
 **Quan hệ với `K_agent_db_04`:** Bổ trợ, không overlap. `K_agent_db_04` chuyên dòng tiền + PTCB 4 type doanh nghiệp + technical từ data DB; `K_sector_framework` chuyên industry structure + competitive dynamics + ESG chuẩn CFA.
 
@@ -207,7 +207,7 @@ Pack chia 5 file: `_00` master + `_01` pre-flight + **Stage 1 data acquisition 1
 
 ### O_weekly_overview
 
-**Mục đích:** Render spec cho deliverable của pack `P_weekly_overview` — báo cáo tổng quan thị trường tuần 12 phần rigid, heading exact. Quy định format MD (source of truth), docx (archive formal), pptx (meeting trình bày), 3 mode branding (custom / default branded / plain), K hygiene, mapping bảng/chart cho từng phần, conviction marker + horizon + disconfirming bắt buộc cho mỗi call (regime / sector bias / watchlist mã).
+**Mục đích:** Render spec cho deliverable của pack `P_weekly_overview` — báo cáo tổng quan thị trường tuần 12 phần rigid, heading exact. Quy định format MD (source of truth) và 3 mode branding (custom / default branded / plain). ⚠ **Không có spec layout docx/pptx** — muốn render binary thì hỏi style user (`system_prompt.md` mục 4 Bước 2), K hygiene, mapping bảng/chart cho từng phần, conviction marker + horizon + disconfirming bắt buộc cho mỗi call (regime / sector bias / watchlist mã).
 
 **Master:** `O_weekly_overview_00`
 

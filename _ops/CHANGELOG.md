@@ -4,6 +4,31 @@ Ghi mỗi lần sửa engine (K/P/O, system_prompt, KERNEL_SKELETON, OUTPUT_MAST
 
 Format: `## YYYY-MM-DD — tiêu đề` + file đụng tới + nội dung + lý do.
 
+## 2026-07-28 — Sửa 4 mâu thuẫn engine do subagent audit phát hiện
+
+**Phương pháp:** thả 5 subagent read-only đóng vai session mới, mỗi con nhận một câu hỏi user khác nhau, rồi đọc lại response xem luật có đứng vững không. Hành vi: **5/5 đúng ở mọi điểm cốt lõi**. Nhưng chúng bắt được 4 mâu thuẫn trong chính văn bản engine mà cả 3 pass audit thủ công trước đó đều bỏ sót.
+
+**1. `KERNEL_SKELETON.md` tự mâu thuẫn, cách nhau 4 dòng.** Khối mới thêm nói *"chỉ khi cần chạy workflow deliverable. Tra cứu nhanh thì không đọc"*; mục "Cách dùng file này" điểm 1 ngay dưới vẫn nói *"Agent scan file này đầu session"*. Lỗi của tôi khi thêm luật gate mà không rà phần cũ trong cùng file. Đã sửa điểm 1.
+
+**2. `OUTPUT_MASTER.md` cùng bệnh, 3 chỗ.** `system_prompt.md` mục 1, `KERNEL_SKELETON.md` mục OUTPUT_MASTER, và chính `OUTPUT_MASTER.md` dòng 5 đều ghi "Đọc đầu session" — trong khi `system_prompt.md` mục 5.8 chốt chỉ áp khi compose deliverable cuối. Phiên tra cứu nạp glossary là phí. Đã đổi cả 3 thành "khi sắp compose deliverable".
+
+**3. `K_sector_framework` — trigger tự mâu thuẫn.** Dòng đầu ghi *"không tự activate"*, bốn dòng dưới lại ghi *"Standalone: khi user hỏi phân tích sâu ngành X"*. Giải quyết bằng cách nói rõ điều mà cả hai vế đều bỏ sót: **đây là K pack, luật gate chỉ chặn P/O** — nên pull standalone ở chế độ tra cứu là hợp lệ, miễn không sinh deliverable file.
+
+**4. Nhãn `[LEGACY]` chưa từng tồn tại trong repo.** `CLAUDE.md` mục 6 và `README` mục 8.1 đều chỉ định dùng "section đánh dấu `[LEGACY]`" làm style baseline khi render. Verify: `git log -S"[LEGACY]"` trên toàn lịch sử = **rỗng**; baseline rev 7 = 0 lần. Nhãn này là tàn dư mô tả từ rev 6 tiền-git, và tôi đã nhân bản nó sang README khi sửa mục 8.1.
+
+Đi kèm là một sai sót nghiêm trọng hơn: 3 chỗ khẳng định `O_weekly_overview_00` có spec pptx/docx, thực tế file đó có **đúng 1 chữ "pptx"** và nó trỏ ngược về `system_prompt.md` mục 4 — mà mục 4 lại trỏ ngược về "O pack có render spec". **Tham chiếu vòng tròn, không có layout nào.**
+
+Kiểm đủ 10 file O pack thay vì kết luận vội (lần sửa đầu tôi đã viết sai thành "không O pack nào có spec"):
+
+| O pack | Spec layout binary |
+|---|---|
+| `O_invest_memo_*` | **Có thật** — bảng slide 15-20 slide ở `_02`, docx/pptx layout ở `_00`/`_01`/`_03`/`_05` |
+| `O_weekly_overview_00` · `O_vbse_strategy_00` · `O_stock_report_00` | **Không có** — 0 lần nhắc "slide" |
+
+`system_prompt.md` mục 4 nguồn (1) nay có bảng hiện trạng này; ba pack thiếu spec thì phải hỏi style user theo Bước 2, không đoán.
+
+**Bài học:** ba pass grep thủ công không bắt được lỗi nào trong bốn lỗi trên, vì grep tìm được thứ mình nghĩ ra để tìm. Subagent đọc như người dùng thật thì vấp phải mâu thuẫn một cách tự nhiên. Với thay đổi kiến trúc, chạy audit bằng subagent là bước nên có, không phải tuỳ chọn.
+
 ## 2026-07-28 — Dọn tàn dư runtime Claude Desktop trong engine (rev 8, pass cuối)
 
 **Phạm vi:** 17 file. Lượt trước ghi "chưa dọn, cố ý"; user yêu cầu dọn hết trước khi vào việc thật. Phân loại kỹ vì phần lớn chữ "upload" là **đúng** — user gửi BCTC PDF qua chat vẫn là luồng hiện hành, không đụng.

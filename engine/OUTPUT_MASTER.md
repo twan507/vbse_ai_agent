@@ -2,7 +2,7 @@
 
 File chốt cách dịch term tiếng Anh khi render output cuối cho user đọc. Áp tuyệt đối cho mọi deliverable (memo, weekly overview, stock report, strategy), bất kể O pack nào active.
 
-Đọc đầu session 1 lần, mỗi session re-queryable khi compose deliverable.
+Đọc **khi sắp compose deliverable cuối** — không nạp ở phiên tra cứu inline. Re-queryable suốt quá trình compose.
 
 ## 1. Scope
 
