@@ -1,8 +1,0 @@
-11c11
-< > 1. **Đơn vị điểm phần trăm:** mọi field `*_pct`/`pct_change` đã là **điểm %** (`w_pct: -1.06` = giảm 1.06%) — ĐỌC THẲNG, không nhân 100. `industry_rank_pct`/`market_rank_pct` = percentile **0–100**. Ngoại lệ giữ nguyên: `*_trend` (0..1), `exposure` (0..2), tỷ trọng `held`/`book` (0..1), tỷ lệ trong `stock_finstats` (thập phân, chờ curated), `other_data.value` (đọc kèm `unit`). Bảng đầy đủ: `agent_db_00` mục 6.
----
-> > 1. **Đơn vị điểm phần trăm:** mọi field `*_pct`/`pct_change` đã là **điểm %** (`w_pct: -1.06` = giảm 1.06%) — ĐỌC THẲNG, không nhân 100. `industry_rank_pct`/`market_rank_pct` = percentile **0–100**. Ngoại lệ giữ nguyên: `*_trend` (0..1), `exposure` (0..2), tỷ trọng `held`/`book` (0..1), tỷ lệ trong `stock_finstats` (thập phân, chờ curated), `other_data.value` (đọc kèm `unit`). Bảng đầy đủ: system prompt mục 4.
-1014c1014
-< **Lưu ý về K hygiene:** `article_slug` raw (dạng string code) thuộc diện cấm lộ trong output theo system prompt mục 5.5 + `agent_db_00` mục 5 (ngoại lệ URL: `agent_db_00` mục 5.1). Tuy nhiên URL `https://finext.vn/news/{slug}` là output user-facing hợp lệ, không tính vi phạm — khác biệt giữa ký hiệu nội bộ DB và URL công khai. Agent dẫn link URL đầy đủ, không để slug trần trong output dạng `article_slug: vnm-xyz`.
----
-> **Lưu ý về K hygiene:** `article_slug` raw (dạng string code) thuộc diện cấm lộ trong output theo system prompt mục 8.5 (ngoại lệ URL: mục 8.2). Tuy nhiên URL `https://finext.vn/news/{slug}` là output user-facing hợp lệ, không tính vi phạm — khác biệt giữa ký hiệu nội bộ DB và URL công khai. Agent dẫn link URL đầy đủ, không để slug trần trong output dạng `article_slug: vnm-xyz`.

@@ -1,8 +1,0 @@
-31c31
-< Bảng tra nhanh cho rule K hygiene (system prompt mục 5.5 + `agent_db_00` mục 5): taxonomy dưới đây là công cụ nội bộ của file này, KHÔNG lộ tên ra output — thay bằng mô tả trực tiếp ở cột phải. Ký hiệu DB raw xem bảng `agent_db_00` mục 5.2; thuật ngữ tin tức xem `agent_db_05` phần 9.
----
-> Bảng tra nhanh cho rule K hygiene (system prompt mục 8.5): taxonomy dưới đây là công cụ nội bộ của file này, KHÔNG lộ tên ra output — thay bằng mô tả trực tiếp ở cột phải. Ký hiệu DB raw xem bảng system prompt mục 9; thuật ngữ tin tức xem `agent_db_05` phần 9.
-243c243
-< Có thể viết tắt "xu hướng tuần/tháng/quý/năm" nhưng KHÔNG được để `w_trend`, `m_trend`... trong response cuối. K hygiene (system prompt mục 5.5 + `agent_db_00` mục 5) cấm lộ ký hiệu raw.
----
-> Có thể viết tắt "xu hướng tuần/tháng/quý/năm" nhưng KHÔNG được để `w_trend`, `m_trend`... trong response cuối. K hygiene (system prompt mục 8.5 + mục 9) cấm lộ ký hiệu raw.

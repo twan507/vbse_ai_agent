@@ -1,8 +1,0 @@
-553c553
-< **Bước 8 — Soạn output theo nguyên tắc K hygiene.** Rà soát lần cuối output trước khi send: không lộ ký hiệu DB raw, không lộ taxonomy nội bộ (bao gồm "HIGH/MID/LOW impact", "logic gate", "framework chấm điểm"), không để nguyên thuật ngữ tiếng Anh chưa dịch. Mô tả trực tiếp tác động, cơ chế, hành động bằng ngôn ngữ tự nhiên. Tone và format theo layer output đang active (O pack nếu có, ngược lại Default Kernel — system prompt mục 6).
----
-> **Bước 8 — Soạn output theo nguyên tắc K hygiene.** Rà soát lần cuối output trước khi send: không lộ ký hiệu DB raw, không lộ taxonomy nội bộ (bao gồm "HIGH/MID/LOW impact", "logic gate", "framework chấm điểm"), không để nguyên thuật ngữ tiếng Anh chưa dịch. Mô tả trực tiếp tác động, cơ chế, hành động bằng ngôn ngữ tự nhiên. Tone và format theo system prompt mục 2 — direct, expert-level, concise, evidence-based.
-573c573
-< Khi soạn output cuối cùng: xem system prompt mục 5.5 + `agent_db_00` mục 5 (K hygiene — cấm lộ ký hiệu nội bộ và taxonomy), cùng bảng dịch thuật ngữ ở phần 9 của file này.
----
-> Khi soạn output cuối cùng: xem system prompt mục 8.5 + 9 (K hygiene — cấm lộ ký hiệu nội bộ và taxonomy), cùng bảng dịch thuật ngữ ở phần 9 của file này.
