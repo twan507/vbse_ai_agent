@@ -18,6 +18,22 @@ Ghi mỗi lần user override quyết định hoặc phương pháp mặc địn
 
 ---
 
+## 2026-07-28 — CP1 — Loại: thay đổi quyết định (regime)
+
+**Quyết định Agent:** **Defensive only**, quota 2 ngành × 3 mã, cash buffer 60%. Lập luận: bốn trong sáu trục bất lợi, trong đó ba điều kiện đang diễn ra có bằng chứng định lượng — Fed xoay hawkish với dự phóng lãi suất cuối 2026 nâng từ 3,4% lên 3,8%, khối ngoại bán ròng tăng tốc (tuần gần nhất 6.472 tỷ, hơn nửa lượng bán cả tháng 12.100 tỷ), và giải chấp margin thật từ nền dư nợ 418.725 tỷ tăng 50,2% so với cùng kỳ. Agent đã ghi rõ đây là quyết định sát nút với Risk-on selective.
+
+**User override:** **Risk-on selective**, quota 3 ngành × 3 mã. Thiên về kịch bản bắt đáy.
+
+**Lý do user:** thiên về kịch bản bắt đáy.
+
+**Agent xử lý:** áp regime selective theo `P_invest_memo_01` mục 3, nhưng chọn cash buffer ở **đầu trên của dải 20-30%, tức 30%** thay vì 20%. Lý do: rủi ro chính của việc bắt đáy giữa chu kỳ giảm đòn bẩy không phải sai hướng mà là hết dư địa mua trước khi luận điểm đúng. Đồng thời viết vào bản confirmed **ba điều kiện huỷ regime** có ngưỡng số cụ thể (VNINDEX mất 1.600 điểm; tỷ giá bán vượt trần biên độ 26.557; Fed tăng lãi suất ngoài dự kiến hoặc Mỹ mở rộng Section 301) để override này không thành một trạng thái vô điều kiện.
+
+**Lập luận thật đứng về phía user, ghi lại để đánh giá công bằng sau này:** định giá phần lõi thị trường loại nhóm Vingroup đang ở phân vị 0,6% của 3 năm về P/E và 1,3% về P/B — rẻ nhất toàn bộ 5,5 năm dữ liệu. Và quan trọng hơn, mẫu hình "tăng mạnh trước ngày hiệu lực nâng hạng rồi đảo chiều sau" — thứ đã hạ gục Dubai, Qatar, Pakistan — **đã không xảy ra** ở Việt Nam: thị trường giảm 12,8% từ đỉnh 18/05 thay vì tăng. Nghĩa là phần bọt mua đón đầu phần lớn chưa hình thành hoặc đã bị xả, nên rủi ro đảo chiều hậu 21/09 thấp hơn tiền lệ.
+
+**Cách đánh giá override này sau 3-6 tháng:** so VNINDEX ngày 28/07/2026 (1.680,62 điểm) với mức tại 30/09/2026 và 31/12/2026. Kiểm thêm hai câu riêng biệt, vì chúng có thể ra kết quả trái nhau: (a) regime selective có đúng không, tức thị trường có tạo đáy quanh đây không; (b) mức cash buffer 30% có hợp lý không, tức có phiên nào thủng 1.600 điểm để cần đến dư địa đó không.
+
+---
+
 ## 2026-07-28 — CP1 — Loại: ghi chú chấm điểm catalyst (không phải override)
 
 Ghi lại để minh bạch, không phải override của user.
