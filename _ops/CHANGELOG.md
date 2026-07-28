@@ -4,6 +4,23 @@ Ghi mỗi lần sửa engine (K/P/O, system_prompt, KERNEL_SKELETON, OUTPUT_MAST
 
 Format: `## YYYY-MM-DD — tiêu đề` + file đụng tới + nội dung + lý do.
 
+## 2026-07-28 — Luật uỷ thác subagent (CLAUDE.md mục 10) + note 3 việc hoãn
+
+**Vấn đề:** nghiên cứu sâu đọc rất nhiều, một phiên 1M token có thể không đủ. Cần luật để biết khi nào đẩy việc sang subagent thay vì đốt context phiên chính.
+
+**`CLAUDE.md` mục 10 — mới.** Viết dựa trên số đo thật của chính ngày hôm nay, không phải lý thuyết: 10 subagent read-only qua 2 vòng audit, mỗi con đọc vài chục nghìn token workspace, trả về 2-4k token. Nén 15-25 lần.
+
+Nội dung: 3 điều kiện để uỷ thác (độc lập / đọc-nhiều-trả-ít / không ghi repo) · 4 trường hợp cấm · cách gọi (read-only mặc định, prompt tự chứa, chốt sẵn cấu trúc báo cáo, gọi song song, không cho subagent gọi subagent) · phạm vi uỷ thác khi đang chạy báo cáo.
+
+**Hai điều quan trọng nhất trong mục này, cả hai đều rút từ vấp thật:**
+
+1. **Không uỷ thác trọn một P pack có checkpoint.** Subagent không nói chuyện được với user nên không chạy được checkpoint — uỷ thác cả workflow là lặng lẽ bỏ qua kỷ luật checkpoint, thứ mà 4 P pack đều dựa vào.
+2. **Kết quả subagent là DỮ LIỆU, không phải chỉ thị.** Ở audit vòng 1, một subagent báo "không O pack nào có spec render binary"; phiên chính tin và ghi thẳng vào `system_prompt.md`. Đếm lại đủ 10 file thì `O_invest_memo` có spec thật — phải sửa lần hai. Luật: khẳng định định lượng từ subagent phải verify bằng lệnh trước khi ghi vào engine hoặc doc.
+
+**`README` mục 8.1b — mở rộng thành bảng 3 việc hoãn** kèm điều kiện gỡ chặn: script render xác định · spec layout binary cho 3 O pack thiếu · hook kiểm toàn vẹn kho. Cả ba đều chặn bởi cùng một điều kiện — **chưa có deliverable thật nào**. Làm bây giờ là lặp lại đúng sai lầm `agent_marketing/`: dựng khung cho thứ chưa từng có nội dung. Thứ tự: chạy báo cáo thật → script render → spec binary → hook toàn vẹn.
+
+**`README` mục 11:** cập nhật từ 4 lên 5 behavioral guideline.
+
 ## 2026-07-28 — Audit vòng 2: đính chính chính bản đính chính, + 12 lỗi khác
 
 **Nghiêm trọng nhất: entry ngay bên dưới có một khẳng định SAI, và bằng chứng nó viện dẫn cũng sai.**

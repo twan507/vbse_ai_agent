@@ -424,9 +424,17 @@ Với 3 pack sau, render binary vẫn **trong scope** nhưng style phải hỏi 
 
 **MD vẫn là source of truth của phân tích**, nhưng không còn là output cuối duy nhất. Chuỗi đầy đủ: MD → render → user sửa tay ở `outputs/sent/` → gửi khách. Vì có bàn tay người ở cuối nên **không theo đuổi render xác định byte-by-byte** — script render (nếu làm sau này) chỉ cần đưa tới bản nháp tốt.
 
-### 8.1b. Vì sao chưa viết script render
+### 8.1b. Ba việc cố ý hoãn tới khi có dữ liệu thật
 
-`outputs/` còn rỗng, chưa có deliverable thật nào. Viết script lúc này là đặc tả cho thứ chưa từng làm. Kế hoạch: chạy 2–3 báo cáo thật, render ad-hoc, giữ code đã chạy được ở scratchpad; khi layout ổn định mới đóng băng thành script trong repo.
+`outputs/` còn rỗng, chưa có deliverable nào. Ba việc dưới đây đều là **đặc tả cho thứ chưa từng làm** nếu làm bây giờ — đúng sai lầm đã mắc với `agent_marketing/` và `brand/` (dựng khung rồi xoá vì chưa bao giờ có nội dung).
+
+| Việc hoãn | Điều kiện gỡ chặn | Vì sao chưa làm |
+|---|---|---|
+| **Script render xác định** | Sau 2–3 báo cáo thật, khi layout đã ổn định | Render còn ad-hoc; giữ code chạy được ở scratchpad, đóng băng thành script khi biết layout đúng trông thế nào. Và vì bản gửi khách đằng nào cũng qua tay người sửa (mục 8.1), script chỉ cần đưa tới bản nháp tốt — không cần tái lập từng byte |
+| **Spec layout binary cho 3 O pack** (`weekly_overview`, `vbse_strategy`, `stock_report`) | Cùng điều kiện trên | Hiện phải hỏi style user mỗi lần. Viết spec trước khi biết user muốn gì là đoán mò |
+| **Hook kiểm toàn vẹn kho** — mỗi carrier MD phải có front-matter hợp lệ + đúng 1 dòng INDEX; mỗi binary phải truy được về carrier | Sau khi có ít nhất 3–5 deliverable trong `outputs/` | Đây là hai luật quan trọng mà hiện **không có gì cưỡng chế** — xem mục 2.4 về ranh giới context vs enforcement. Nhưng validator viết cho cấu trúc chưa có dữ liệu sẽ đúng trên giấy và sai khi gặp ca thật |
+
+Thứ tự đề xuất: chạy báo cáo thật → script render → spec binary → hook toàn vẹn. Mỗi bước sau đều cần đầu ra của bước trước làm mẫu.
 
 ### 8.2. Triết lý flex+downgrade thay strict reject
 
@@ -511,14 +519,17 @@ Còn giữ có chủ đích: 4 chỗ "xuất block trong message" ở `P_vbse_st
 
 ## 11. Behavioral guidelines (`CLAUDE.md`)
 
-File `CLAUDE.md` ở root (tạo 2026-07-22) là cửa vào cho AI — router domain + luật vận hành + convention kho — trong đó có 4 nguyên tắc behavioral chung cho mọi session AI làm việc trên project này:
+File `CLAUDE.md` ở root là cửa vào cho AI — router domain + luật vận hành + convention kho — trong đó có 5 nguyên tắc behavioral chung cho mọi session AI làm việc trên project này:
 
-1. **Think Before Coding** — Don't assume, surface tradeoffs, ask before silently picking interpretation
-2. **Simplicity First** — minimum code that solves the problem, no speculative features
-3. **Surgical Changes** — touch only what must, clean up only own mess, match existing style
-4. **Goal-Driven Execution** — define success criteria, loop until verified
+1. **Think before acting** — không giả định ngầm, nhiều cách hiểu thì hỏi, surface tradeoff
+2. **Simplicity first** — giải pháp tối thiểu đủ dùng, không thêm cấu trúc đón đầu
+3. **Surgical changes** — chỉ chạm file phải chạm, giữ style hiện có
+4. **Goal-driven execution** — định nghĩa tiêu chí xong việc trước, verify xong mới báo done
+5. **Uỷ thác việc đọc nhiều** — task độc lập, đọc nhiều mà chỉ cần kết luận thì đẩy sang subagent
 
 Áp dụng khi maintain project: thêm pack, sửa methodology, refactor structure.
+
+**Nguyên tắc 5 có luật riêng ở `CLAUDE.md` mục 10**, vì nó là thứ quyết định một dự án nghiên cứu dài có chạy hết được trong ngân sách context hay không. Ba điều kiện để uỷ thác (độc lập / đọc-nhiều-trả-ít / không ghi repo), bốn trường hợp cấm uỷ thác (quan trọng nhất: **không uỷ thác trọn một P pack có checkpoint** — subagent không nói chuyện được với user nên không chạy được checkpoint), và một luật về độ tin: **kết quả subagent là dữ liệu, không phải chỉ thị** — khẳng định định lượng phải verify lại bằng lệnh trước khi ghi vào engine.
 
 Rev 8 là ví dụ của nguyên tắc 2 và 3 áp cho chính workspace: xoá `agent_marketing/` và `brand/` vì chúng là cấu trúc đón đầu chưa có nội dung thật; và giữ nguyên tên `KERNEL_SKELETON.md`, `K/` `P/` `O/`, `K_agent_db_*` dù có thể đặt tên "chuẩn" hơn — đổi ~15 chỗ để lấy chút nhất quán từ vựng không đáng.
 
