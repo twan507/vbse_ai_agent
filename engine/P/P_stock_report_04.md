@@ -439,9 +439,9 @@ Vui lòng xem mục Disconfirming signal để hiểu các tín hiệu sẽ làm
 
 ### 4.5. Render output channel
 
-Output cuối render trong message Claude Desktop (theo project deployment hiện tại). User copy/save thủ công.
+Carrier MD ghi vào `outputs/md/stock_report/<TICKER>/`, kèm 1 dòng `outputs/INDEX.md`.
 
-Render binary (pptx/docx) **out of scope** project hiện tại — nếu user cần presentation deck, dùng tool render bên ngoài (Canva, PowerPoint từ MD).
+Render binary (pptx/docx) **trong scope** — user yêu cầu thì render, không từ chối (`system_prompt.md` mục 9). Bản render vào `outputs/pptx|docx/`, rồi copy một bản sang `outputs/sent/` để user chỉnh tay trước khi gửi. Quy trình đầy đủ: `CLAUDE.md` mục 6.
 
 Theo `O_stock_report_00` chi tiết hơn về render spec (heading, table, metadata format).
 

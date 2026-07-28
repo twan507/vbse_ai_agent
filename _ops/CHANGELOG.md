@@ -4,6 +4,25 @@ Ghi mỗi lần sửa engine (K/P/O, system_prompt, KERNEL_SKELETON, OUTPUT_MAST
 
 Format: `## YYYY-MM-DD — tiêu đề` + file đụng tới + nội dung + lý do.
 
+## 2026-07-28 — Audit rev 8: gỡ 5 chỉ thị "render binary out of scope" trong engine
+
+**Phát hiện khi audit sau khi đã đóng rev 8.** Sửa README mục 8.1 và CLAUDE.md mục 6 ở commit trước là chưa đủ — mâu thuẫn còn sống **bên trong engine**, ở dạng chỉ thị hành vi chứ không phải mô tả.
+
+Năm chỗ ra lệnh cho agent từ chối render:
+
+- `KERNEL_SKELETON.md` dòng 234 (mô tả pack `O_stock_report`)
+- `O/O_stock_report_00.md` dòng 9 và 517
+- `P/P_stock_report_00.md` dòng 164
+- `P/P_stock_report_04.md` dòng 444 (mục 4.5 Render output channel)
+
+**Vì sao nghiêm trọng hơn mâu thuẫn ở README:** đây không phải wording lỗi thời vô hại. `system_prompt.md` mục 9 nói *"User yêu cầu render binary: chạy workflow render binary — **không từ chối**"*, còn `O_stock_report_00` dòng 9 nói *"out of scope"*. Hai chỉ thị ngược nhau trong cùng một engine, và pack file được đọc **sau** system prompt nên nhiều khả năng thắng. Kết quả thực tế sẽ là agent từ chối render đúng lúc user cần.
+
+Đã đổi cả 5 sang "trong scope", kèm đường dẫn ghi file mới (`outputs/md/`, `outputs/pptx|docx/`, copy sang `outputs/sent/`) và trỏ về `CLAUDE.md` mục 6.
+
+**Bài học ghi lại:** sửa mâu thuẫn ở tầng doc (CLAUDE.md, README) không tự động sửa tầng engine. Lần sau đổi một quyết định kiến trúc, phải grep chính từ khoá của quyết định đó (`out of scope`, `không hỗ trợ`, `không render`) trên toàn `engine/`, không chỉ trên doc.
+
+**Không đụng:** wording "project knowledge" / "Claude Desktop" còn ~11 chỗ trong P/O packs. Chúng mô tả cơ chế lưu file cũ, **không chặn hành vi** — agent theo `CLAUDE.md` mục 4 vẫn ghi đúng chỗ. Khác bản chất với 5 chỗ trên. Xem README mục 10.
+
 ## 2026-07-28 — Tái cấu trúc workspace rev 8 (A2-A4, B1-B2)
 
 **Phạm vi:** cấu trúc thư mục, luật vận hành, tooling. Spec: `_ops/specs/2026-07-28-tai-cau-truc-workspace-design.md`.

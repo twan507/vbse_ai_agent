@@ -231,7 +231,7 @@ Pack chia 5 file: `_00` master + `_01` pre-flight + **Stage 1 data acquisition 1
 
 **Mục đích:** Render spec cho deliverable của pack `P_stock_report` — báo cáo phân tích chuyên sâu 1 cổ phiếu VN niêm yết, 3 depth mode (Quick / Standard / Deep), audience flex (nội bộ / KH), pair compare optional. Quy định structure rigid 6-7 phần, format MD (source of truth), 2 mode branding (plain / branded optional), K hygiene + citation (4 nhóm), audit trail metadata, file naming `stock_report_<TICKER>_<YYYYMMDD>_<mode>.md`.
 
-Output cuối là MD final trong message (Claude Desktop). Render binary pptx/docx out of scope project (xem README.md mục 8.1). Branding optional — user cung cấp brand info ở pre-flight nếu cần shell visual.
+Carrier MD là source of truth, lưu tại `outputs/md/stock_report/<TICKER>/`. Render binary pptx/docx **trong scope** (xem README.md mục 8.1). Branding optional — user cung cấp brand info ở pre-flight nếu cần shell visual.
 
 **K hygiene đặc biệt:**
 - Audience nội bộ analyst: giữ raw Recommendation Long/Watch/Avoid + Conviction HIGH/MID/LOW + TP1/TP2/SL số

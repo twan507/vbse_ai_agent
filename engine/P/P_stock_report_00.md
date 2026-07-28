@@ -161,7 +161,7 @@ Chi tiết ở `O_stock_report_00`. Tóm tắt:
 - Mỗi phần ghi rõ **data source attribution** (DB / Web / PDF / Sector framework)
 - Audit trail metadata cuối báo cáo (audit trail data sources + timestamps)
 - Audience flex (nội bộ / KH) → ảnh hưởng K hygiene + wording mềm/cứng
-- Render branded optional (VBSE / brand tuỳ chọn / plain) — render binary out of scope, MD final là deliverable
+- Render branded optional (VBSE / brand tuỳ chọn / plain) — carrier MD là source of truth, render binary trong scope khi user yêu cầu
 - Citation 4 nhóm (xem `O_stock_report_00` mục 6 + system prompt mục 5.2)
 - Naming: `stock_report_<TICKER>_<YYYYMMDD>_<mode>.md` (mode = quick/standard/deep)
 

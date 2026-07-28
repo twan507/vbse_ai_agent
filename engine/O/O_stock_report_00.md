@@ -6,7 +6,7 @@ Render spec cho deliverable của pack `P_stock_report` — báo cáo phân tíc
 
 Pack quy định: structure rigid 6-7 phần, format MD (source of truth), 2 mode branding (plain / branded optional), K hygiene + citation, audit trail metadata, output naming.
 
-**Output cuối là MD final** trong message (theo deployment Claude Desktop hiện tại). Render binary pptx/docx out of scope (xem README.md mục 8.1).
+**Carrier MD là source of truth**, lưu tại `outputs/md/stock_report/<TICKER>/`. Render binary pptx/docx **trong scope** — chạy khi user yêu cầu, theo `CLAUDE.md` mục 6 và `system_prompt.md` mục 4 (xem README.md mục 8.1).
 
 **Dependencies:**
 - `P_stock_report_00..04` — pack process
@@ -514,7 +514,7 @@ Render:
 
 **Branding KHÔNG ảnh hưởng content** — chỉ shell visual. Content vẫn theo `P_stock_report` workflow.
 
-Render binary (pptx/docx branded) **out of scope** project hiện tại — nếu user cần, dùng tool render bên ngoài.
+Render binary (pptx/docx branded) **trong scope** — spec branding ở trên dùng làm style baseline khi render. Quy trình: `CLAUDE.md` mục 6.
 
 ## 5. K hygiene — bảng dịch áp dụng riêng cho pack này
 
