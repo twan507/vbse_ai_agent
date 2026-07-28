@@ -6,7 +6,7 @@ File index của `engine/`. Liệt kê pack available + trigger activation. Chi 
 
 ## Cách dùng file này
 
-1. Agent đọc file này **khi đã xác định intent là deliverable** — không phải mặc định đầu session (xem khối "Đọc file này khi nào" ở trên). Phiên tra cứu bỏ qua hoàn toàn file này lẫn `OUTPUT_MASTER.md`.
+1. Agent đọc file này **khi đã xác định intent là deliverable** — không phải mặc định đầu session (xem khối "Đọc file này khi nào" ở trên). Phiên tra cứu bỏ qua file này lẫn `OUTPUT_MASTER.md`; **ngoại lệ duy nhất**: query vùng rìa được đọc riêng khối **Trigger** để phân định, không đọc phần mô tả pack (`CLAUDE.md` mục 3).
 2. Khi query user đến, match với trigger của pack để quyết định activate pack nào.
 3. Activate pack thì đọc `_00` master của pack đó trước (bắt buộc theo rule master-first reading trong system prompt mục 5.7).
 4. Nếu không match pack nào, fall back về Default inline hoặc Default report (xem system prompt mục 6).
@@ -47,7 +47,9 @@ File index của `engine/`. Liệt kê pack available + trigger activation. Chi 
 
 ### K_sector_framework
 
-**Mục đích:** Khung phân tích ngành chuẩn institutional buy-side, chắt lọc từ CFA Sector Analysis Framework (2020). Cung cấp lens systematic cho deep-dive sector-level analysis qua 5 dimension: **Demand Drivers / Market Position / Structural Influences / Performance Metrics / ESG**, cộng Industry 4.0 lens cross-sector. Có per-sector quick-reference cho 10-12 ngành whitelist có CFA cover trực tiếp (NGANHANG, TIENICH, BDS, KCN, BANLE, VANTAI, CONGNGHE, XAYDUNG, THUCPHAM, NONGNGHIEP, CHUNGKHOAN, BAOHIEM override) + guidance generic cho 6 ngành còn lại (DAUKHI, HOACHAT, KIMLOAI, DETMAY, KHOANGSAN, CONGNGHIEP).
+**Mục đích:** Khung phân tích ngành chuẩn institutional buy-side, chắt lọc từ CFA Sector Analysis Framework (2020). Cung cấp lens systematic cho deep-dive sector-level analysis qua 5 dimension: **Demand Drivers / Market Position / Structural Influences / Performance Metrics / ESG**, cộng Industry 4.0 lens cross-sector. Có per-sector quick-reference cho các ngành có CFA cover trực tiếp: NGANHANG, TIENICH, BDS, KCN, BANLE, VANTAI, CONGNGHE, XAYDUNG, THUCPHAM, NONGNGHIEP, CHUNGKHOAN — cộng **BAOHIEM ở chế độ override, ngành này NẰM NGOÀI whitelist 18** (`K_agent_db_01`: "Bảo hiểm" là ví dụ ngành ngoài whitelist, chỉ query khi user hỏi đích danh).
+
+Guidance generic cho **7 ngành** còn lại: DAUKHI, HOACHAT, KIMLOAI, DETMAY, KHOANGSAN, **THUYSAN**, CONGNGHIEP — danh sách này lấy theo `K_sector_framework` mục "Universal framework first"; đừng bỏ sót THUYSAN vì nó có trong whitelist 18.
 
 **Pack chỉ có 1 file (không có `_00` master riêng vì pack đơn file):** `K_sector_framework`
 
@@ -145,10 +147,10 @@ Pack chia 5 file: `_00` master + `_01` pre-flight + **Stage 1 data acquisition 1
 3. Smile Curve (Stan Shih 1992) — vị trí capture giá trị (smile bottom/mid/top) — **đặc biệt quan trọng cho VN context** vì hầu hết SXKD VN ở smile bottom
 4. GVC governance (Gereffi, Humphrey, Sturgeon 2005) — market/modular/relational/captive/hierarchy + Tier supplier position
 5. Industry 4.0 / Digital footprint (CFA Sector Analysis 2020) — Three Golden Steps + 7-dimension readiness table
-6. CFA Sector Analysis 2020 — 21 industry chapter mapping với 18 ngành VN whitelist + 3 financial
+6. CFA Sector Analysis 2020 — 21 industry chapter map sang 18 ngành whitelist (whitelist **đã gồm** NGANHANG và CHUNGKHOAN) cộng BAOHIEM ngoài whitelist
 
 **4 type framework (chi tiết ở `_02`):**
-- **SXKD** (Sản xuất kinh doanh, 21 ngành whitelist trừ tài chính): 4 kịch bản Value Play / Value Trap / Growth at Premium / Cycle Top + 3 sub-type cycle dynamics (Cyclical / Consumer-Defensive / Growth-Infrastructure)
+- **SXKD** (Sản xuất kinh doanh — 21 ngành phi tài chính trong tổng 24 ngành DB; nếu giới hạn trong whitelist 18 thì còn 16 ngành sau khi trừ NGANHANG + CHUNGKHOAN. **Không có con số "21 ngành whitelist"**): 4 kịch bản Value Play / Value Trap / Growth at Premium / Cycle Top + 3 sub-type cycle dynamics (Cyclical / Consumer-Defensive / Growth-Infrastructure)
 - **NH** (Banking): NIM drivers + asset quality (NPL Group 2-5, LLR coverage) + capital (CAR, LDR, LCR) + bank-specific FA
 - **CK** (Chứng khoán): brokerage market share + margin book quality (leverage, yield, concentration) + IB pipeline + prop book VaR
 - **BH** (Bảo hiểm — override mode): combined ratio (Loss + Expense) + APE/NBV (life) + persistency + investment yield + solvency margin

@@ -4,7 +4,33 @@ Ghi mỗi lần sửa engine (K/P/O, system_prompt, KERNEL_SKELETON, OUTPUT_MAST
 
 Format: `## YYYY-MM-DD — tiêu đề` + file đụng tới + nội dung + lý do.
 
+## 2026-07-28 — Audit vòng 2: đính chính chính bản đính chính, + 12 lỗi khác
+
+**Nghiêm trọng nhất: entry ngay bên dưới có một khẳng định SAI, và bằng chứng nó viện dẫn cũng sai.**
+
+Entry đó viết: *"Nhãn `[LEGACY]` chưa từng tồn tại trong repo. Verify: `git log -S"[LEGACY]"` trên toàn lịch sử = rỗng; baseline rev 7 = 0 lần."* Đã port câu này sang `system_prompt.md` và `README` mục 8.1.
+
+**Sự thật:** `git log --all -S"[LEGACY]"` trả về **4 commit**, và baseline rev 7 (`5fb0ecb`) chứa chuỗi đó ở 3 chỗ — `CLAUDE.md:101`, `README.md:391`, `README.md:450`.
+
+**Nguyên nhân:** lệnh verify hôm đó bị giới hạn path — `git log -S"[LEGACY]" -- engine/ agent_analyst/` — trong khi chuỗi nằm ở `CLAUDE.md` và `README.md` **ở gốc repo**. Grep đúng phạm vi nhưng sai tập file, ra 0 kết quả, rồi kết luận vượt xa cái đã kiểm.
+
+**Phát biểu đúng:** không section nào trong `engine/` mang nhãn `[LEGACY]` (grep `engine/` = 0 — phần này vẫn đúng, và đó là điều thực sự quan trọng). Nhưng **doc có nhắc tới nhãn** từ baseline rev 7; nhãn thật nếu từng tồn tại thì ở rev 6 tiền-git, ngoài tầm với của lịch sử này. Đã sửa ở `system_prompt.md` mục 4 và `README` mục 8.1.
+
+**Vì sao đáng ghi to:** một đính chính sai còn hại hơn lỗi gốc. Nó kèm sẵn một lệnh "tự kiểm chứng đi" — người sau chạy đúng lệnh đó, thấy 4 kết quả ngược lại, rồi mất niềm tin vào cả phần đúng. **Luật rút ra: lệnh verify viết vào tài liệu phải là lệnh đã chạy đúng nguyên văn, không được giới hạn path rồi phát biểu ở phạm vi toàn cục.**
+
+**Các lỗi khác cùng đợt:**
+
+- `README` dòng cuối vẫn ghi *"AI không tự push được"* rồi trỏ về `CLAUDE.md` mục 7.7 — chính mục đã bác bỏ nó. Lần trước sửa dòng 57, sót dòng cuối file. Đây là **lần thứ hai** cùng một lỗi ở cùng một file.
+- `CLAUDE.md` bảng router mục 3 và `README` mục 13 vẫn bảo đọc `OUTPUT_MASTER.md` ngay từ đầu, trong khi 3 file engine đã chốt "chỉ đọc khi sắp compose". Lần trước sửa 3 chỗ engine, quên 2 chỗ doc — **bài học "sửa doc không tự sửa engine" chạy ngược chiều, cũng lần thứ hai**.
+- Ngoại lệ "query vùng rìa được đọc riêng khối Trigger" mới thêm ở `CLAUDE.md` chưa port sang `system_prompt.md`, `KERNEL_SKELETON.md`, `README` — ba chỗ đó vẫn dùng từ tuyệt đối ("bỏ qua hoàn toàn", "Không đọc"). Đã port.
+- `README` mục 10 còn ghi *"Chưa dọn: wording đó còn rải rác trong P/O packs"* — thực tế đã dọn ở commit `ca5c61f`, grep 6 từ khoá = 0. Đã sửa.
+- **Danh sách ngành sai 3 chỗ trong `KERNEL_SKELETON`:** (a) kê BAOHIEM là "ngành whitelist" trong khi `K_agent_db_01` nêu đích danh "Bảo hiểm" làm ví dụ ngành **ngoài** whitelist; (b) bỏ sót THUYSAN khỏi danh sách ngành không có CFA cover (6 → đúng là 7), mà THUYSAN lại có trong whitelist 18; (c) "21 ngành whitelist" là con số không tồn tại — đúng phải là 24 ngành DB, 18 whitelist, 21 phi tài chính; và phép cộng "18 whitelist + 3 financial" sai vì whitelist đã gồm NGANHANG + CHUNGKHOAN.
+
+**Đánh giá phương pháp:** vòng 2 dùng 5 probe khác hẳn vòng 1 (tiền tố `tra nhanh:`, luồng intake, đính chính báo cáo cũ, sửa engine, đọc nguội tổng thể). Hành vi vẫn 5/5 đúng. Nhưng tìm thêm được **13 lỗi văn bản** sau khi vòng 1 đã sửa 9 — trong đó 3 lỗi là **tàn dư của chính các bản sửa ở vòng 1**. Kết luận: mỗi lần sửa luật đều có xác suất sinh lỗi mới, nên audit phải chạy **sau** mỗi đợt sửa chứ không phải một lần cho xong.
+
 ## 2026-07-28 — Sửa 4 mâu thuẫn engine do subagent audit phát hiện
+
+> ⚠ **ĐÍNH CHÍNH (xem entry trên cùng ngày, phía trên):** mục 4 của entry này khẳng định nhãn `[LEGACY]` "chưa từng tồn tại trong repo" — **SAI**. Nó có trong `CLAUDE.md`/`README.md` từ baseline rev 7. Phần đúng: `engine/` không có nhãn nào. Giữ entry nguyên văn theo luật append-only, đọc kèm đính chính.
 
 **Phương pháp:** thả 5 subagent read-only đóng vai session mới, mỗi con nhận một câu hỏi user khác nhau, rồi đọc lại response xem luật có đứng vững không. Hành vi: **5/5 đúng ở mọi điểm cốt lõi**. Nhưng chúng bắt được 4 mâu thuẫn trong chính văn bản engine mà cả 3 pass audit thủ công trước đó đều bỏ sót.
 

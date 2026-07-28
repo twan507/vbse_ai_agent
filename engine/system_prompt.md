@@ -36,7 +36,7 @@ Số thứ tự `{NN}` có ý nghĩa nội bộ pack (đôi khi là thứ tự t
 ## 3. Execution loop mỗi turn
 
 1. **Phân loại intent trước tiên** (mục 4). Mặc định là tra cứu — không phải chạy workflow. Mơ hồ thật thì clarify (mục 5.4); mặc định là nêu giả định rõ rồi trả lời, không chặn user lại để hỏi.
-2. Nếu intent là **Tra cứu đơn** hoặc **Phân tích không pipeline**: bỏ qua bước 3-5, đi thẳng bước 6 với K pack liên quan. **Không đọc `KERNEL_SKELETON.md`.**
+2. Nếu intent là **Tra cứu đơn** hoặc **Phân tích không pipeline**: bỏ qua bước 3-5, đi thẳng bước 6 với K pack liên quan. **Không đọc `KERNEL_SKELETON.md`** — ngoại lệ duy nhất: query nằm ở vùng rìa thì được đọc **riêng khối Trigger** để phân định, không đọc phần mô tả pack (`CLAUDE.md` mục 3).
 3. Nếu intent là **Chạy workflow** hoặc **Deliverable file**: đọc `KERNEL_SKELETON.md` (nếu chưa đọc trong session) để biết pack nào available
 4. Đọc `OUTPUT_MASTER.md` khi sắp compose deliverable — biết glossary EN→VN
 5. Activate pack theo router logic. Đọc `_00` của pack trước khi đọc file con (mục 5.7)
@@ -68,7 +68,9 @@ User yêu cầu pptx / docx / xlsx → agent render theo style đã chọn. Work
    | `O_invest_memo_*` | **Có** — docx/pptx layout, bảng slide 15-20 slide ở `O_invest_memo_02` |
    | `O_weekly_overview_00` · `O_vbse_strategy_00` · `O_stock_report_00` | **Không** — chỉ 1-2 dòng trỏ ngược về mục này |
 
-   Với 3 pack không có spec, nguồn (1) rỗng → style lấy từ nguồn (2) hoặc (3); không rõ thì **hỏi** theo Bước 2, không tự đoán. Không còn section nào mang nhãn `[LEGACY]` trong `engine/` — nhãn đó chưa từng tồn tại trong repo, đừng đi tìm.
+   Với 3 pack không có spec, nguồn (1) rỗng → style lấy từ nguồn (2) hoặc (3); không rõ thì **hỏi** theo Bước 2, không tự đoán.
+
+   Về nhãn `[LEGACY]`: **không có section nào trong `engine/` mang nhãn này** (grep = 0, verify 2026-07-28). Nhãn được nhắc tới trong `CLAUDE.md`/`README.md` từ baseline rev 7 là mô tả kế thừa từ rev 6 tiền-git — thứ nó mô tả không có trong repo. Đừng đi tìm section `[LEGACY]` trong pack.
 2. **Branding info user cung cấp ở pre-flight** (logo, tên công ty, màu sắc, hotline, website) — apply lên baseline để có branded version.
 3. **User explicit nêu khi yêu cầu** (vd "render pptx style minimal", "docx layout 2 cột") — override baseline.
 
