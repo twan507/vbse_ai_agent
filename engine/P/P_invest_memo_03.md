@@ -38,9 +38,10 @@ Reference: `P_invest_memo_00` phần Flow chi tiết (overview), `P_invest_memo_
 
 Mã phải lọt điều kiện universe mới được xem xét tiếp. Công thức:
 
-**Universe = [(B ∩ D) ∪ (C ∩ D) ∪ (E ∩ D)] − F**
+**Universe = T ∩ { [(B ∩ D) ∪ (C ∩ D) ∪ (E ∩ D)] − F }**
 
 Trong đó:
+- **T — Xu hướng giá (gate bắt buộc, áp TRƯỚC mọi vòng khác):** mã phải có bằng chứng đã ngừng giảm. Xem Section 2b
 - **B — Fundamental mã:** mã có trạng thái kinh doanh cơ bản đủ chất lượng
 - **D — Liquidity:** giá trị giao dịch đủ cao để vào/ra không gây slippage nặng
 - **C — Catalyst mã (optional):** mã có catalyst cá thể mạnh, có thể không đạt B nhưng có catalyst
@@ -48,6 +49,7 @@ Trong đó:
 - **F — Loại trừ cứng:** sự kiện pháp lý, quản trị, hoặc nguồn cung cổ phiếu làm mã không dùng được bất kể B/C/E/D. Xem Section 5c
 
 Logic:
+- **T là gate chặn trước tiên** — mã trượt T không vào universe bất kể B, C, E, D tốt đến đâu. Không có đường vòng, không có exception tự động
 - Đường chính: B ∩ D — mã fundamental tốt + đủ thanh khoản
 - Đường phụ 1 (optional): C ∩ D — catalyst play không đạt B nhưng có catalyst mạnh
 - Đường phụ 2 (optional): E ∩ D — flow play không đạt B nhưng dòng tiền chứng minh được bằng số
@@ -57,6 +59,33 @@ Logic:
 **Constraint đường phụ:** tối đa 1-3 mã/ngành qua đường C, và tối đa 1-3 mã/ngành qua đường E. **Tổng hai đường phụ không vượt 3 mã/ngành** — tránh shortlist ngập mã thiếu nền tảng.
 
 **Đường E chỉ mở khi user chốt horizon ngắn (1-3 tháng) và tuyên bố ưu tiên dòng tiền trên cơ bản.** Mặc định đường E ĐÓNG. Mở đường E là quyết định của user, phải ghi `audit_overrides.md`, vì nó đảo thứ tự hai tầng của kiến trúc gốc.
+
+### Tầng 1b — Vòng T: bộ lọc xu hướng giá (v2 từ 2026-07-29)
+
+**Nguyên tắc:** với horizon 1-6 tháng, **xu hướng giá là điều kiện CẦN, định giá và cơ bản là điều kiện ĐỦ.** Không đưa vào universe cổ phiếu chưa có bằng chứng ngừng giảm, bất kể định giá rẻ đến đâu và chỉ báo quá bán đến đâu.
+
+**Hai đại lượng, tính từ giá đóng cửa thô (`history_stock`), không dùng tầng chỉ báo nội bộ:**
+
+1. **Khoảng cách tới MA200** — trung bình đơn 200 phiên đóng cửa.
+2. **Chuỗi 120 phiên chia ba đoạn** — so giá đóng cửa tại các mốc T−120, T−60, T−20 và hiện tại; đếm số đoạn giảm trên 3.
+
+**Phân tầng:**
+
+| Tầng | Điều kiện | Xử lý |
+|---|---|---|
+| **Loại thẳng** | Dưới MA200 quá **20%** VÀ giảm cả **3/3** đoạn | **Không vào universe.** Chuyển sang danh sách theo dõi kèm điều kiện kích hoạt |
+| **Chờ xác nhận** | Dưới MA200 từ 0 đến 20%, hoặc giảm 2/3 đoạn | Vào universe nhưng **không được cấp size đầy đủ** cho tới khi có 2 tín hiệu: đóng cửa trên MA20 ba phiên liên tiếp VÀ không tạo đáy mới trong 10 phiên |
+| **Mua được** | Trên MA200 VÀ không giảm quá 2/3 đoạn | Vào universe bình thường |
+
+**Vì sao MA200 chứ không phải MA20/MA50.** MA20 và MA50 phản ứng quá nhanh nên trong một nhịp bật kỹ thuật chúng cho tín hiệu mua rồi rút lại ngay. MA200 trả lời đúng câu duy nhất cần trả lời trước khi bắt đáy: **thị trường có còn coi mức giá này là hợp lý theo quan điểm một năm không.** Chậm là ưu điểm ở đây.
+
+**Vì sao chia ba đoạn.** Một con số phần trăm duy nhất che mất hình dạng đường đi. Ba đoạn phân biệt được ba trường hợp có cùng mức giảm tổng: giảm rồi đi ngang (đoạn cuối phẳng — đáng quan tâm), giảm đều liên tục (3/3 âm — dao rơi), giảm rồi hồi rồi giảm tiếp (đoạn giữa dương — bẫy).
+
+**Ngoại lệ duy nhất:** mã niêm yết dưới 200 phiên chưa đủ chuỗi để tính MA200 — dùng MA khả dụng dài nhất, **ghi rõ trong checkpoint** rằng phép so sánh yếu hơn vì mã chưa trải qua chu kỳ giảm nào.
+
+**Vòng T không được nới bởi Agent.** Universe sau T nhỏ hơn quota thì **giảm quota**, không hạ ngưỡng. Nới T là quyết định của user và phải ghi `audit_overrides.md`.
+
+**Ca thật đã vấp (cycle 2026-08), lý do vòng này ra đời:** bản khuyến nghị ngày 28/07 đưa 8 mã vào danh sách mua trong khi cả 8 đều thuộc tầng loại thẳng, gồm 5 mã ở nhóm lõi. Nặng nhất: KDH ở −37,9% dưới MA200 với 3/3 đoạn giảm và tốc độ giảm còn tăng dần, được xếp nhóm lõi nhờ định giá ngành rẻ, chỉ báo quá bán 19,4 và một phiên khối ngoại mua ròng. Toàn bộ 6/6 mã ngành BĐS Dân dụng khi đó đều ở tầng loại thẳng.
 
 ### Tầng 2 — Ranking filter (xếp hạng, không loại)
 
@@ -112,6 +141,23 @@ Ba chỉ tiêu bắt buộc đọc theo chuỗi, không được đọc điểm:
 | **ICR** | Doanh nghiệp có thể có 1 quý ICR cao nhờ khoản bất thường, che 3 quý âm liền trước |
 | **Dòng tiền kinh doanh (CFO)** | ROE cao đi kèm CFO âm kéo dài = lợi nhuận không tạo tiền |
 | **Tăng trưởng lợi nhuận** | Một quý đột biến kéo nền so sánh, làm quý sau trông xấu và ngược lại |
+
+### Kiểm tra bắt buộc — độ tươi kỳ báo cáo (v2 từ 2026-07-29)
+
+**Chạy kiểm tra này TRƯỚC mọi kiểm tra khác của Vòng B.**
+
+So kỳ báo cáo mới nhất trong `stock_finstats` với kỳ gần nhất doanh nghiệp **đã công bố thật**. Hai tình huống, xử lý khác hẳn nhau — không phân biệt thì quy tắc thành cứng nhắc vô ích:
+
+| Tình huống | Dấu hiệu | Xử lý |
+|---|---|---|
+| **A — Số mới ĐÃ CÓ nhưng kho chưa cập nhật** | Doanh nghiệp đã công bố BCTC kỳ N nhưng kho dừng ở kỳ N−1 | **Lỗi. Phải đi tìm số mới** — web search BCTC, công bố thông tin doanh nghiệp, hoặc yêu cầu user cung cấp. **Cấm dùng số cũ rồi chấm điểm như thường.** Không tìm được thì ghi **"chưa đủ cơ sở khuyến nghị"** và để mã ngoài universe |
+| **B — Doanh nghiệp CHƯA công bố** | Chưa tới hoặc vừa qua hạn công bố, chưa có BCTC | Số cũ là số mới nhất hợp lệ, **được dùng** — nhưng phải ghi nhãn kỳ báo cáo cạnh mỗi con số và **hạ một bậc mức tin cậy** cho tới khi số mới về |
+
+**Quy tắc nhãn bắt buộc:** mỗi con số tài chính trong checkpoint phải kèm **kỳ báo cáo** và nhãn **[công bố]** hoặc **[dự phóng]**. Cấm trộn hai loại trong cùng một bảng chấm điểm mà không phân biệt — đó là cách một dự phóng của bên thứ ba trở thành căn cứ cấp tỷ trọng.
+
+**Mốc lịch cần thuộc:** BCTC quý riêng lẻ hạn 20 ngày sau quý (30 ngày với công ty mẹ); BCTC bán niên soát xét hạn 45 ngày (60 ngày với công ty mẹ). Nếu ngày chạy báo cáo nằm sát các mốc này, **hoãn phần chấm điểm cho tới khi số về** thay vì chạy trên số cũ.
+
+**Hai ca thật (cycle 2026-08):** nhóm công ty chứng khoán rơi vào tình huống A — BCTC quý 2 đã công bố từ giữa tháng 7 mà báo cáo vẫn dùng số quý 1, dẫn tới xếp VCI và VND vào nhóm lõi trong khi số quý 2 cho thấy VCI **vốn chủ giảm 872 tỷ dù báo lãi 591 tỷ** và VND xếp hạng chót về chất lượng lợi nhuận. Nhóm ngân hàng rơi vào tình huống B — 5 trên 8 mã chưa công bố BCTC quý 2 tại thời điểm chạy, nên số quý 1 hợp lệ nhưng phải ghi nhãn.
 
 ### Kiểm tra bắt buộc — đối chiếu trailing với quý gần nhất
 

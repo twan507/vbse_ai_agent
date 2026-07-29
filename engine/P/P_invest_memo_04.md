@@ -1,6 +1,6 @@
 # P_invest_memo_04 — Tier 3: Chấm điểm + chọn top 3/ngành
 
-Giai đoạn 4 của quy trình. Từ shortlist 6-10 mã/ngành ở tier 2, chấm điểm 6 tiêu chí (max 18 điểm) và chọn top 3 mã/ngành cho tier 5 (memo deep-dive). Đây là **gate quan trọng trước memo** — sau tier này mới đầu tư resource lớn vào PDF extraction và modeling.
+Giai đoạn 4 của quy trình. Từ shortlist 6-10 mã/ngành ở tier 2, chấm điểm 5 tiêu chí (max 15 điểm) và chọn top 3 mã/ngành cho tier 5 (memo deep-dive). Đây là **gate quan trọng trước memo** — sau tier này mới đầu tư resource lớn vào PDF extraction và modeling.
 
 Reference: `P_invest_memo_00` phần Flow chi tiết (overview), `P_invest_memo_00` phần Cơ chế checkpoint review, `P_invest_memo_03` (tier 2 output làm input), pack `K_agent_db` (`K_agent_db_01` schema, `K_agent_db_04` interpretation).
 
@@ -9,7 +9,7 @@ Reference: `P_invest_memo_00` phần Flow chi tiết (overview), `P_invest_memo_
 ## 1. Mục tiêu & output expected
 
 **Mục tiêu:** từ shortlist 6-10 mã/ngành (tier 2) xuống 3 mã/ngành qua:
-- Chấm điểm 6 tiêu chí, mỗi tiêu chí 1-3 điểm, max 18 điểm
+- Chấm điểm 5 tiêu chí, mỗi tiêu chí 1-3 điểm, max 15 điểm
 - Xếp hạng + chọn top 3/ngành
 - Cân bằng bucket entry (không phải 3 mã cao điểm nhất — cần đa dạng bucket)
 - Phân vào 3 tier conviction: high / medium / low
@@ -40,11 +40,11 @@ Reference: `P_invest_memo_00` phần Flow chi tiết (overview), `P_invest_memo_
 
 **Không dùng bảng chấm để loại mã:** nếu 1 mã có điểm thấp nhưng lọt shortlist tier 2, nó vẫn có chất lượng tối thiểu đã được verify. Loại mã khỏi shortlist phải dựa trên **tiêu chí loại bắt buộc** (Section 6) hoặc user override có audit.
 
-**6 tiêu chí, 18 điểm max:** thiết kế để distribute vừa phải — mã trung bình 9-11đ, mã tốt 12-14đ, mã xuất sắc 15-18đ. Nếu phần lớn shortlist ≥ 15đ → tiêu chí đang quá rộng, cần siết lại. Nếu phần lớn < 10đ → tiêu chí quá khắt khe hoặc universe tier 2 chất lượng thấp.
+**5 tiêu chí, 15 điểm max** (v2 từ 2026-07-29, trước đó 6 tiêu chí / 18 điểm — xem tiêu chí đã gỡ ở mục 3): thiết kế để distribute vừa phải — mã trung bình 7-9đ, mã tốt 10-12đ, mã xuất sắc 13-15đ. Nếu phần lớn shortlist ≥ 13đ → tiêu chí đang quá rộng, cần siết lại. Nếu phần lớn < 8đ → tiêu chí quá khắt khe hoặc universe tier 2 chất lượng thấp.
 
 ---
 
-## 3. Sáu tiêu chí chấm điểm
+## 3. Năm tiêu chí chấm điểm
 
 Mỗi tiêu chí 1-3 điểm. Thang điểm:
 - **3 điểm** — vượt trội rõ ràng so với peer cùng ngành
@@ -135,28 +135,23 @@ Mã có Tiêu chí 3 = 1đ (thanh khoản thấp) sẽ vướng constraint 5% AD
 
 Mã vào shortlist qua đường C (fail B) chắc chắn có catalyst mạnh — mặc định Tiêu chí 4 ≥ 2đ, thường là 3đ. Nhưng Tiêu chí 1 (vị thế ngành) có thể thấp vì fundamental yếu. Kết quả thường: catalyst play có tổng điểm tập trung ở Tiêu chí 4-6, thấp ở Tiêu chí 1-3.
 
-### Tiêu chí 5 — Dòng tiền NN/TD 1 tháng (kỹ thuật — flow)
+### ~~Tiêu chí 5 — Dòng tiền NN/TD 1 tháng~~ → ĐÃ GỠ KHỎI BẢNG CHẤM (2026-07-29)
 
-**Mục đích:** xác nhận smart money (khối ngoại) và tự doanh đang tích luỹ mã. Đây là **tiebreaker** quan trọng, không phải điểm chính.
+> **Dòng tiền khối ngoại và tự doanh KHÔNG còn là tiêu chí chấm điểm.** Nó chuyển thành **ghi chú tham khảo**, ghi vào báo cáo nhưng không cộng điểm, không trừ điểm.
+>
+> **Vì sao gỡ.** Cycle 2026-08 cho bằng chứng định lượng: khi tháo trọng số khối ngoại ra khỏi bộ tiêu chí, **4 trên 5 quyết định mua/loại đảo chiều** (loại oan ACB và SSI vì bán ròng một tuần; mua sai SHB và KDH vì mua ròng một phiên). Một tiêu chí mà khi bỏ đi thì phần lớn kết luận đổi chiều thì nó không phải tiebreaker — nó đang lái cả bảng chấm.
+>
+> Ba lý do bản chất: (1) **nhiễu ở khung ngắn** — một phiên hoặc một tuần có thể do một lệnh thoả thuận, một quỹ cơ cấu hoặc giao dịch ETF chi phối; (2) **khối ngoại là bên thiểu số** trong đa số phiên ở thị trường mà cá nhân trong nước chiếm phần lớn thanh khoản; (3) **nó là hệ quả chứ không phải nguyên nhân** — bán ròng toàn thị trường là biến vĩ mô, không phải đánh giá về từng doanh nghiệp.
 
-**Chấm điểm:**
+**Ba quy tắc sử dụng khi ghi chú:**
 
-| Điểm | Tiêu chí |
-|---|---|
-| 3 | NN mua ròng rõ rệt 1 tháng + có xu hướng tăng mua qua các tuần + còn room |
-| 2 | NN mua ròng nhẹ hoặc trung tính với xu hướng cải thiện, HOẶC TD tích luỹ mạnh |
-| 1 | NN trung tính không rõ xu hướng, hoặc bán ròng nhẹ |
-| 0 (rare) | NN bán ròng mạnh kéo dài — xem xét loại mã, không chỉ chấm 0đ |
+1. **Khung tối thiểu là một tháng.** Số một phiên và một tuần chỉ được ghi để tham khảo, **cấm dùng làm căn cứ quyết định**.
+2. **Chỉ dùng như tín hiệu xác nhận, không dùng như tín hiệu khởi tạo.** Mã đã đạt Vòng T, Vòng B và Vòng D thì khối ngoại mua ròng đều là điểm cộng định tính. Mã chưa đạt ba vòng đó thì khối ngoại mua bao nhiêu cũng không đủ.
+3. **Ngoại lệ duy nhất được coi là tín hiệu mạnh:** bán ròng **liên tục trên ba tháng với quy mô vượt 20% vốn hoá tự do chuyển nhượng** — đó là thay đổi cấu trúc sở hữu, khác hẳn dao động tuần. Trường hợp này xử lý ở Vòng F của `P_invest_memo_03`, không xử lý bằng điểm.
 
-**Nguyên tắc đọc (khớp nguyên tắc tier 0 Input 4):**
+**Data source (giữ để ghi chú):** stock_nntd. Mã không có giao dịch NN/TD thì block `nn`/`td` bị omit khỏi doc — hiểu là "không có dữ liệu", **không** hiểu là "mua ròng 0".
 
-- NN là **tham khảo**, không phải yếu tố quyết định — không mã nào NN cũng mua
-- Mã không có NN giao dịch → chấm 1đ (không có signal), không loại
-- Xu hướng quan trọng hơn giá trị tuyệt đối: tuần gần nhất tăng mua so với các tuần trước = tín hiệu tốt hơn là giá trị tháng cao
-
-**Data source:** stock_nntd (đã có tier 2). Lưu ý v2: mã không có giao dịch NN/TD thì block `nn`/`td` bị omit hẳn khỏi doc — hiểu là "không có dữ liệu", chấm 1đ theo rule trên, KHÔNG phải "mua ròng 0". Check thêm `foreignerRoom` từ stock_info — mã cạn room thì NN mua ít ý nghĩa hơn.
-
-### Tiêu chí 6 — Đồng đều điểm dòng tiền 5 phiên (kỹ thuật — flow)
+### Tiêu chí 5 — Đồng đều điểm dòng tiền 5 phiên (kỹ thuật — flow)
 
 **Mục đích:** xác nhận dòng tiền nội bộ đến mã **đồng đều**, không phải spike 1 phiên. Đây là **tiebreaker** thứ 2 cùng Tiêu chí 5.
 
@@ -170,7 +165,7 @@ Mã vào shortlist qua đường C (fail B) chắc chắn có catalyst mạnh �
 
 **Data source:** stock_recent (đã có tier 2) — đọc field `series[].money_flow_score.day_score` cho 5 phiên mới nhất. week_score từ stock_snapshot.
 
-**Vai trò tiebreaker:** khi 2 mã có tổng điểm từ Tiêu chí 1-4 bằng nhau (ví dụ cả 2 đều 10đ), dùng tổng Tiêu chí 5+6 để phân thứ tự. Mã có Tiêu chí 5+6 = 5đ xếp trên mã có 3đ. Không đặt trọng số riêng cho Tiêu chí 5-6 — chúng có điểm như các tiêu chí khác nhưng được ưu tiên khi có tranh chấp.
+**Vai trò tiebreaker:** khi 2 mã có tổng điểm từ Tiêu chí 1-4 bằng nhau, dùng Tiêu chí 5 để phân thứ tự. Nếu vẫn hoà, tiebreaker tiếp theo là **khoảng cách tới MA200** ở Vòng T (`P_invest_memo_03`) — mã có cấu trúc xu hướng tốt hơn xếp trên. **Không dùng dòng tiền khối ngoại làm tiebreaker** (xem tiêu chí đã gỡ).
 
 ---
 
@@ -234,23 +229,23 @@ Sau khi chốt top 3/ngành, phân mỗi mã vào 1 trong 3 tier conviction dự
 
 | Tier | Điểm tổng | Size target (% portfolio) | Ý nghĩa |
 |---|---|---|---|
-| High | 15-18 | 6-8% | Mã có thesis mạnh đa chiều, conviction cao, đáng đầu tư lớn |
-| Medium | 11-14 | 3-5% | Mã tốt với 1-2 điểm mạnh, conviction trung bình, size vừa |
-| Low | 8-10 | 1-2% | Mã pass universe nhưng không xuất sắc, size nhỏ để có exposure |
+| High | 13-15 | 6-8% | Mã có thesis mạnh đa chiều, conviction cao, đáng đầu tư lớn |
+| Medium | 9-12 | 3-5% | Mã tốt với 1-2 điểm mạnh, conviction trung bình, size vừa |
+| Low | 6-8 | 1-2% | Mã pass universe nhưng không xuất sắc, size nhỏ để có exposure |
 
 **Nguyên tắc:**
 
 - Size target là **guideline**; điều chỉnh cuối ở tier 5/6 dựa trên memo (tier 5C) + modeling (tier 5B) + ADV constraint tier 6 (xem `P_invest_memo_08` Section 3.4 cho công thức `5% × ADV × N` với N=2-4 phiên build position)
-- Điểm 8-10 vẫn vào shortlist final vì đã pass universe — chỉ size nhỏ, không loại
-- Điểm dưới 8 là hiếm (vì shortlist tier 2 đã filter chất lượng). Nếu có, flag bất thường trong checkpoint
+- Điểm 6-8 vẫn vào shortlist final vì đã pass universe — chỉ size nhỏ, không loại
+- Điểm dưới 6 là hiếm (vì shortlist tier 2 đã filter chất lượng). Nếu có, flag bất thường trong checkpoint
 
 ### Điều kiện distribution conviction
 
 **Khuyến nghị cho shortlist final** (3-5 ngành × 3 mã = 9-15 mã):
 
-- Ít nhất 1-2 mã High (15-18) trong toàn portfolio
-- Majority (5-10 mã) là Medium (11-14)
-- Có thể có 1-3 mã Low (8-10) cho diversification
+- Ít nhất 1-2 mã High (13-15) trong toàn portfolio
+- Majority (5-10 mã) là Medium (9-12)
+- Có thể có 1-3 mã Low (6-8) cho diversification
 
 Nếu toàn portfolio đều Medium/Low (không có High) → conviction tổng thấp, cân nhắc tăng cash buffer để chờ cơ hội tốt hơn. Nếu > 50% là High → có thể đang overconfident, review lại bảng chấm có cho điểm quá rộng không.
 
@@ -319,7 +314,7 @@ Nếu có mismatch → flag và report trong checkpoint.
 - Tiêu chí 3: trading value trung bình + marketcap + free_float_pct
 - Tiêu chí 4: catalyst map từ tier 2
 - Tiêu chí 5: stock_nntd
-- Tiêu chí 6: stock_recent day_score 5 phiên + week_score
+- Tiêu chí 5: stock_recent day_score 5 phiên + week_score
 
 Chạy được song song cho toàn bộ shortlist.
 
@@ -561,9 +556,9 @@ Agent so ROE của mã ngân hàng với median SXKD, hoặc so P/E của CK v�
 
 ### 10.6. Không phát hiện mã trong "dòng tiền dương + catalyst tiêu cực"
 
-Mã có Tiêu chí 5+6 cao (dòng tiền vào) + Tiêu chí 4 trung tính → Agent cho điểm tổng trung bình 11-13. Nhưng có thể bỏ sót catalyst tiêu cực mới chưa index kỹ (ví dụ: tin xấu ngành vừa công bố).
+Mã có Tiêu chí 5 cao (dòng tiền nội bộ vào đều) + Tiêu chí 4 trung tính → Agent cho điểm tổng trung bình 9-11. Nhưng có thể bỏ sót catalyst tiêu cực mới chưa index kỹ (ví dụ: tin xấu ngành vừa công bố).
 
-**Xử lý:** Bước 5 workflow — kiểm tra R4 trước khi finalize. Web search: `<ngành> tin xấu`, `<ngành> chính sách siết` trong 2 tuần gần. Đối chiếu với mã có Tiêu chí 5+6 cao trong ngành đó. Nếu match → R4 apply, loại.
+**Xử lý:** Bước 5 workflow — kiểm tra R4 trước khi finalize. Web search: `<ngành> tin xấu`, `<ngành> chính sách siết` trong 2 tuần gần. Đối chiếu với mã có Tiêu chí 5 cao trong ngành đó. Nếu match → R4 apply, loại.
 
 ### 10.7. Skip kiểm tra lại universe filter ở Bước 2
 
@@ -575,7 +570,7 @@ Tier 2 có thể chạy cách đây vài ngày, data có thể đã thay đổi 
 
 Agent có thể chỉ xuất tổng điểm mà không map sang tier High/Medium/Low, hoặc đặt ngưỡng ad-hoc khác nhau giữa các ngành. Dẫn đến tier 6 sizing không nhất quán.
 
-**Xử lý:** áp ngưỡng cứng Section 5 cho toàn shortlist: High 15-18, Medium 11-14, Low 8-10. Cùng ngưỡng cho mọi ngành. Dưới 8 là bất thường, flag riêng.
+**Xử lý:** áp ngưỡng cứng Section 5 cho toàn shortlist: High 13-15, Medium 9-12, Low 6-8. Cùng ngưỡng cho mọi ngành. Dưới 6 là bất thường, flag riêng.
 
 ---
 
