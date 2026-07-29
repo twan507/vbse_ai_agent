@@ -227,15 +227,23 @@ Trong output tier 3, ghi rõ distribution bucket của top 3 mỗi ngành để 
 
 Sau khi chốt top 3/ngành, phân mỗi mã vào 1 trong 3 tier conviction dựa trên tổng điểm. Tier conviction quyết định size position ở tier 6.
 
-| Tier | Điểm tổng | Size target (% portfolio) | Ý nghĩa |
+| Tier | Điểm tổng | Vai trò trong danh mục | Ý nghĩa |
 |---|---|---|---|
-| High | 13-15 | 6-8% | Mã có thesis mạnh đa chiều, conviction cao, đáng đầu tư lớn |
-| Medium | 9-12 | 3-5% | Mã tốt với 1-2 điểm mạnh, conviction trung bình, size vừa |
-| Low | 6-8 | 1-2% | Mã pass universe nhưng không xuất sắc, size nhỏ để có exposure |
+| High | 13-15 | **Lõi** — vào trước, giữ lâu nhất, cắt sau cùng | Mã có thesis mạnh đa chiều, conviction cao |
+| Medium | 9-12 | **Bổ sung** — vào sau khi nhóm lõi đã đủ | Mã tốt với 1-2 điểm mạnh, conviction trung bình |
+| Low | 6-8 | **Dự bị** — chỉ vào khi còn dư địa, cắt trước tiên | Mã pass universe nhưng không xuất sắc |
+
+> **KHÔNG gán tỷ trọng phần trăm cho từng mã** (v3 từ 2026-07-29). Tier conviction quyết định **thứ tự ưu tiên và thứ tự cắt**, không quyết định con số phần trăm.
+>
+> **Tỷ trọng chỉ được công bố ở cấp DANH MỤC** — tổng tỷ trọng cổ phiếu trên tổng tài sản, theo dải của regime. Báo cáo không ghi "mã X 5%, mã Y 3%".
+>
+> **Vì sao bỏ.** Con số phần trăm từng mã tạo ra ba vấn đề: nó giả vờ chính xác ở mức mà bảng chấm không hỗ trợ được (chênh 1 điểm trên thang 15 không biện minh được cho chênh 2 điểm phần trăm tỷ trọng); nó không dùng được vì quy mô danh mục mỗi nhà đầu tư khác nhau; và nó kéo sự chú ý của người đọc khỏi thứ thật sự quan trọng là **tổng exposure và thứ tự ưu tiên**.
+>
+> **Vẫn giữ:** trần thanh khoản 5% khối lượng bình quân 20 phiên và trần tập trung theo mã/ngành ở `P_invest_memo_08`. Đó là **ràng buộc an toàn**, khác với **mục tiêu tỷ trọng** — ràng buộc cho biết tối đa vào được bao nhiêu, mục tiêu nói nên vào bao nhiêu. Bỏ cái sau, giữ cái trước.
 
 **Nguyên tắc:**
 
-- Size target là **guideline**; điều chỉnh cuối ở tier 5/6 dựa trên memo (tier 5C) + modeling (tier 5B) + ADV constraint tier 6 (xem `P_invest_memo_08` Section 3.4 cho công thức `5% × ADV × N` với N=2-4 phiên build position)
+- Thứ tự ưu tiên là **guideline**; điều chỉnh cuối ở tier 5/6 dựa trên memo (tier 5C) + modeling (tier 5B) + ADV constraint tier 6 (xem `P_invest_memo_08` Section 3.4 cho công thức `5% × ADV × N` với N=2-4 phiên build position)
 - Điểm 6-8 vẫn vào shortlist final vì đã pass universe — chỉ size nhỏ, không loại
 - Điểm dưới 6 là hiếm (vì shortlist tier 2 đã filter chất lượng). Nếu có, flag bất thường trong checkpoint
 
@@ -381,7 +389,7 @@ Mã bị loại hard reject: [số] — chi tiết Phần 5.
 | 5. NN/TD 1T | 3 | NN mua ròng mạnh kéo dài 4 tuần, xu hướng tăng, còn room |
 | 6. Dòng tiền 5P | 2 | Day_score dương 3/5 phiên, week_score 18 |
 
-Tier High → size target 6-8% portfolio. Bucket 1 → vào ngay 50-70%.
+Tier High → vai trò lõi, vào trước. Bucket 1 → vào ngay 50-70% phần dự kiến của mã đó.
 
 **Mã a2 — [tên] — Tổng 13đ — Tier Medium — Bucket 2**
 

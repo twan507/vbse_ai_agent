@@ -4,6 +4,28 @@ Ghi mỗi lần sửa engine (K/P/O, system_prompt, KERNEL_SKELETON, OUTPUT_MAST
 
 Format: `## YYYY-MM-DD — tiêu đề` + file đụng tới + nội dung + lý do.
 
+## 2026-07-29 (b) — P_invest_memo: bỏ tỷ trọng phần trăm cấp mã, chỉ công bố tỷ trọng cấp danh mục
+
+**Bối cảnh:** user rà bản khuyến nghị và yêu cầu bỏ tỷ trọng đơn lẻ từng cổ phiếu — "nhỏ nhặt quá, chỉ cần tỷ trọng khuyến nghị cả danh mục là đủ". Áp luôn vào engine theo chỉ đạo.
+
+**File đụng tới:** `engine/P/P_invest_memo_04.md` (mục 5 phân tier conviction, mục 8 template) · `engine/P/P_invest_memo_08.md` (mục 1 output, mục 3 công thức sizing, mục 3.1, workflow bước 2).
+
+### Thay đổi
+
+Quy trình **không còn sinh con số phần trăm tỷ trọng cho từng mã**. Bảng `Size target (% portfolio)` gắn với tier conviction — High 6-8%, Medium 3-5%, Low 1-2% — bị gỡ ở cả hai pack. Đoạn mã giả `target_size(conviction, regime, bucket, ADV)` ở `P_invest_memo_08` cũng gỡ, thay bằng hàm chỉ tính **trần thanh khoản tuyệt đối** theo tỷ đồng.
+
+**Tier conviction giờ quyết định vai trò và thứ tự, không quyết định tỷ trọng:** High = lõi, vào trước, cắt sau cùng · Medium = bổ sung · Low = dự bị, cắt trước tiên.
+
+**Đầu ra phân bổ còn đúng hai thứ:** tổng tỷ trọng cổ phiếu của cả danh mục theo dải regime kèm lộ trình và điều kiện mở khoá từng nấc; và thứ tự ưu tiên từng mã kèm trần thanh khoản riêng.
+
+### Vì sao
+
+Con số phần trăm từng mã tạo ba vấn đề. **Nó giả vờ chính xác ở mức bảng chấm không hỗ trợ được** — chênh 1 điểm trên thang 15 không biện minh được cho chênh 2 điểm phần trăm tỷ trọng. **Nó không dùng được** vì quy mô danh mục mỗi nhà đầu tư khác nhau. Và **nó kéo chú ý khỏi thứ thật sự quan trọng** là tổng exposure và thứ tự ưu tiên.
+
+### Ranh giới giữ lại
+
+Phân biệt **ràng buộc an toàn** với **mục tiêu tỷ trọng**: ràng buộc trả lời "tối đa vào được bao nhiêu", mục tiêu trả lời "nên vào bao nhiêu". Bỏ mục tiêu, **giữ nguyên ràng buộc** — trần thanh khoản 5% khối lượng bình quân 20 phiên và trần tập trung theo mã, theo ngành ở `P_invest_memo_08` mục 5. Việc chia tổng tỷ trọng ra từng mã là quyết định của người quản lý danh mục, không phải đầu ra của quy trình phân tích.
+
 ## 2026-07-29 — P_invest_memo: thêm Vòng T (xu hướng), gỡ khối ngoại khỏi bảng chấm, luật độ tươi kỳ báo cáo
 
 **Bối cảnh:** user rà lại bản khuyến nghị `client_report_20260728.md` và chỉ ra ba lỗi. Kiểm chứng bằng dữ liệu giá 250 phiên và báo cáo chuyên đề quý 2/2026 của 8 công ty chứng khoán (`inputs/external/20260723_VBSE_bao-cao-CTCK-Q2-2026.docx`) cho thấy **cả ba đều đúng, và cả ba là lỗi thiết kế của spec chứ không phải lỗi thực thi**. Bản sửa: `outputs/md/invest_memo/2026-08_cycle/client_report_20260728_rev2.md`.

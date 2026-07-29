@@ -9,7 +9,7 @@ Reference: `P_invest_memo_00` phần Flow chi tiết (overview), `P_invest_memo_
 ## 1. Mục tiêu & output expected
 
 **Mục tiêu:** chuyển shortlist các mã đã pass memo thành **portfolio cụ thể** với:
-- Size % portfolio cho từng mã
+- Tổng tỷ trọng cổ phiếu ở cấp danh mục + thứ tự ưu tiên từng mã
 - Sequence entry (mã nào vào trước, mã nào chờ)
 - Cash buffer phù hợp với regime
 - Diversification constraint (max per stock, per industry)
@@ -24,7 +24,7 @@ Reference: `P_invest_memo_00` phần Flow chi tiết (overview), `P_invest_memo_
 6. Positions hiện tại (nếu đang có mã từ cycle trước) để tránh concentration
 
 **Output chính:**
-1. **Bảng size allocation** cho mỗi mã: % portfolio, VND absolute, số cổ phiếu
+1. **Bảng thứ tự ưu tiên** cho mỗi mã: vai trò (lõi/bổ sung/dự bị), trần thanh khoản, thứ tự vào và thứ tự cắt. **Không ghi % portfolio từng mã**
 2. **Sequence entry plan** — phase 1 (vào ngay), phase 2 (chờ confirm), phase 3 (watchlist)
 3. **Cash buffer plan** — theo regime + reserved cho Bucket 2/3 future entries
 4. **Constraint check report** — ADV, diversification, concentration
@@ -55,25 +55,37 @@ Reference: `P_invest_memo_00` phần Flow chi tiết (overview), `P_invest_memo_
 
 ---
 
-## 3. Sizing per stock — formula
+## 3. Phân bổ — cấp danh mục, không cấp mã
 
-### Công thức tổng quát
+> **Thay đổi v3 (2026-07-29): quy trình KHÔNG còn tính tỷ trọng phần trăm cho từng mã.**
+>
+> **Đầu ra phân bổ gồm đúng hai thứ:**
+> 1. **Tổng tỷ trọng cổ phiếu của cả danh mục** — theo dải của regime, có lộ trình theo tuần và điều kiện mở khoá từng nấc.
+> 2. **Thứ tự ưu tiên từng mã** — vai trò lõi / bổ sung / dự bị, thứ tự vào và thứ tự cắt, cộng trần thanh khoản của riêng mã đó.
+>
+> Việc chia tổng tỷ trọng đó ra từng mã là **quyết định của người quản lý danh mục**, phụ thuộc quy mô vốn, vị thế đang có và khẩu vị rủi ro — không phải đầu ra của quy trình phân tích.
+
+### Công thức tổng quát — chỉ còn dùng cho TRẦN, không dùng cho mục tiêu
 
 ```
-Target size = Base size (conviction) × Regime adjustment × Bucket multiplier × min(1, ADV cap / Base size)
+Trần vào được của một mã = min( trần thanh khoản 5% ADV × N phiên , trần tập trung theo mã , trần tập trung theo ngành )
 ```
 
-4 thành phần chi tiết:
+Ba thành phần chi tiết:
 
-### 3.1. Base size (theo conviction tier)
+### 3.1. Vai trò theo conviction tier (thứ tự ưu tiên, KHÔNG phải tỷ trọng)
 
 Từ tier 3:
 
-| Tier conviction | Điểm tổng | Base size (% portfolio) |
+| Tier conviction | Điểm tổng | Vai trò |
 |---|---|---|
-| High | 15-18 | 6-8% |
-| Medium | 11-14 | 3-5% |
-| Low | 8-10 | 1-2% |
+| High | 13-15 | Lõi — vào trước, cắt sau cùng |
+| Medium | 9-12 | Bổ sung |
+| Low | 6-8 | Dự bị — cắt trước tiên |
+
+> **KHÔNG gán base size phần trăm cho từng mã** (v3 từ 2026-07-29, đồng bộ với `P_invest_memo_04` mục 5). Tỷ trọng chỉ công bố ở cấp danh mục. Tier quyết định thứ tự vào và thứ tự cắt.
+>
+> **Hai trần vẫn giữ nguyên vì là ràng buộc an toàn, không phải mục tiêu:** trần thanh khoản 5% khối lượng bình quân 20 phiên (mục 3.4) và trần tập trung theo mã / theo ngành (mục 5). Chúng trả lời "tối đa vào được bao nhiêu", không trả lời "nên vào bao nhiêu".
 
 **Chọn cụ thể trong range:**
 - High 15-16đ: 6%, 17đ: 7%, 18đ: 8%
@@ -131,28 +143,13 @@ Nếu conviction High muốn 7% mà ADV cap chỉ 3.3% → **size bị cap xuố
 
 ### 3.5. Công thức tổng hợp
 
+> **Đoạn mã giả tính tỷ trọng từng mã đã được gỡ (v3, 2026-07-29).** Quy trình không còn sinh con số phần trăm cho từng cổ phiếu. Thứ còn lại là phép tính **trần**, dùng để cảnh báo khi một mã không hấp thụ nổi size có ý nghĩa:
+
 ```python
-def target_size(conviction_tier, regime, bucket, ADV_20):
-    # 1. Base size từ conviction
-    base = {'High': 0.07, 'Medium': 0.04, 'Low': 0.015}[conviction_tier]
-    
-    # 2. Regime adjustment
-    regime_mult = {'Risk-on full': 1.0, 'Risk-on selective': 0.7, 
-                   'Defensive only': 0.5, 'Đứng ngoài': 0}[regime]
-    
-    # 3. Bucket multiplier (immediate entry)
-    bucket_mult = {1: 0.6, 2: 0.4, 3: 0}[bucket]  # trung bình
-    
-    # 4. ADV cap
-    max_abs = 0.05 * ADV_20 * 3  # 3 phiên accumulate
-    adv_cap_pct = max_abs / portfolio_size
-    
-    # Target size immediate
-    target_pct = base * regime_mult * bucket_mult
-    # Nhưng không vượt ADV cap
-    target_final = min(target_pct, adv_cap_pct * bucket_mult)
-    
-    return target_final
+def tran_thanh_khoan(ADV_20_ty, so_phien_build=3):
+    """Tra ve gia tri tuyet doi toi da vao duoc mot ma, don vi ty dong.
+    Khong tra ve % danh muc - viec chia % la quyet dinh cua nguoi quan ly danh muc."""
+    return 0.05 * ADV_20_ty * so_phien_build
 ```
 
 Agent áp dụng cho từng mã, build bảng allocation.
@@ -353,11 +350,11 @@ Các mã catalyst play (qua đường C tier 2, fail B nhưng có catalyst mạn
 - Portfolio size USD/VND từ user
 - Positions hiện tại (nếu có)
 
-**Bước 2 — Tính target size per stock**
+**Bước 2 — Chốt tổng tỷ trọng danh mục và thứ tự ưu tiên**
 
-Công thức Section 3.5 — base × regime × bucket × ADV cap.
+Xác định dải tổng tỷ trọng cổ phiếu theo regime, lộ trình theo tuần, và điều kiện mở khoá từng nấc.
 
-Build bảng đầy đủ với 4 cột: Base size, Regime-adjusted, Bucket-adjusted (phase 1), ADV-capped final.
+Build bảng với 4 cột: **mã · vai trò (lõi/bổ sung/dự bị) · trần thanh khoản · thứ tự vào và thứ tự cắt.** Không có cột phần trăm từng mã.
 
 **Bước 3 — Check 4 constraints**
 
