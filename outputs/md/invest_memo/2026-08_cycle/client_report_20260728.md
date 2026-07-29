@@ -71,15 +71,17 @@ Ba quy ước số liệu áp cho toàn bộ báo cáo:
 
 **Kế hoạch hành động, tóm lược.** Tỷ trọng cổ phiếu mục tiêu tăng dần theo mức độ xác nhận, không giải ngân một lần:
 
+**Dải tỷ trọng cổ phiếu của cả kế hoạch: tối thiểu 30%, tối đa 70%** — tức cash buffer dao động 30–70%, với trần 70% cổ phiếu đúng bằng mức regime Risk-on selective cho phép (cash buffer tối thiểu 30%).
+
 | Tuần | Phiên | Tỷ trọng cổ phiếu mục tiêu cuối tuần | Cửa ải chính |
 |---|---|---|---|
-| **T1** 29–31/07 | 3 | **10–15%** | Quyết định FOMC rạng sáng 30/07 |
-| **T2** 03–07/08 | 5 | **25–30%** | Số liệu vĩ mô tháng 7 công bố 03/08 |
-| **T3** 10–14/08 | 5 | **35–45%** | BCTC bán niên soát xét, hạn 14/08 |
-| **T4** 17–21/08 | 5 | **45–55%** | Đáo hạn phái sinh 20/08 · FTSE danh sách cuối 21/08 |
-| **T5** 24–28/08 | 5 | **40–50%**, hạ dần | Jackson Hole 27–29/08 · rào 5 ngày nghỉ lễ |
+| **T1** 29–31/07 | 3 | **30–35%** | Quyết định FOMC rạng sáng 30/07 |
+| **T2** 03–07/08 | 5 | **40–50%** | Số liệu vĩ mô tháng 7 công bố 03/08 |
+| **T3** 10–14/08 | 5 | **55–65%** | BCTC bán niên soát xét, hạn 14/08 |
+| **T4** 17–21/08 | 5 | **60–70%** | Đáo hạn phái sinh 20/08 · FTSE danh sách cuối 21/08 |
+| **T5** 24–28/08 | 5 | **50–60%**, hạ dần | Jackson Hole 27–29/08 · rào 5 ngày nghỉ lễ |
 
-**Ngưỡng huỷ cứng, kiểm hằng ngày:** VNINDEX thủng **1.651,20** (đáy 60 phiên) thì dừng giải ngân mới; thủng **1.600** kèm khối lượng tăng thì hạ toàn bộ về 15–20% cổ phiếu và xem lại từ đầu.
+**Ngưỡng huỷ cứng, kiểm hằng ngày:** VNINDEX thủng **1.651,20** (đáy 60 phiên) thì dừng giải ngân mới và hạ về sàn 30%; thủng **1.600** kèm khối lượng tăng thì **regime chuyển sang Defensive only** — lúc đó dải 30–70% không còn hiệu lực và hạ tiếp về 15–20%.
 
 ---
 
@@ -483,7 +485,9 @@ Regime selective này **không vô điều kiện**. Chạm bất kỳ điều n
 
 Điều kiện thứ tư bổ sung ở tầng ngành: **khối ngoại bán ròng một tuần vượt 8.000 tỷ** — tuần gần nhất đã 6.472 tỷ.
 
-### Ba dấu hiệu xác nhận đáy — đủ hai trong ba thì nâng size và cân nhắc giảm cash buffer về 15–20%
+### Ba dấu hiệu xác nhận đáy — đủ hai trong ba thì nâng size lên trần
+
+*Điều kiện gốc của tầng vĩ mô cho phép giảm cash buffer về 15–20% khi đủ dấu hiệu. **Kế hoạch phân bổ ở Phần VI đặt trần cứng ở 70% cổ phiếu, tức cash buffer không xuống dưới 30% trong mọi kịch bản** — kể cả kịch bản xác nhận đáy. Lý do ở mục 6.2.*
 
 1. Khối ngoại bán ròng tuần **dưới 2.000 tỷ** hai tuần liên tiếp, hoặc chuyển mua ròng — *hiện tuần gần nhất −6.472 tỷ, còn xa*
 2. Số mã tăng vượt số mã giảm ở **3 trên 5 phiên** liên tiếp, không còn mã giảm sàn theo cụm
@@ -961,6 +965,8 @@ Sắp theo ngành rồi theo điểm giảm dần. Thang điểm tối đa 18.
 
 **Nếu vào hết theo size gợi ý:** nhóm 1 chiếm 24–38%, nhóm 2 chiếm 15–22%, nhóm 3 chiếm 3–6%. Tổng 42–66%, tức cash còn 34–58%.
 
+> *Lưu ý: cột size ở bảng trên là mức gợi ý từ tầng chấm điểm, tính trên giả định trải đều 20 mã. **Kế hoạch phân bổ thực tế ở Phần VI dùng size lớn hơn cho ít mã hơn** — 5–6,5% mỗi mã cho 13–14 mã, để đạt dải 30–70% mà không bị phân tán. Khi hai bảng lệch nhau, dùng Phần VI.*
+
 > **Khuyến nghị đi kèm, ngược một phần với chính danh sách: KHÔNG nên vào cả 20 mã.** Danh mục dưới 1 triệu USD giữ 20 mã là quá phân tán — mỗi mã 3,5% thì một mã tăng 30% chỉ đóng góp 1% cho danh mục, không đủ bù công theo dõi. **Nhóm 1 với 9 mã đã là giới hạn thực tế**; nhóm 2 nên coi là danh sách dự bị để thay khi một mã nhóm 1 hỏng luận điểm.
 
 ### 3.2.2. Bảng chấm điểm chi tiết — 20 mã, sáu tiêu chí
@@ -1403,7 +1409,7 @@ Ba thứ đó **không đòi hỏi biết trước hướng thị trường**, v
 | Đường đi VNINDEX | Bật lên vùng MA10 1.725 rồi MA20 1.783, không vượt được, dao động 1.650–1.790 hết tháng 8 | Vượt MA20 1.783 kèm khối lượng trước 21/08, hướng lên 1.870 | Thủng 1.651 trong 2 tuần đầu, về vùng 1.560–1.600 |
 | Dấu hiệu nhận biết sớm | Bật yếu dần, khối lượng co lại ở mỗi nhịp lên | Đủ 2/3 dấu hiệu xác nhận đáy ở mục 1.7 | Khối ngoại tuần vượt 8.000 tỷ, hoặc phiên giảm quá 2% kèm khối lượng cao |
 | Nhóm dẫn dắt | Nhóm chưa nén (LPB, STB, MSB) giữ giá tốt hơn | Nhóm đã nén bật mạnh: Chứng khoán, BĐS mid-cap | Không nhóm nào; nhóm không đệm định giá mất nhiều nhất |
-| Tỷ trọng cuối tháng 8 | 40–50% | 55–65% | **15–20%** |
+| Tỷ trọng cuối tháng 8 | 50–60% | **70%** (trần) | **30%** (sàn), xuống 15–20% nếu regime bị huỷ |
 | Lợi suất danh mục kỳ vọng | 0% đến +6% | +8% đến +15% | −5% đến −10% (nếu tuân thủ cắt lỗ) |
 
 **Vì sao kịch bản A được cho xác suất cao nhất.** Bốn lý do, xếp theo sức nặng:
@@ -1417,21 +1423,27 @@ Ba thứ đó **không đòi hỏi biết trước hướng thị trường**, v
 
 ## 6.2. Lộ trình giải ngân
 
-| Tuần | Phiên | **Tỷ trọng cổ phiếu mục tiêu cuối tuần** | Số mã tối đa | Điều kiện để đạt mức trên |
+**Dải hoạt động: sàn 30% — trần 70%.** Trần 70% cổ phiếu tương ứng cash buffer 30%, đúng bằng mức regime Risk-on selective cho phép. Sàn 30% nghĩa là **không hạ xuống dưới mức đó chừng nào regime còn hiệu lực**; chỉ khi chạm điều kiện huỷ regime (mục 7.1) thì dải này mới không còn áp dụng.
+
+| Tuần | Phiên | **Tỷ trọng cổ phiếu mục tiêu cuối tuần** | Số mã | Điều kiện để đạt mức trên |
 |---|---|---|---|---|
-| **T1** 29–31/07 | 3 | **10–15%** | 4 | FOMC không hawkish thêm; VNINDEX giữ trên 1.651 |
-| **T2** 03–07/08 | 5 | **25–30%** | 7 | Số liệu 03/08 không xấu bất ngờ; chỉ số giữ trên 1.651 cả tuần |
-| **T3** 10–14/08 | 5 | **35–45%** | 10 | BCTC bán niên soát xét xác nhận luận điểm ít nhất 6/10 mã đang nắm |
-| **T4** 17–21/08 | 5 | **45–55%** | 12 | Chỉ số vượt MA10 1.725; đã hạ trước sự kiện 20–21/08 |
-| **T5** 24–28/08 | 5 | **40–50%**, hạ dần | 12 | **Bắt buộc hạ**, bất kể kịch bản, trước kỳ nghỉ 5 ngày |
+| **T1** 29–31/07 | 3 | **30–35%** | 6–7 | FOMC không hawkish thêm; VNINDEX giữ trên 1.651 |
+| **T2** 03–07/08 | 5 | **40–50%** | 9–10 | Số liệu 03/08 không xấu bất ngờ; chỉ số giữ trên 1.651 cả tuần |
+| **T3** 10–14/08 | 5 | **55–65%** | 12–13 | BCTC bán niên soát xét xác nhận luận điểm ít nhất 8/12 mã đang nắm |
+| **T4** 17–21/08 | 5 | **60–70%** | 13–14 | Chỉ số vượt MA10 1.725; đã hạ nhóm FTSE trước sự kiện 20–21/08 |
+| **T5** 24–28/08 | 5 | **50–60%**, hạ dần | 11–12 | **Bắt buộc hạ**, bất kể kịch bản, trước kỳ nghỉ 5 ngày |
 
-**Ba nguyên tắc chi phối hình dạng lộ trình này:**
+**Bốn nguyên tắc chi phối hình dạng lộ trình này:**
 
-**Một — nặng ở giữa, nhẹ ở hai đầu.** Rủi ro sự kiện dồn vào tuần 1 (FOMC) và tuần 4–5 (đáo hạn phái sinh, FTSE, Jackson Hole, kỳ nghỉ). Tuần 2 và 3 là cửa sổ yên tĩnh nhất, và trùng đúng thời điểm dữ liệu quý 2 hoàn chỉnh về. **Giải ngân mạnh nhất nên rơi vào tuần 2 và 3.**
+**Một — nặng ở giữa, nhẹ ở hai đầu.** Rủi ro sự kiện dồn vào tuần 1 (FOMC) và tuần 4–5 (đáo hạn phái sinh, FTSE, Jackson Hole, kỳ nghỉ). Tuần 2 và 3 là cửa sổ yên tĩnh nhất, và trùng đúng thời điểm dữ liệu quý 2 hoàn chỉnh về. **Nhịp giải ngân mạnh nhất rơi vào tuần 2 và tuần 3.**
 
-**Hai — trần 55% chứ không phải 70%.** Regime cho phép tối đa 70% cổ phiếu (cash buffer 30%). Nhưng **không mã nào trong 24 mã đạt mức tin cậy cao**, và chính quy trình khuyến nghị tăng cash buffer trong tình huống đó. Trần thực tế đặt ở **55%**, tức cash buffer thực tế 45%. Chỉ nâng lên vùng 55–65% nếu kịch bản B xảy ra, tức đủ 2/3 dấu hiệu xác nhận đáy.
+**Hai — vào sàn 30% ngay tuần 1, không rải mỏng.** Luận điểm của cycle là bắt đáy trên nền định giá phân vị dưới 2%. Nếu tin luận điểm đó thì việc chỉ nắm 10–15% ở tuần đầu là **tự vô hiệu hoá chính luận điểm** — mức nén lớn nhất nằm ở đây, và nhịp hồi kỹ thuật sau bốn tuần giảm thường đến sớm chứ không chờ. Sàn 30% ngay tuần 1 là mức đủ để hưởng nhịp hồi mà vẫn còn 70% dư địa mua thêm nếu thị trường thủng sâu hơn.
 
-**Ba — mỗi lần vào chỉ 1/3 size mục tiêu.** Với mọi mã, chia làm ba lần vào: lần đầu khi giá vào vùng mua, lần hai khi có xác nhận (tuần thứ hai giữ được vùng đó), lần ba khi vượt MA10. **Không mã nào vào đủ size trong một tuần.** Lý do: nhịp bật ngày 28/07 mới một phiên, và chi phí của việc vào muộn thấp hơn nhiều so với chi phí của việc vào đủ rồi sai.
+**Ba — trần 70% chỉ chạm ở tuần 4, không sớm hơn.** Đây là mức tối đa của regime. Chạm trần đúng vào tuần đã có dữ liệu quý 2 đầy đủ (sau 14/08) và ngay trước khi độ bất định lớn nhất — danh sách FTSE 21/08 — được giải quyết.
+
+> **Ghi chú minh bạch:** bản trước của kế hoạch này đặt trần ở 55% với lý do không mã nào đạt mức tin cậy cao và quy trình khuyến nghị tăng cash buffer trong tình huống đó. Trần đã được nâng về đúng mức regime là 70% theo quyết định phân bổ. **Cảnh báo tin cậy ở mục 3.2.2 và 8.1 vẫn nguyên giá trị** — nó không mất đi vì tỷ trọng tăng; nó chỉ có nghĩa là cùng một sai lầm nay tốn nhiều hơn. Bù lại bằng kỷ luật cắt lỗ ở mục 6.3 và nhánh xấu ở mục 6.10, cả hai đều siết chặt hơn tương ứng.
+
+**Bốn — mỗi mã vào làm hai lần, không phải ba.** Lần đầu 60% size mục tiêu khi giá vào vùng mua; lần hai 40% còn lại khi có xác nhận — giữ được vùng mua qua một tuần, hoặc vượt MA10. Ở mức tỷ trọng 30–70% thì chia ba lần là quá chậm để kịp lộ trình.
 
 ## 6.3. Sáu nguyên tắc áp cho mọi tuần
 
@@ -1448,34 +1460,39 @@ Ba thứ đó **không đòi hỏi biết trước hướng thị trường**, v
 
 ### Chủ đề: Thăm dò, và cửa ải Fed
 
-**Tỷ trọng mục tiêu cuối tuần: 10–15%. Tối đa 4 mã.**
+**Tỷ trọng mục tiêu cuối tuần: 30–35%. Sáu đến bảy mã.**
 
-Đây là tuần **không giải ngân mạnh trong mọi kịch bản**, vì hai lý do độc lập: quyết định FOMC rơi vào rạng sáng 30/07 giờ Việt Nam, và nhịp bật ngày 28/07 mới đúng một phiên.
+Đây là tuần **đưa danh mục về sàn 30%**. Vẫn chia làm hai nửa quanh mốc FOMC, nhưng phần lớn size đã được vào ngay trong tuần này chứ không rải sang tuần sau — vì mức nén lớn nhất nằm ở đây và nhịp hồi kỹ thuật sau bốn tuần giảm thường không chờ.
 
 ### Chia làm hai nửa quanh mốc FOMC
 
-**Nửa đầu — phiên 29/07, trước khi có kết quả FOMC. Giải ngân tối đa 5%.**
+**Nửa đầu — phiên 29/07, trước khi có kết quả FOMC. Giải ngân 13–15%.**
 
-Chỉ mua mã thoả **đồng thời** hai điều kiện: xu hướng chưa gãy hoặc dòng tiền khối ngoại đang xác nhận, **và** mức cắt lỗ dưới 4%.
+Ưu tiên mã thoả **đồng thời** hai điều kiện: xu hướng chưa gãy hoặc dòng tiền khối ngoại đang xác nhận, **và** mức cắt lỗ dưới 5%.
 
-| Mã | Size | Vùng mua | Cắt lỗ | Lý do chọn cho phiên này |
+| Mã | Size vào phiên này | Vùng mua | Cắt lỗ | Lý do chọn cho phiên này |
 |---|---|---|---|---|
-| **LPB** | 3% | 52,70 – 53,77 | 51,19 (−3,8%) | Mã **duy nhất** còn trên MA20 với dòng tiền khối ngoại mua ròng ở cả ba khung (tháng +122, tuần +103, phiên +31). Không phụ thuộc vào việc thị trường có tạo đáy hay không |
-| **SHB** | 2% | 11,00 – 11,57 | 10,93 (−3,1%) | Khối ngoại **+92 tỷ riêng phiên 28/07** trong khi giá vẫn giảm 0,44%. R:R 2,00 và 3,87, cắt lỗ chặt nhất nhóm quá bán. Vào 1/3 size dự kiến |
+| **LPB** | 5% | 52,70 – 53,77 | 51,19 (−3,8%) | Mã **duy nhất** còn trên MA20 với dòng tiền khối ngoại mua ròng ở cả ba khung (tháng +122, tuần +103, phiên +31). Không phụ thuộc vào việc thị trường có tạo đáy hay không |
+| **SHB** | 4% | 11,00 – 11,57 | 10,93 (−3,1%) | Khối ngoại **+92 tỷ riêng phiên 28/07** trong khi giá vẫn giảm 0,44%. R:R 2,00 và 3,87, cắt lỗ chặt nhất nhóm quá bán |
+| **KDH** | 4% | 16,36 – 17,20 | 15,96 (−4,9%) | Hội tụ tín hiệu tốt nhất nhóm BĐS: điểm cao nhất ngành (13đ), khối ngoại mua ròng **+50 tỷ phiên 28/07 tương đương 56% ADV**, RSI 19,4 quá bán sâu, R:R 3,14. Lãnh đạo đăng ký mua 350 tỷ tiền cá nhân |
 
-**Không mua bất cứ mã nào khác trước FOMC.** Kể cả VND, VCI, SSI dù đã bật mạnh — vì bật mạnh trước một sự kiện vĩ mô lớn là cấu hình rủi ro tệ nhất.
+**Chưa mua nhóm chứng khoán trước FOMC.** VND, VCI, SSI đều đã bật mạnh phiên 28/07 — bật mạnh ngay trước một sự kiện vĩ mô lớn là cấu hình rủi ro tệ nhất, và đây là nhóm không có đệm định giá nên chịu đòn nặng nhất nếu Fed cứng.
 
 **Nửa sau — phiên 30/07 và 31/07, sau khi có kết quả FOMC.**
 
-**Nhánh thuận** — Fed giữ nguyên lãi suất và giọng điệu không cứng thêm, **và** VNINDEX giữ trên 1.651 → nâng lên **10–15%**:
+**Nhánh thuận** — Fed giữ nguyên lãi suất và giọng điệu không cứng thêm, **và** VNINDEX giữ trên 1.651 → nâng lên **30–35%**:
 
-| Mã | Size thêm | Vùng mua | Cắt lỗ | Lý do |
-|---|---|---|---|---|
-| **KDH** | 2–3% | 16,36 – 17,20 | 15,96 (−4,9%) | Hội tụ tín hiệu tốt nhất nhóm BĐS: điểm cao nhất ngành (13đ), khối ngoại mua ròng **+50 tỷ phiên 28/07 tương đương 56% ADV**, RSI 19,4 quá bán sâu, R:R 3,14. Lãnh đạo đăng ký mua 350 tỷ tiền cá nhân |
-| **VND** | 2–3% | 15,83 – 16,65 | 15,25 (−6,1%) | Mã chứng khoán duy nhất khối ngoại mua ròng cả tháng lẫn tuần. Đã bật +6,84% nên **chỉ mua khi giá lùi về dưới 16,4**, không mua giá cao hơn |
-| **SHB** | +1–2% | như trên | như trên | Nâng nốt phần còn lại nếu có nến xanh xác nhận |
+| Mã | Size vào thêm | Size tích luỹ | Vùng mua | Cắt lỗ | Lý do |
+|---|---|---|---|---|---|
+| **VND** | 4% | 4% | 15,83 – 16,65 | 15,25 (−6,1%) | Mã chứng khoán duy nhất khối ngoại mua ròng cả tháng lẫn tuần. Đã bật +6,84% nên **chỉ mua khi giá lùi về dưới 16,4**, không mua giá cao hơn |
+| **MBS** | 4% | 4% | 17,18 – 18,07 | 16,55 (−6,1%) | Mã chứng khoán duy nhất **không còn cung pha loãng treo**. Vòng quay 5 phiên chỉ bằng 0,73 lần mức 20 phiên — cung đã cạn |
+| **MBB** | 4% | 4% | 21,37 – 22,48 | 21,03 (−4,1%) | Chất lượng tài sản tốt nhất nhóm ngân hàng đã nén: NPL 1,42%, room ngoại 49%. Khối ngoại phiên 28/07 mua ròng +30 tỷ |
+| **VCI** | 3% | 3% | 19,01 – 20,00 | 18,32 (−6,1%) | Đặt trước cửa sổ mua của cổ đông lớn mở ngày 04/08. Vào 3/5 size, phần còn lại sang tuần 2 |
+| **LPB · SHB · KDH** | +1% mỗi mã | 5% mỗi mã | như trên | như trên | Nâng nốt nếu giữ được vùng mua |
 
-**Nhánh nghịch** — Fed cứng hơn dự kiến, hoặc VNINDEX thủng 1.651 → **dừng toàn bộ giải ngân, giữ nguyên 5% đã vào, đặt cắt lỗ nghiêm.** Không bình quân giá xuống.
+**Tổng cuối tuần 1: LPB 5 + SHB 5 + KDH 5 + VND 4 + MBS 4 + MBB 4 + VCI 3 = 30%.** Đây là mức sàn của kế hoạch.
+
+**Nhánh nghịch** — Fed cứng hơn dự kiến, hoặc VNINDEX thủng 1.651 → **dừng phần giải ngân sau FOMC, giữ nguyên 13–15% đã vào, đặt cắt lỗ nghiêm.** Không bình quân giá xuống, không ép cho đủ sàn 30% — sàn là mục tiêu khi điều kiện cho phép, không phải nghĩa vụ vô điều kiện.
 
 ### Việc phải làm trong tuần, ngoài việc mua bán
 
@@ -1489,9 +1506,9 @@ Chỉ mua mã thoả **đồng thời** hai điều kiện: xu hướng chưa g�
 
 ### Chủ đề: Số liệu vĩ mô, rổ VN30 mới, và cửa sổ VCI mở
 
-**Tỷ trọng mục tiêu cuối tuần: 25–30%. Tối đa 7 mã.**
+**Tỷ trọng mục tiêu cuối tuần: 40–50%. Chín đến mười mã.**
 
-Đây là **tuần đầu tiên giải ngân thực sự**, với điều kiện tuần 1 đã qua an toàn.
+Tuần 1 đã đưa danh mục về sàn 30%. Tuần này **nâng thêm 10–20 điểm phần trăm**, với điều kiện tuần 1 đã qua an toàn.
 
 ### Ba sự kiện của tuần
 
@@ -1509,27 +1526,30 @@ Chỉ mua mã thoả **đồng thời** hai điều kiện: xu hướng chưa g�
 
 | Mã | Size mục tiêu tích luỹ | Vùng mua | Cắt lỗ | Ưu tiên | Lý do rơi vào tuần này |
 |---|---|---|---|---|---|
-| **VCI** | 3–4% | 19,01 – 20,00 | 18,32 (−6,1%) | **Cao nhất tuần** | Cửa sổ mua của cổ đông lớn mở đúng 04/08. R:R 2,55 tới MA20. Vào 1/2 size ngay đầu tuần, phần còn lại khi có xác nhận |
-| **MBS** | 2–3% | 17,18 – 18,07 | 16,55 (−6,1%) | Cao | Mã chứng khoán duy nhất **không còn cung pha loãng treo**. Vòng quay 5 phiên chỉ bằng 0,73 lần mức 20 phiên — **cung đã cạn**, cấu hình tốt cho nhịp hồi. R:R 2,37 |
-| **KDH** | nâng lên 4–5% | 16,36 – 17,20 | 15,96 | Cao | Nâng nốt nếu giữ được vùng và khối ngoại tiếp tục mua |
-| **LPB** | nâng lên 4–5% | 52,70 – 53,77 | 51,19 | Trung bình | Nâng nốt. **Nhắc lại rủi ro: P/B 3,23 gấp 2,4 lần trung bình ngành** — mã này không rẻ, mua vì dòng tiền và động lượng |
-| **VND** | nâng lên 3–4% | 15,83 – 16,65 | 15,25 | Trung bình | Nâng nếu chưa đủ ở tuần 1 |
-| **SHB** | giữ 3–4% | 11,00 – 11,57 | 10,93 | Trung bình | Giữ, chưa nâng thêm — chờ tin Krungsri |
-| **CEO** | 1–2% | 10,71 – 11,27 | 10,32 (−6,1%) | Thấp | Chỉ vào nếu chỉ số đã giữ trên 1.651 cả tuần. R:R 3,36, mục tiêu MA20 +20,3% — cao nhất bảng. **Size nhỏ vì dòng tiền kinh doanh −380 tỷ, đây là vị thế giao dịch thuần** |
+| **VCI** | nâng lên **5%** | 19,01 – 20,00 | 18,32 (−6,1%) | **Cao nhất tuần** | Cửa sổ mua của cổ đông lớn mở đúng 04/08. R:R 2,55 tới MA20. Nâng nốt 2% còn lại ngay đầu tuần |
+| **MBS** | nâng lên **5%** | 17,18 – 18,07 | 16,55 (−6,1%) | Cao | Cung đã cạn (vòng quay 5 phiên bằng 0,73 lần mức 20 phiên), R:R 2,37 |
+| **VND** | nâng lên **5%** | 15,83 – 16,65 | 15,25 | Cao | Nâng nốt nếu khối ngoại còn mua ròng |
+| **MBB** | nâng lên **5%** | 21,37 – 22,48 | 21,03 | Cao | Nâng nốt nếu giữ được vùng |
+| **KDH · LPB · SHB** | giữ **5%** mỗi mã | như trên | như trên | Trung bình | Đã đủ size từ tuần 1. **Nhắc lại rủi ro LPB: P/B 3,23 gấp 2,4 lần trung bình ngành** — mã này không rẻ, mua vì dòng tiền và động lượng |
+| **CEO** | **3%** | 10,71 – 11,27 | 10,32 (−6,1%) | Trung bình | Chỉ vào nếu chỉ số đã giữ trên 1.651 cả tuần. R:R 3,36, mục tiêu MA20 **+20,3% — cao nhất bảng**. Đây là vị thế giao dịch thuần vì dòng tiền kinh doanh −380 tỷ |
+| **NLG** | **3%** | 19,88 – 20,91 | 19,16 (−6,1%) | Trung bình | R:R 3,11, mục tiêu MA20 +18,8%. **Backlog 10.878 tỷ** là cơ sở doanh thu chắc chắn nhất nhóm BĐS. Vào cùng CEO để cân bằng: một mã dòng tiền, một mã cơ bản |
+| **CTG** | **3%** | 27,98 – 29,43 | 27,97 (−2,6%) | Trung bình | **Chỉ vào nếu khối ngoại giảm cường độ bán** (tháng đang −474 tỷ, tuần đã hạ về −27 tỷ — dấu hiệu tốt). Cắt lỗ chỉ −2,6% chặt nhất bảng, R:R 4,08, LLCR 167,2% mạnh nhất nhóm |
+
+**Tổng cuối tuần 2:** LPB 5 + SHB 5 + KDH 5 + VND 5 + MBS 5 + MBB 5 + VCI 5 + CEO 3 + NLG 3 + CTG 3 = **44%**, nằm giữa dải 40–50%.
 
 ### Điều kiện riêng cho nhóm Chứng khoán trong tuần này
 
-Nhóm Chứng khoán chiếm 3 mã trong danh sách trên (VCI, MBS, VND) tức khoảng 8–11% danh mục. **Điều kiện để giữ mức đó:**
+Nhóm Chứng khoán chiếm 3 mã trong danh sách trên (VCI, MBS, VND) tức khoảng 15% danh mục — **đây là mức đáng kể cho một ngành không có đệm định giá**, nên điều kiện dưới đây phải kiểm nghiêm:
 
 > Trung bình 5 phiên giá trị giao dịch HOSE **vượt 13.000 tỷ**, và trong 5 phiên không có phiên nào chỉ số giảm quá 2%.
 
-Nếu không đạt: **giữ nguyên, không nâng thêm.** Nếu trung bình 5 phiên xuống dưới 11.000 tỷ: **hạ nhóm Chứng khoán xuống một nửa.**
+Nếu không đạt: **giữ nguyên, không nâng thêm.** Nếu trung bình 5 phiên xuống dưới 11.000 tỷ: **hạ nhóm Chứng khoán xuống một nửa, tức từ 15% về 7–8%**, và bù phần đó bằng nhóm ngân hàng đã nén (MBB, CTG) để giữ tổng tỷ trọng trong dải.
 
 *Lưu ý ngưỡng: 13.000 tỷ ở đây thấp hơn ngưỡng xác nhận 15.000 tỷ của luận điểm ngành. Đó là chủ ý — 15.000 tỷ là ngưỡng để nâng nhóm này lên tỷ trọng đầy đủ, còn 13.000 tỷ chỉ là ngưỡng để không phải rút.*
 
 ### Không mua trong tuần 2
 
-- **ACB, HDB, MSB** — cả ba đang bị khối ngoại bán ròng mạnh trong tuần, và R:R dưới 1,0 với ACB, MSB.
+- **ACB, HDB, MSB** — cả ba đang bị khối ngoại bán ròng mạnh trong tuần, và R:R dưới 1,0 với ACB, MSB. **Việc nâng trần tỷ trọng lên 70% không đổi được đánh giá này** — tỷ trọng tăng thì phân bổ vào mã tốt hơn, không phải vào mã đã loại.
 - **SSI** — bán ròng 403 tỷ/tuần, R:R 0,45 tới MA10.
 - **STB, TAL, VIX** — nhóm giao dịch thuần, chưa tới lượt.
 - **Nhóm dự bị CTD, VGC, IDC, HHV** — chờ BCTC bán niên soát xét tuần 3.
@@ -1540,9 +1560,9 @@ Nếu không đạt: **giữ nguyên, không nâng thêm.** Nếu trung bình 5 
 
 ### Chủ đề: Tuần dữ liệu — BCTC bán niên soát xét và MSCI review
 
-**Tỷ trọng mục tiêu cuối tuần: 35–45%. Tối đa 10 mã.**
+**Tỷ trọng mục tiêu cuối tuần: 55–65%. Mười hai đến mười ba mã.**
 
-Đây là **tuần quan trọng nhất về mặt thông tin của cả tháng**, và cũng là tuần giải ngân mạnh nhất — nhưng chỉ với mã đã được dữ liệu xác nhận.
+Đây là **tuần quan trọng nhất về mặt thông tin của cả tháng**, và cũng là tuần giải ngân mạnh nhất — nhưng chỉ với mã đã được dữ liệu xác nhận. Nâng thêm 15 điểm phần trăm so với tuần 2, đưa danh mục về sát trần.
 
 ### Vì sao tuần này quyết định
 
@@ -1563,17 +1583,29 @@ Toàn bộ cycle Tier 0–3 đứng trên **dữ liệu tài chính quý 1/2026*
 
 ### Danh sách mua tuần 3
 
-**Nhóm A — nâng size các mã đã nắm, nếu BCTC không phá vỡ luận điểm:** VCI, MBS, VND, KDH, LPB, SHB lên mức size mục tiêu đầy đủ theo bảng ở mục 3.2.1.
+**Nhóm A — nâng size các mã đã nắm, nếu BCTC không phá vỡ luận điểm:**
 
-**Nhóm B — mã mới thêm trong tuần, mỗi mã 1/3 size:**
+| Mã | Từ | Lên | Điều kiện |
+|---|---|---|---|
+| **KDH** | 5% | **6–7%** | Điều kiện "hai tuần không tạo đáy mới" đã thoả (xem dưới). Mã điểm cao nhất ngành BĐS |
+| **MBB** | 5% | **6–7%** | NPL quý 2 soát xét giữ dưới 2% |
+| **VCI** | 5% | 5% | Giữ. Cửa sổ mua nội bộ còn hiệu lực nhưng sự kiện FTSE 21/08 đang tới |
+| **CTG** | 3% | **5%** | Khối ngoại đã ngừng bán ròng mạnh |
+| **NLG** | 3% | **4%** | Backlog xác nhận trong BCTC soát xét |
+| **VND · MBS · LPB · SHB · CEO** | | giữ nguyên | Chờ tín hiệu riêng |
+
+**Nhóm B — bốn mã mới thêm trong tuần, mỗi mã vào 60% size trước:**
 
 | Mã | Size mục tiêu | Vùng mua | Cắt lỗ | Điều kiện thêm |
 |---|---|---|---|---|
-| **MBB** | 3–4% | 21,37 – 22,48 | 21,03 (−4,1%) | NPL quý 2 giữ dưới 2%. Khối ngoại phiên 28/07 đã mua ròng +30 tỷ — theo dõi có duy trì không |
-| **NLG** | 1–2% | 19,88 – 20,91 | 19,16 (−6,1%) | R:R 3,11, mục tiêu MA20 +18,8%. **Backlog 10.878 tỷ** là cơ sở doanh thu chắc chắn nhất nhóm BĐS. Chọn NLG trước DXG vì cơ bản tốt hơn rõ |
-| **CTG** | 2–3% | 27,98 – 29,43 | 27,97 (−2,6%) | **Chỉ vào nếu khối ngoại ngừng bán** (tháng đang −474 tỷ). Bù lại: cắt lỗ chỉ −2,6% chặt nhất bảng, R:R 4,08, LLCR 167,2% mạnh nhất nhóm, lợi nhuận Q2 dự phóng cao nhất ngành |
-| **CTD** | 2–3% | 55,58 – 58,46 | 53,88 (−5,5%) | **Chỉ vào nếu BCTC soát xét cho thấy khoản phải thu không xấu thêm.** Catalyst lớn nhất toàn bộ 24 mã (backlog 65.500 tỷ kỷ lục), nhưng dòng tiền kinh doanh −1.733 tỷ là rủi ro thật |
-| **VGC** | 1,5–2% (trần size 2,1 tỷ) | 34,50 – 36,29 | 33,49 (−5,4%) | Mã duy nhất nhóm dự bị **đã có số quý 2 thật và tốt** (LNST 1.036 tỷ, +42%). Vướng trần thanh khoản nên size nhỏ |
+| **CTD** | **4%** | 55,58 – 58,46 | 53,88 (−5,5%) | **Chỉ vào nếu BCTC soát xét cho thấy khoản phải thu không xấu thêm.** Catalyst lớn nhất toàn bộ 24 mã (backlog 65.500 tỷ kỷ lục), nhưng dòng tiền kinh doanh −1.733 tỷ là rủi ro thật |
+| **DXG** | **3%** | 9,89 – 10,40 | 9,61 (−5,3%) | R:R 2,76, RSI 21,9, thanh khoản cao nhất mid-cap BĐS. Vào sau NLG vì cơ bản yếu hơn (ROE trailing giảm 2,6% → 1,7%) |
+| **HDG** | **3%** | 15,54 – 16,34 | 14,97 (−6,1%) | **Dòng tiền kinh doanh dương 6 quý liên tiếp — duy nhất nhóm BĐS.** ROE 10,11% cao thứ hai ngành |
+| **VGC** | **2%** (trần size 2,1 tỷ) | 34,50 – 36,29 | 33,49 (−5,4%) | Mã duy nhất nhóm dự bị **đã có số quý 2 thật và tốt** (LNST 1.036 tỷ, +42%). Vướng trần thanh khoản nên size nhỏ |
+
+**Tổng cuối tuần 3:** LPB 5 + SHB 5 + KDH 6,5 + VND 5 + MBS 5 + MBB 6,5 + VCI 5 + CEO 3 + NLG 4 + CTG 5 + CTD 4 + DXG 3 + HDG 3 + VGC 2 = **62%**, nằm trong dải 55–65%.
+
+> **Nếu một trong bốn mã nhóm B không đạt điều kiện thêm**, không thay bằng mã khác cho đủ tỷ trọng — để tỷ trọng rơi về cận dưới 55%. **Ép cho đủ số là cách nhanh nhất để biến trần 70% thành rủi ro thay vì thành cơ hội.**
 
 ### Điều kiện riêng cho nhóm BĐS Dân dụng
 
@@ -1589,7 +1621,9 @@ MSCI công bố kết quả kỳ review tháng 8. Việt Nam vẫn trong rổ Fr
 
 ### Chủ đề: Tuần sự kiện — đáo hạn phái sinh 20/08 và FTSE danh sách cuối 21/08
 
-**Tỷ trọng mục tiêu cuối tuần: 45–55%. Tối đa 12 mã. Nhưng đây là tuần chủ động hạ rủi ro trước sự kiện, không phải tuần mua đuổi.**
+**Tỷ trọng mục tiêu cuối tuần: 60–70% — chạm trần của kế hoạch. Mười ba đến mười bốn mã. Nhưng đây là tuần chủ động hạ rủi ro TRƯỚC sự kiện rồi mua lại SAU, không phải tuần mua đuổi.**
+
+Lưu ý cách đọc con số 60–70%: đó là tỷ trọng **cuối tuần**, tức sau khi đã mua lại phần hạ trước ngày 21/08. Trong hai phiên 19–20/08 tỷ trọng thực tế sẽ thấp hơn, khoảng 52–58%.
 
 ### Hai sự kiện và cách xử lý khác nhau
 
@@ -1609,7 +1643,7 @@ Trong 24 mã theo dõi, các mã nằm trong danh sách dự báo vào rổ FTSE
 
 | Nhóm | Hành động trước 21/08 |
 |---|---|
-| **Sáu mã có câu chuyện FTSE** (SSI, VIX, VCI, VND, STB, SHB) | **Hạ xuống 2/3 size đang nắm.** Không phải vì bi quan, mà vì đây là rủi ro nhị phân không quản trị được bằng cắt lỗ — tin ra sau giờ hoặc gap mở cửa thì cắt lỗ không bảo vệ được |
+| **Sáu mã có câu chuyện FTSE** (SSI, VIX, VCI, VND, STB, SHB) | **Hạ xuống 2/3 size đang nắm** — trong danh mục thực tế là VCI, VND, SHB, tức hạ khoảng 5 điểm phần trăm tổng tỷ trọng. Không phải vì bi quan, mà vì đây là rủi ro nhị phân không quản trị được bằng cắt lỗ — tin ra sau giờ hoặc gap mở cửa thì cắt lỗ không bảo vệ được |
 | **Các mã còn lại** | Giữ nguyên. Không liên quan sự kiện |
 
 **Xử lý sau khi có danh sách:**
@@ -1625,10 +1659,12 @@ Trong 24 mã theo dõi, các mã nằm trong danh sách dự báo vào rổ FTSE
 
 | Mã | Size mục tiêu | Ghi chú |
 |---|---|---|
-| **DXG** | 1–2% | R:R 2,76, RSI 21,9. Vào sau NLG vì cơ bản yếu hơn (ROE trailing đang giảm 2,6% → 1,7%) |
-| **HDG** | 1–2% | **Dòng tiền kinh doanh dương 6 quý liên tiếp — duy nhất trong nhóm BĐS.** Bảng chấm đối xử thiếu công bằng với mã này |
-| **IDC** | 1–2% | Chỉ vào nếu số FDI tháng 7 công bố 03/08 không suy giảm. ROE 29,15% gấp 2,47 lần median ngành |
-| **MSB hoặc HDB** | 2–3% | **Chỉ một trong hai**, và chỉ khi LLCR trong BCTC soát xét đã cải thiện lên trên 60%. Nếu không, bỏ qua cả hai |
+| **IDC** | **3%** | Chỉ vào nếu số FDI tháng 7 công bố 03/08 không suy giảm. ROE 29,15% gấp 2,47 lần median ngành |
+| **SHS** | **3%** | Chỉ vào nếu BCTC soát xét cho thấy lợi nhuận quý 2 đã tạo đáy. **P/B 1,06 rẻ nhất nhóm chứng khoán**, R:R 2,56 tới MA20 |
+| **MSB hoặc HDB** | **3%** | **Chỉ một trong hai**, và chỉ khi LLCR trong BCTC soát xét đã cải thiện lên trên 60%. Nếu không, bỏ qua cả hai |
+| **CTD · DXG · HDG · VGC** | nâng nốt 40% size còn lại | Nếu giữ được vùng mua qua tuần 3 |
+
+**Tổng cuối tuần 4:** nền 62% của tuần 3, cộng 6–9% từ ba mã mới, trừ phần hạ tạm của nhóm FTSE đã mua lại → **65–70%**. Đây là trần, **không vượt trong bất kỳ kịch bản nào**.
 
 ### Không mua trong tuần 4
 
@@ -1642,7 +1678,9 @@ Trong 24 mã theo dõi, các mã nằm trong danh sách dự báo vào rổ FTSE
 
 ### Chủ đề: Jackson Hole và rào 5 ngày nghỉ — tuần hạ rủi ro, không phải tuần mua
 
-**Tỷ trọng mục tiêu cuối tuần: 40–50%, giảm từ mức 45–55% của tuần 4. Đây là mức trần cứng, áp trong mọi kịch bản trừ kịch bản B rõ ràng.**
+**Tỷ trọng mục tiêu cuối tuần: 50–60%, giảm từ mức 60–70% của tuần 4. Mức giảm khoảng 10 điểm phần trăm này là bắt buộc, áp trong mọi kịch bản.**
+
+Vẫn ở trên sàn 30% khá xa — tức đây không phải rút lui, chỉ là hạ đòn bẩy trước một cửa sổ rủi ro không phòng vệ được.
 
 ### Vì sao bắt buộc hạ
 
@@ -1689,47 +1727,52 @@ Ba rủi ro chồng nhau rơi vào cùng một cửa sổ 5 ngày mà thị trư
 
 Ký hiệu: **M** = mua mới hoặc nâng size · **G** = giữ nguyên · **H** = hạ size · **B** = bán hết · **—** = chưa vào danh mục · **?** = có điều kiện
 
-| Mã | Nhóm | T1 29–31/07 | T2 03–07/08 | T3 10–14/08 | T4 17–21/08 | T5 24–28/08 | Size đích |
-|---|---|---|---|---|---|---|---|
-| **LPB** | 1 | **M** 3% | M 4–5% | G | G | G | 4–5% |
-| **SHB** | 1 | **M** 2% | G 3–4% | M 4–5% | **H** trước 21/08 → M sau | G | 4–5% |
-| **KDH** | 1 | M? 2–3% | M 4–5% | G | G | G | 4–5% |
-| **VND** | 1 | M? 2–3% | M 3–4% | G | **H** trước 21/08 → M sau | H | 3–4% |
-| **VCI** | 1 | — | **M** 3–4% | G | **H** trước 21/08 → M sau | G | 3–4% |
-| **MBS** | 1 | — | **M** 2–3% | M 3–4% | G | H | 3–4% |
-| **CEO** | 1 | — | M? 1–2% | G | G | **B** | 1–2% |
-| **MBB** | 1 | — | — | **M** 3–4% | G | G | 3–4% |
-| **DXG** | 1 | — | — | — | M? 1–2% | **B** | 1–2% |
-| **NLG** | 2 | — | — | **M** 1–2% | G | G | 1–2% |
-| **CTG** | 2 | — | — | M? 2–3% | G | G | 2–3% |
-| **HDG** | 2 | — | — | — | M? 1–2% | G | 1–2% |
-| **SSI** | 2 | — | — | — | ? | **B** | 0–2% |
-| **SHS** | 2 | — | — | ? | ? | H | 0–2% |
-| **HDB** | 2 | **Không** | Không | ? sau BCTC | ? một trong hai | H | 0–3% |
-| **MSB** | 2 | Không | Không | ? sau BCTC | ? một trong hai | H | 0–3% |
-| **ACB** | 2 | **Không** | Không | ? sau BCTC | Không | — | 0–2% |
-| **VIX** | 3 | Không | Không | ? | Không | **B** | 0–1% |
-| **STB** | 3 | Không | Không | ? | **H** trước 21/08 | **B** | 0–1% |
-| **TAL** | 3 | Không | Không | Không | Không | **B** | 0 |
-| **CTD** | 4 | — | — | M? 2–3% | G | G | 2–3% |
-| **VGC** | 4 | — | — | M? 1,5–2% | G | G | 1,5–2% |
-| **IDC** | 4 | — | — | — | M? 1–2% | G | 1–2% |
-| **HHV** | 4 | — | — | — | ? | — | 0–1% |
-| **Tổng tỷ trọng** | | **10–15%** | **25–30%** | **35–45%** | **45–55%** | **40–50%** | |
+Con số trong ô là **tỷ trọng tích luỹ trên tổng danh mục ở cuối tuần đó**.
+
+| Mã | Nhóm | T1 29–31/07 | T2 03–07/08 | T3 10–14/08 | T4 17–21/08 | T5 24–28/08 |
+|---|---|---|---|---|---|---|
+| **LPB** | 1 | **M** 5% | G 5% | G 5% | G 5% | G 5% |
+| **SHB** | 1 | **M** 5% | G 5% | G 5% | **H** 3,5% trước 21/08 → **M** 5% sau | G 5% |
+| **KDH** | 1 | **M** 5% | G 5% | **M** 6,5% | G 6,5% | G 6,5% |
+| **VND** | 1 | **M** 4% | **M** 5% | G 5% | **H** 3,5% trước 21/08 → **M** 5% sau | H 3% |
+| **MBS** | 1 | **M** 4% | **M** 5% | G 5% | G 5% | H 3% |
+| **MBB** | 1 | **M** 4% | **M** 5% | **M** 6,5% | G 6,5% | G 6,5% |
+| **VCI** | 1 | **M** 3% | **M** 5% | G 5% | **H** 3,5% trước 21/08 → **M** 5% sau | G 5% |
+| **CEO** | 1 | — | **M** 3% | G 3% | G 3% | **B** 0 |
+| **DXG** | 1 | — | — | **M** 3% | G 3% | **B** 0 |
+| **NLG** | 2 | — | **M** 3% | **M** 4% | G 4% | G 4% |
+| **CTG** | 2 | — | **M?** 3% | **M** 5% | G 5% | G 5% |
+| **HDG** | 2 | — | — | **M** 3% | G 3% | G 3% |
+| **SHS** | 2 | — | — | — | **M?** 3% | H 1,5% |
+| **HDB** *hoặc* **MSB** | 2 | **Không** | Không | Không | **M?** 3% — chỉ một trong hai | H 1,5% |
+| **SSI** | 2 | Không | Không | Không | Không | Không |
+| **ACB** | 2 | **Không** | Không | ? sau BCTC | Không | Không |
+| **VIX · STB · TAL** | 3 | Không | Không | Không | Không | Không |
+| **CTD** | 4 | — | — | **M?** 4% | G 4% | G 4% |
+| **VGC** | 4 | — | — | **M?** 2% | G 2% | G 2% |
+| **IDC** | 4 | — | — | — | **M?** 3% | G 3% |
+| **HHV** | 4 | — | — | — | ? | — |
+| **TỔNG** | | **30%** | **44%** | **62%** | **65–70%** | **50–56%** |
+
+**Ba mã bị bỏ hẳn khỏi kế hoạch dù nằm trong danh sách 24 mã:** SSI (khối ngoại bán ròng 403 tỷ/tuần và 892 tỷ/tháng, nặng nhất danh sách, cộng pha loãng 20% không hạn chế chuyển nhượng) · ACB (bán tuần −295 tỷ vượt cả số ròng tháng, cộng nợ nhóm 2 tăng 93,4%, R:R 0,58) · nhóm 3 giao dịch thuần VIX, STB, TAL (không đủ chất lượng để chiếm chỗ trong danh mục ở mức tỷ trọng cao).
+
+> **Nguyên tắc khi nâng tỷ trọng: dồn vào mã tốt hơn, không rải sang mã kém hơn.** Trần 70% được lấp bằng cách nâng size các mã nhóm 1 lên 5–6,5% mỗi mã, chứ không phải bằng cách mua thêm mã thứ 20. Đây là lý do kế hoạch chỉ dùng 13–14 mã cho 70% tỷ trọng thay vì trải đủ 24 mã — mỗi mã 3% thì một mã tăng 30% chỉ đóng góp 0,9% cho danh mục.
 
 ## 6.10. Nhánh xấu — kế hoạch nếu kịch bản C xảy ra
 
 **Kích hoạt khi:** VNINDEX đóng cửa dưới **1.651,20** hai phiên liên tiếp, **hoặc** một phiên dưới 1.651 kèm khối lượng vượt 1,3 lần bình quân 20 phiên.
 
-| Bước | Hành động | Thời điểm |
-|---|---|---|
-| 1 | **Dừng toàn bộ giải ngân mới.** Không bình quân giá xuống với bất kỳ mã nào | Ngay |
-| 2 | **Bán hết nhóm 3 và nhóm mức tin cậy Thấp** — VIX, STB, TAL, CEO, DXG, HDG. Đây là nhóm không có đệm định giá | Trong 2 phiên |
-| 3 | **Hạ nhóm Chứng khoán xuống 1/3** — ngành không có đệm định giá nào, sẽ giảm mạnh nhất | Trong 2 phiên |
-| 4 | Giữ lại **tối đa 20% cổ phiếu**, ưu tiên MBB, CTG, KDH, LPB | Trong 3 phiên |
-| 5 | **Nếu thủng 1.600 kèm khối lượng tăng** → hạ tiếp về **15%**, và **regime chuyển từ Risk-on selective sang Defensive only**. Toàn bộ khung kỳ vọng ở mục 2.2.7 phải tính lại từ đáy mới | Ngay khi chạm |
+| Bước | Hành động | Tỷ trọng sau bước | Thời điểm |
+|---|---|---|---|
+| 1 | **Dừng toàn bộ giải ngân mới.** Không bình quân giá xuống với bất kỳ mã nào | giữ nguyên | Ngay |
+| 2 | **Bán hết nhóm mức tin cậy Thấp** — CEO, DXG, HDG, và nhóm 3 nếu đã có | −9 điểm % | Trong 2 phiên |
+| 3 | **Hạ nhóm Chứng khoán xuống 1/3** — VND, MBS, VCI, SHS từ khoảng 18% về 6%. Ngành không có đệm định giá nào, sẽ giảm mạnh nhất | −12 điểm % | Trong 2 phiên |
+| 4 | **Hạ nốt về sàn 30%**, ưu tiên giữ MBB, CTG, KDH, LPB, SHB — nhóm có đệm định giá thật hoặc dòng tiền khối ngoại xác nhận | **30%** | Trong 3 phiên |
+| 5 | **Nếu thủng 1.600 kèm khối lượng tăng** → **regime chuyển từ Risk-on selective sang Defensive only. Dải 30–70% hết hiệu lực**, hạ tiếp về **15–20%**. Toàn bộ khung kỳ vọng ở mục 2.2.7 phải tính lại từ đáy mới | **15–20%** | Ngay khi chạm |
 
-**Điều kiện quay lại:** không nối lại giải ngân cho tới khi đủ **2 trong 3 dấu hiệu xác nhận đáy** ở mục 1.7, tính từ đáy mới.
+**Điểm quan trọng về sàn 30%:** sàn này là **sàn của regime, không phải sàn tuyệt đối**. Chừng nào bốn điều kiện huỷ ở mục 7.1 chưa bị chạm thì không hạ dưới 30% — vì hạ dưới đó tức là đã ngầm bỏ regime mà không thừa nhận. Khi một điều kiện huỷ bị chạm thì regime đổi và sàn đổi theo. **Không có trạng thái trung gian "vẫn Risk-on selective nhưng nắm 15%"** — đó là cách tự lừa mình phổ biến nhất trong thị trường giảm.
+
+**Điều kiện quay lại:** không nối lại giải ngân trên 30% cho tới khi đủ **2 trong 3 dấu hiệu xác nhận đáy** ở mục 7.2, tính từ đáy mới.
 
 ## 6.11. Nhánh tốt — kế hoạch nếu kịch bản B xảy ra
 
@@ -1737,11 +1780,11 @@ Ký hiệu: **M** = mua mới hoặc nâng size · **G** = giữ nguyên · **H*
 
 | Bước | Hành động |
 |---|---|
-| 1 | Nâng trần tỷ trọng từ 55% lên **65%**, tức giảm cash buffer về 35% |
-| 2 | **Ưu tiên nâng nhóm đã nén trước nhóm chưa nén** — SHB, CTG, MBB, KDH, NLG, DXG. Đây là nhóm có dư địa hồi lớn hơn |
+| 1 | **Đạt trần 70% sớm hơn lịch** — kéo mốc 60–70% từ tuần 4 về tuần 3. **Không vượt 70%**: đó là mức regime cho phép, và vượt nó nghĩa là đã đổi regime mà chưa xét lại |
+| 2 | **Ưu tiên nâng nhóm đã nén trước nhóm chưa nén** — SHB, CTG, MBB, KDH, NLG, DXG. Đây là nhóm có dư địa hồi lớn hơn. Nhóm chưa nén (LPB, MSB) giữ nguyên, không nâng |
 | 3 | Nâng nhóm Chứng khoán lên size đầy đủ **chỉ khi** trung bình 5 phiên thanh khoản HOSE vượt **15.000 tỷ mà không có phiên nào giảm quá 2%** |
-| 4 | Kích hoạt hai ngành dự bị: thêm CTD và VGC lên size đầy đủ, cân nhắc IDC và HHV |
-| 5 | **Vẫn giữ nguyên kỷ luật hạ tỷ trọng ở tuần 5** — kỳ nghỉ 5 ngày là rủi ro độc lập với xu hướng thị trường |
+| 4 | Kích hoạt đầy đủ hai ngành dự bị: CTD và VGC lên size trần theo thanh khoản, thêm IDC và HHV |
+| 5 | **Vẫn giữ nguyên kỷ luật hạ tỷ trọng ở tuần 5** — kỳ nghỉ 5 ngày là rủi ro độc lập với xu hướng thị trường. Trong kịch bản này hạ từ 70% về 55–60% thay vì về 50% |
 
 ---
 
