@@ -773,7 +773,11 @@ Ba lỗi ở phần đầu **không phải lỗi thực thi, chúng là lỗi th
 
 ## Khuyến cáo
 
-Báo cáo này thay thế bản ngày 28/07/2026. Bản cũ được giữ lại trong hồ sơ để truy vết, **không dùng cho quyết định đầu tư**.
+**Báo cáo này KHÔNG đứng độc lập.** Nó thay thế phần chọn cổ phiếu và kế hoạch triển khai của bản ngày 28/07/2026, nhưng **không chép lại phần vĩ mô và phần lựa chọn ngành** — hai phần đó vẫn nằm ở bản 28/07 và **vẫn giữ nguyên hiệu lực** (danh sách chi tiết ở Phần D).
+
+Để có bức tranh đầy đủ, đọc **Phần I và Phần II của bản 28/07** cùng với bản này. Phần III trở đi của bản 28/07 đã bị thay thế, không dùng.
+
+Bản sửa lần 2 ngày 29/07 bị thay thế hoàn toàn bởi bản này.
 
 Nội dung được lập cho mục đích tham khảo, dựa trên dữ liệu giá đến hết phiên 28/07/2026 và dữ liệu tài chính đến ngày 29/07/2026. Báo cáo không phải lời chào mua hay chào bán, và không tính đến mục tiêu đầu tư hay tình hình tài chính riêng của từng nhà đầu tư.
 
