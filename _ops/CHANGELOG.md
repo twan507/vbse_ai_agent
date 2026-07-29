@@ -4,6 +4,47 @@ Ghi mỗi lần sửa engine (K/P/O, system_prompt, KERNEL_SKELETON, OUTPUT_MAST
 
 Format: `## YYYY-MM-DD — tiêu đề` + file đụng tới + nội dung + lý do.
 
+## 2026-07-29 — P_invest_memo: thêm Vòng T (xu hướng), gỡ khối ngoại khỏi bảng chấm, luật độ tươi kỳ báo cáo
+
+**Bối cảnh:** user rà lại bản khuyến nghị `client_report_20260728.md` và chỉ ra ba lỗi. Kiểm chứng bằng dữ liệu giá 250 phiên và báo cáo chuyên đề quý 2/2026 của 8 công ty chứng khoán (`inputs/external/20260723_VBSE_bao-cao-CTCK-Q2-2026.docx`) cho thấy **cả ba đều đúng, và cả ba là lỗi thiết kế của spec chứ không phải lỗi thực thi**. Bản sửa: `outputs/md/invest_memo/2026-08_cycle/client_report_20260728_rev2.md`.
+
+**File đụng tới:** `engine/P/P_invest_memo_03.md` (mục 2 công thức universe, mục 2b Vòng T mới, mục 3 luật độ tươi) · `engine/P/P_invest_memo_04.md` (mục 1, 2, 3, 5, 8, 11 — hạ thang điểm 18 → 15).
+
+### Thay đổi 1 — Thêm Vòng T, gate xu hướng giá đặt TRƯỚC mọi vòng khác
+
+Công thức universe đổi từ `[(B ∩ D) ∪ (C ∩ D) ∪ (E ∩ D)] − F` thành **`T ∩ { [(B ∩ D) ∪ (C ∩ D) ∪ (E ∩ D)] − F }`**.
+
+**Nguyên tắc:** xu hướng giá là điều kiện CẦN, định giá và cơ bản là điều kiện ĐỦ. Hai đại lượng tính từ giá thô: khoảng cách tới MA200, và chuỗi 120 phiên chia ba đoạn. Ba tầng: loại thẳng (dưới MA200 quá 20% và giảm 3/3 đoạn) · chờ xác nhận · mua được.
+
+**Vì sao cần:** spec cũ không có bước nào kiểm xem giá đã ngừng giảm chưa. Chuỗi lập luận "ngành rẻ theo phân vị → mã bị nén sâu → chỉ báo quá bán → tỷ lệ phần thưởng trên rủi ro đẹp → mua" chạy trọn vẹn mà không chạm câu hỏi đó. Hệ quả ở cycle 2026-08: **8 mã được khuyến nghị mua trong khi cả 8 thuộc tầng loại thẳng**, gồm 5 mã nhóm lõi. Toàn bộ 6/6 mã ngành BĐS Dân dụng khi đó đều ở tầng loại thẳng; nặng nhất là KDH ở −37,9% dưới MA200 với 3/3 đoạn giảm và tốc độ giảm còn tăng dần.
+
+**Vòng T không được nới bởi Agent.** Universe sau T nhỏ hơn quota thì giảm quota.
+
+### Thay đổi 2 — Gỡ dòng tiền khối ngoại khỏi bảng chấm điểm
+
+Tiêu chí 5 cũ (dòng tiền NN/TD 1 tháng) **bị gỡ khỏi bộ chấm điểm**, chuyển thành ghi chú tham khảo. Bảng chấm từ **6 tiêu chí / 18 điểm** xuống **5 tiêu chí / 15 điểm**; ngưỡng conviction hạ tương ứng (High 13-15, Medium 9-12, Low 6-8).
+
+**Bằng chứng định lượng:** khi tháo trọng số khối ngoại ra, **4 trên 5 quyết định mua/loại đảo chiều** — loại oan ACB (bán ròng 295 tỷ một tuần) và SSI (403 tỷ một tuần), mua sai SHB (mua ròng 92 tỷ **một phiên**) và KDH (50 tỷ **một phiên**). Một tiêu chí mà khi bỏ đi thì phần lớn kết luận đổi chiều thì nó không phải tiebreaker — nó đang lái cả bảng chấm.
+
+**Ba lý do bản chất:** nhiễu ở khung ngắn (một lệnh thoả thuận hoặc một quỹ cơ cấu đủ chi phối); khối ngoại là bên thiểu số trong đa số phiên; và nó là hệ quả của biến vĩ mô chứ không phải đánh giá về từng doanh nghiệp.
+
+**Ba quy tắc sử dụng còn lại:** khung tối thiểu một tháng, cấm dùng số một phiên/một tuần làm căn cứ · chỉ dùng như tín hiệu xác nhận sau khi mã đã đạt T, B, D · ngoại lệ duy nhất là bán ròng liên tục trên ba tháng vượt 20% vốn hoá tự do chuyển nhượng, xử lý ở Vòng F chứ không bằng điểm.
+
+**Tiebreaker mới khi Tiêu chí 1-4 hoà:** dùng Tiêu chí 5 (đồng đều dòng tiền 5 phiên), sau đó tới khoảng cách MA200 ở Vòng T.
+
+### Thay đổi 3 — Luật độ tươi kỳ báo cáo, đặt trước mọi kiểm tra khác của Vòng B
+
+Phân biệt hai tình huống, trước đây spec không phân biệt nên quy tắc thành vô ích:
+
+- **A — số mới ĐÃ CÓ nhưng kho chưa cập nhật:** lỗi. Phải đi tìm bên ngoài hoặc yêu cầu user cung cấp. Không tìm được thì ghi "chưa đủ cơ sở khuyến nghị" và để mã ngoài universe. **Cấm dùng số cũ rồi chấm điểm như thường.**
+- **B — doanh nghiệp CHƯA công bố:** số cũ hợp lệ, được dùng, nhưng phải ghi nhãn kỳ báo cáo và hạ một bậc mức tin cậy.
+
+**Quy tắc nhãn bắt buộc:** mỗi con số tài chính kèm kỳ báo cáo và nhãn **[công bố]** hoặc **[dự phóng]**. Cấm trộn hai loại trong cùng bảng chấm.
+
+**Hai ca thật:** nhóm chứng khoán rơi vào tình huống A — BCTC quý 2 công bố từ giữa tháng 7 mà báo cáo vẫn dùng số quý 1, dẫn tới xếp VCI vào nhóm lõi trong khi số quý 2 cho thấy **vốn chủ giảm 872 tỷ dù báo lãi 591 tỷ**, và xếp VND ưu tiên số một trong khi mã này hạng chót về chất lượng lợi nhuận. Nhóm ngân hàng rơi vào tình huống B — 5/8 mã chưa công bố BCTC quý 2 tại ngày chạy.
+
+**Bài học chung của cả ba thay đổi:** ghi cảnh báo không thay được việc xử lý cảnh báo. Bản cũ ghi rất rõ ở phần giới hạn rằng dữ liệu cũ ba tháng và nhiều số là dự phóng — rồi vẫn xếp hạng và cấp tỷ trọng như thể dữ liệu đầy đủ. Phần cảnh báo khi đó chỉ có tác dụng miễn trừ trách nhiệm, không có tác dụng bảo vệ người đọc.
+
 ## 2026-07-28 — P_invest_memo: thêm Vòng E, Vòng F, catalyst loại 5, luật đọc chuỗi
 
 **Bối cảnh:** rút từ cycle invest_memo 2026-08 chạy thật qua Tier 0 → Tier 2, có ba vòng phản hồi của user và một đợt rà tin tức 5 ngành bằng 5 subagent. Đây là lần đầu pack `P_invest_memo` được chạy đầy đủ trên dữ liệu thật, và nó lộ ra bốn lỗ hổng mà spec viết trên lý thuyết không thấy.

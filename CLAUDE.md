@@ -28,7 +28,13 @@ Version control: git local, branch `main` — quy tắc mục 7.
 
 **2.1. AI là người ghi duy nhất.** User KHÔNG tự tay sửa/thêm/xoá file trong workspace. Hệ quả logic: mọi trạng thái bất thường đều là lỗi sync hoặc lỗi session trước, không phải "user vừa sửa".
 
-**Ngoại lệ duy nhất — `outputs/sent/`:** AI tạo và đặt file ở đó (copy từ `outputs/pptx/` hoặc `docx/`), **user sửa nội dung** trước khi gửi khách. Đây là nơi duy nhất user ghi. Mọi thư mục khác vẫn AI ghi duy nhất.
+**Ngoại lệ 1 — `outputs/sent/`:** AI tạo và đặt file ở đó (copy từ `outputs/pptx/` hoặc `docx/`), **user sửa nội dung** trước khi gửi khách. Đây là nơi duy nhất user ghi trực tiếp bằng tay.
+
+**Ngoại lệ 2 — user dùng Cowork để dựng bản gửi khách.** User đôi khi mở một session Cowork riêng để biên tập và render file khách hàng (bản `_external`, docx/pptx theo house style). Session đó **ghi thật vào repo và tự commit** với git identity `Finext` — nên có thể thấy commit lạ trên `main`, file `_external.md` mới, hoặc file trong `sent/` đổi kích thước giữa hai phiên.
+
+**Nhận biết:** commit có message dạng `report: ... bản gửi khách (md+sent)`, tác giả `Finext`, đụng `outputs/md/**/*_external.md` và `outputs/sent/`. **Đây KHÔNG phải bất thường mục 2.2** — không báo động, không tự hoàn tác. Xử lý: merge bình thường (merge commit, không rebase), giữ cả hai nhánh nội dung, và nếu bản gửi khách phái sinh từ một báo cáo vừa bị superseded thì **ghi cảnh báo vào INDEX rồi báo user một câu** — việc dựng lại bản gửi khách là của Cowork, không phải của session này.
+
+Mọi thư mục và trường hợp khác vẫn AI ghi duy nhất.
 
 **2.2. Phát hiện bất thường → BÁO, không tự xử.** Bất thường gồm: file sai naming convention, file lạ ở root, bản sao conflict OneDrive (`*-DESKTOP-*`, `*conflict*`), file tạm (`~$*`, `*.tmp`), binary không được liệt kê trong carrier MD nào. Khi gặp: báo user hiện trạng + nguyên nhân khả dĩ + đề xuất xử lý, chờ duyệt rồi mới động tay. Không im lặng sửa, không im lặng bỏ qua.
 
@@ -171,6 +177,10 @@ Repo local, branch duy nhất `main`. Remote `origin`: `git@github.com:twan507/v
 **7.5. Line-ending:** `.gitattributes` ép LF cho text — không override bằng autocrlf, không tắt.
 
 **7.6. OneDrive:** repo nằm trong folder OneDrive — chấp nhận với 1 máy + 1 session ghi tại một thời điểm; không chạy song song nhiều session cùng ghi.
+
+**Ngoại lệ đã biết:** session Cowork dựng bản gửi khách (mục 2.1 ngoại lệ 2) có thể ghi và commit song song với session phân tích. Gặp `main` đã phân nhánh vì lý do này thì **merge commit** — không rebase, không force (mục 7.4 vẫn áp).
+
+**Bẫy đã mắc, đừng lặp lại:** không nối `git merge ... | tail` với `&& git push`. Đường ống nuốt mã lỗi của `merge` nên `push` vẫn chạy dù merge đã abort. Kiểm kết quả merge bằng lệnh riêng trước khi push.
 
 **7.7. Push:** AI push được. Kiểm chứng 2026-07-28: `git push` từ sandbox thành công qua SSH của máy user (11 commit lên `origin/main`). Luật cũ ghi "sandbox không có credential, AI không tự push được" — **đã sai, đã gỡ**.
 
