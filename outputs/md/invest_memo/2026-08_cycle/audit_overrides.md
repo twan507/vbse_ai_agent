@@ -4,6 +4,77 @@ Ghi mỗi lần user override quyết định hoặc phương pháp mặc địn
 
 ---
 
+## 2026-07-29 — Bản khuyến nghị rev3 — Loại: nâng HDB lên nhóm lõi bất chấp trượt Vòng T
+
+**Quyết định Agent (bản rev2):** HDB ở **tầng chờ xác nhận**, không cấp tỷ trọng tuần 1. Căn cứ: dưới MA200 3,8% và **giảm cả ba đoạn** của chuỗi 120 phiên; tỷ lệ bao phủ nợ xấu hợp nhất quý 1 khoảng 43,4–50%, thấp nhất trong tám mã ngân hàng và thấp xa bình quân ngành khoảng 87,65%; chưa công bố BCTC quý 2.
+
+**User override:** đưa HDB lên nhóm ưu tiên, giải ngân ngay tuần 1, kèm bộ luận điểm về kế hoạch lợi nhuận 2026, hạn mức tín dụng, thâu tóm và IPO công ty thành viên, chính sách cổ tức.
+
+**Agent xác minh bộ luận điểm trước khi áp — kết quả hỗn hợp, ghi đủ cả hai chiều:**
+
+*Xác minh được và là cơ sở thật của việc nâng:*
+- Nâng sở hữu **HD SAISON 50% → 75%**, hoàn tất 24/03/2026 [công bố]
+- Nâng sở hữu **Chứng khoán HD 30% → 90%**, đã hoàn tất, **hợp nhất vào BCTC HDB từ quý 2/2026** [công bố]. HDS đã công bố quý 2 với LNTT **1.118 tỷ, gấp gần 4 lần cùng kỳ**
+- **CAR 16,16–16,2%** tại 31/03/2026 [công bố] — cao nhất nhóm ngân hàng niêm yết
+- Kế hoạch LNTT 2026 **30.100 tỷ, +41%** [kế hoạch — ĐHĐCĐ 24/04/2026]
+- **IPO Chứng khoán HD mục tiêu tháng 9/2026** [mục tiêu, chưa nộp hồ sơ]
+- Nhận chuyển giao bắt buộc Vikki Digital Bank, nay là công ty con 100% [công bố]
+
+*Hai điểm trong luận điểm SAI so với nguồn — đã đính chính trong báo cáo:*
+- "Hạn mức tín dụng được cấp tới 37%" — **37% là kế hoạch tự đặt của HDBank**, không phải room Ngân hàng Nhà nước cấp. Dự phóng thị trường 27–34%
+- "Cổ tức 30% bằng cổ phiếu và tiền mặt" — **100% bằng cổ phiếu, không có tiền mặt**
+
+*Bốn rủi ro luận điểm không nhắc, agent bổ sung:*
+1. Bao phủ nợ xấu ~43,4–50%, thấp nhất nhóm; ban lãnh đạo đặt mục tiêu nâng lên 75–80%, tức thừa nhận cần trích lập thêm
+2. **Pha loãng gần như chắc chắn kích hoạt:** tăng vốn thêm tới 9.891 tỷ, gồm phát hành riêng lẻ 700 triệu cp và **chuyển đổi 2.891 tỷ trái phiếu ở giá 13.100đ so với thị giá quanh 26.800đ**
+3. Chất lượng tăng trưởng 2026 có yếu tố một lần — phần lớn đến từ thu nhập khi nâng sở hữu HD SAISON và hợp nhất HDS. Một đơn vị phân tích dự phóng cả năm chỉ +32%, thấp hơn kế hoạch
+4. Chưa công bố BCTC quý 2 tính đến 29/07/2026
+
+**Agent xử lý:** áp override nhưng chia làm hai phần — **vào khoảng 3/5 phần dự kiến ngay tuần 1, giữ 2/5 cho tới khi đóng cửa trên MA20 ba phiên**. Gắn **ba ngưỡng huỷ luận điểm** có số cụ thể (bao phủ nợ xấu không lên trên 60% · ngày chốt quyền phát hành rơi trong tháng 8 · IPO Chứng khoán HD trượt khỏi tháng 9). Đặt HDB vào **bước 4 của nhánh xấu** — phải giảm trước nhóm lõi còn lại.
+
+**Rủi ro của override này, ghi rõ:** đây là lần thứ hai trong cùng một chu kỳ mà một mã trượt bộ lọc xu hướng vẫn được mua. Nếu thực thi lỏng ba ngưỡng huỷ thì Vòng T mất hiệu lực trên thực tế dù vẫn còn trong spec.
+
+**Cách đánh giá sau 3-6 tháng:** so lợi suất HDB với ACB, LPB, MSB tại 30/09/2026 và 31/12/2026. Kiểm riêng: (a) bao phủ nợ xấu quý 2 và quý 3 có lên trên 60% không; (b) IPO Chứng khoán HD có diễn ra trong tháng 9 không; (c) trái phiếu chuyển đổi giá 13.100đ có được kích hoạt và pha loãng thực tế bao nhiêu.
+
+---
+
+## 2026-07-29 — Bản khuyến nghị rev3 — Loại: đổi cơ cấu ngành chính và ngành dự bị
+
+**Quyết định Agent (bản rev2):** ba ngành chính là Chứng khoán, Bất động sản Dân dụng, Tài chính ngân hàng — kế thừa từ Tier 1.
+
+**User override:** nâng **Hạ tầng Tiện ích** lên ngành chính, hạ **Công ty Chứng khoán** xuống ngành dự bị. Chỉ định ba mã tiện ích: GEG, NT2, và POW.
+
+**Agent kiểm chứng — kết quả không đồng nhất với chỉ định ban đầu:**
+- **GEG và NT2 đều trượt bộ lọc xu hướng**, giảm cả ba đoạn; GEG ở −15,9% dưới MA200 với đoạn cuối −12,7%, tức đang giảm nhanh dần
+- **POW là mã duy nhất trong ngành đạt bộ lọc** (trên MA200 +1,2%, chỉ 1/3 đoạn giảm) và cũng là mã duy nhất vào được size có ý nghĩa (ADV 121,9 tỷ so với NT2 11 tỷ và GEG 3 tỷ)
+- **TDM** đạt bộ lọc sạch nhất ngành (0/3 đoạn giảm) nhưng **user loại vì thanh khoản quá nhỏ** (ADV 4 tỷ, trần vị thế ~600 triệu)
+
+**User quyết định cuối:** giữ cả ba mã GEG, NT2, POW nhưng **không mã nào vào tuần 1** — tất cả vào theo điều kiện kỹ thuật.
+
+**Agent xử lý:** áp đúng chỉ đạo. Đặt điều kiện mua riêng từng mã theo tầng chờ xác nhận của Nguyên tắc 1, cộng điều kiện bổ sung: GEG phải có **khối lượng phiên vượt trên bình quân 20 phiên** (vì vừa gãy, dễ bật giả trên thanh khoản cạn) và quý 2 công bố không xấu hơn dự phóng −63%; POW **không đuổi giá ngay sau kết quả quý 2 bùng nổ** vì kế hoạch nửa cuối năm chỉ 1.028 tỷ so với 5.002 tỷ nửa đầu.
+
+**Agent đề xuất lại thứ tự trong ngành là NT2 → POW → GEG, khác thứ tự user nêu ban đầu**, dựa trên: NT2 rẻ nhất nhóm (P/E 4,68, EV/EBITDA 4,19), ROE trailing tăng liên tục năm quý lên 27,24%, quý 2 đã công bố tốt, và còn dư địa lớn so với kế hoạch của chính nó. GEG xếp cuối vì doanh thu quý 1 giảm 31%, ROE trailing đảo chiều, doanh thu điện gió giảm 47% dù sản lượng tăng — tức vấn đề ở giá bán.
+
+**Hạ Chứng khoán xuống dự bị:** agent áp đúng, giữ **VCK và HCM** ở vai trò bổ sung (cả hai đạt bộ lọc xu hướng), loại **VPX** vì 49,7% lợi nhuận trước thuế quý 2 đến từ khoản một lần. Điều kiện nâng ngành trở lại: thanh khoản HOSE bình quân 5 phiên vượt 15.000 tỷ mà không có phiên giảm quá 2%.
+
+**Cách đánh giá sau 3-6 tháng:** so lợi suất ba mã tiện ích với nhóm ngân hàng lõi tại 30/09 và 31/12/2026. Kiểm riêng: (a) GEG và NT2 có thật sự vượt được điều kiện kỹ thuật trong tháng 8 không, hay cả hai đứng ngoài suốt chu kỳ; (b) POW sau quý 2 bùng nổ có điều chỉnh như hướng dẫn nửa cuối gợi ý không; (c) việc hạ Chứng khoán xuống dự bị có bỏ lỡ nhịp không, đo bằng lợi suất VCK và HCM so với nhóm đã mua.
+
+---
+
+## 2026-07-29 — Bản khuyến nghị rev3 — Loại: bỏ tỷ trọng phần trăm cấp mã
+
+**Quyết định Agent (bản rev2):** mỗi mã có tỷ trọng phần trăm đề xuất, kế thừa từ bảng conviction tier của quy trình.
+
+**User override:** bỏ tỷ trọng đơn lẻ từng cổ phiếu, chỉ công bố tỷ trọng khuyến nghị cho cả danh mục. Yêu cầu sửa luôn vào engine.
+
+**Agent xử lý:** áp cho báo cáo và sửa engine — gỡ bảng `Size target (% portfolio)` ở `P_invest_memo_04` mục 5 và `P_invest_memo_08` mục 3.1, gỡ đoạn mã giả `target_size()`. Tier conviction nay quyết định **vai trò và thứ tự** (lõi / bổ sung / dự bị), không quyết định tỷ trọng. Ghi `_ops/CHANGELOG.md` entry 2026-07-29 (b).
+
+**Ranh giới agent giữ lại, có chủ ý:** trần thanh khoản 5% khối lượng bình quân 20 phiên và trần tập trung theo mã, theo ngành **vẫn giữ nguyên**. Đó là ràng buộc an toàn trả lời "tối đa vào được bao nhiêu", khác với mục tiêu tỷ trọng trả lời "nên vào bao nhiêu".
+
+**Cách đánh giá sau 3-6 tháng:** kiểm xem việc bỏ tỷ trọng cấp mã có làm báo cáo khó thực thi hơn không — cụ thể là người đọc có tự phân bổ được không, hay quay lại hỏi con số cụ thể.
+
+---
+
 ## 2026-07-28 — CP4 — Loại: dừng cycle ở Tier 3, không chạy Tier 5 và Tier 6
 
 **Quyết định Agent theo spec:** `P_invest_memo_00` Nguyên tắc 1 và 2 quy định **không vào position nếu chưa viết xong memo 7 phần** với variant perception, bear case steelmanned và exit trigger. Tier 3 chỉ là gate trước memo, không phải điểm kết thúc.
